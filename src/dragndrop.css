@@ -1,0 +1,39 @@
+
+@keyframes draggableGlow {
+    0% {background-color: rgba(255,255,255,0.4);}
+    50% {background-color: rgba(255,255,255,0.8);}
+    100% {background-color: rgba(255,255,255,0.4);}
+  }
+  
+  .draggable {
+      position: relative;
+      z-index: 2;
+  }
+
+  .projectDraggable {
+      position: relative;
+      z-index: 2;
+  }
+
+  .dragProject .projectDraggable {
+    animation-name: draggableGlow;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes darkenMask {
+      0% {background-color: transparent;}
+      100% {background-color: rgba(0,0,0,0.4);}
+  }
+
+  .dragProject:after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      animation-name: darkenMask;
+      animation-duration: 1s;
+      animation-iteration-count: 1;
+      background-color: rgba(0,0,0,0.4);
+      z-index: 1;
+
+  }

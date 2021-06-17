@@ -1,0 +1,51 @@
+.calendargrid {
+    background-color: white;
+    display: grid;
+    grid-template-columns: repeat(7, 14%);
+    grid-gap: 2px;
+}
+
+.day {
+    background-color: #eeeeee;
+    transition: 0.4s;
+}
+
+
+.day.tracked {
+    background-color: #eeffee;
+}
+
+.day.inactive {
+    background-color: #cccccc;
+}
+
+.day:hover {
+    background-color: wheat;
+}
+.weekday {
+    background-color: lightslategray;
+    text-align: center;
+}
+
+.monthHeader {
+    background-color: hotpink;
+    display: grid;
+    grid-template-columns: 20% auto 20%;
+}
+
+.monthHeader .title {
+    text-align: center;
+    font-size: xx-large;
+}
+
+.monthHeader button {
+    border: none;
+    outline: none;
+    background-color: inherit;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.monthHeader button:hover {
+    background-color: rgba(0,0,0,0.1);
+}
