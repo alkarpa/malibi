@@ -1,70 +1,47 @@
-import React, { useEffect, useState } from 'react'
-import intervalService from '../../services/intervals'
-import storageService from '../../services/storage'
-import TimesTable from '../timesTable'
+import React, { useEffect } from 'react'
 import TimerControls from './timerControls'
 import TimerDisplay from './timerDisplay'
-import TimerSessionControls from './timerSessionControls'
+import { tick } from '../../reducers/timerReducer'
+import { useDispatch, useSelector } from 'react-redux'
+import IntervalProject from '../intervalProject'
+import TimeDisplay from '../timeDisplay'
 
 
+const Timer = () => {
 
-const Timer = ({ completed, setCompleted, projects }) => {
+    const dispatch = useDispatch()
 
-    const emptyIntervalInfo = intervalService.DEFAULT_INTERVAL_INFO
+    const intervals = useSelector( state => state.intervals )
+    const elapsed = useSelector( state => state.elapsed )
 
-    const [elapsed, setElapsed] = useState(0)
-    const [sinceClick, setSinceClick] = useState(0)
-    const [intervalInfo, setIntervalInfo] = useState(emptyIntervalInfo)
+    const lastInterval = [undefined, ...intervals].slice(-1)[0]
 
-    const running = intervalService.isRunning(intervalInfo)
+    //console.log('lastInterval', lastInterval)
+    //const today = (new Date()).toISOString().substring(0, 10)
 
-    useEffect(() => {
-        const stored = storageService.load('intervals')
-        if (stored) {
-            const rebuilt = intervalService.buildIntervalInfoFromStorage( stored )
-            setIntervalInfo( rebuilt )
-        }
-    }, [])
+    const running = lastInterval && !lastInterval.end
+    //console.log('running', running)
+
+    const getTotalToday = () => {
+        let now = new Date()
+        now.setHours(0,0,0,0)
+        let todayStart = now.getTime()
+        const completedToday = intervals
+            .filter( v => v.start > todayStart && v.end )
+            .reduce( (acc, cur) => {
+                return acc + ( cur.end - cur.start )
+            }, 0 )
+        return completedToday + elapsed
+    }
 
     useEffect(() => {
         if (running) {
-            const sinceLastClick = () => (Date.now() - intervalService.getLastStartClick(intervalInfo))
-            const intervalsAndThen = () => (intervalInfo.total.millis + sinceLastClick())
             const timer = setInterval(() => {
-                setElapsed(intervalsAndThen)
-                setSinceClick(sinceLastClick)
+                dispatch( tick(lastInterval) )
             }, 1000)
             return () => clearInterval(timer)
         }
-    }, [intervalInfo, running])
-
-
-    const setIntervalProject = (interval_id, project) => {
-        const newIntervals = intervalService.setIntervalProject(intervalInfo, interval_id, project)
-        setIntervalInfo(newIntervals)
-        storageService.save('intervals', intervalService.prepareIntervalsForStorage(newIntervals))
-    }
-
-    const handleCompletion = () => {
-        const completedIntervalInfo = running
-            ? intervalService.buildIntervalInfo(intervalInfo, [Date.now()])
-            : intervalInfo
-
-        const newCompletedIntervalInfos = [...completed, completedIntervalInfo]
-
-
-        setCompleted(newCompletedIntervalInfos)
-        setElapsed(0)
-        setSinceClick(0)
-        storageService.save('intervals', [])
-        setIntervalInfo(emptyIntervalInfo)
-
-        // get all the intervals into an array
-        const allIntervals = newCompletedIntervalInfos.reduce( (array, cur) => array.concat(cur.intervals) , [] )
-        const newCompletedForStorage = intervalService.prepareIntervalsForStorage( {intervals: allIntervals} )
-        storageService.save('completed', newCompletedForStorage)
-    }
-
+    }, [running, lastInterval, dispatch])
 
     return (
         <div className='timerContainer floatContainer'>
@@ -72,30 +49,43 @@ const Timer = ({ completed, setCompleted, projects }) => {
                 <span>M'alibi</span>
             </div>
             <div className='floatLeft'>
+                Total today
                 <div>
-                    <TimerDisplay elapsed={elapsed} />
-                </div>
-                <div>
-                    <TimerControls running={running}
-                        intervals={intervalInfo}
-                        setIntervals={setIntervalInfo}
-                    />
+                    <TimerDisplay elapsed={getTotalToday()} />
                 </div>
             </div>
-
-            <div className='floatLeft'>
-                <div className='fiveRowScrollable floatLeft'>
-                    <TimesTable intervalsInfo={intervalInfo}
-                        sinceClick={sinceClick}
-                        projects={projects}
-                        setProject={setIntervalProject}
-                        showTotal={false} />
+            <div className='floatLeft panel'>
+                <div className='floatLeft'>
+                    <div>
+                        Active
+                </div>
+                    <div>
+                        <TimerDisplay elapsed={elapsed} />
+                    </div>
+                    <div>
+                        <TimerControls running={running}/>
+                    </div>
                 </div>
 
                 <div className='floatLeft'>
-                    <TimerSessionControls intervals={intervalInfo} handleCompletion={handleCompletion} />
+                    <div>Start time:
+                        {
+                            lastInterval && !lastInterval.end
+                                ? <TimeDisplay isTime={true} time={lastInterval.start} />
+                                : <></>
+                        }
+                         </div>
+                    <div>Project:
+                        {
+                            lastInterval && !lastInterval.end
+                                ? <IntervalProject interval={lastInterval} />
+                                : <></>
+                        }
+                    </div>
                 </div>
+
             </div>
+
 
         </div>
     )

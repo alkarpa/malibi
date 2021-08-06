@@ -1,28 +1,22 @@
 import React, {useState} from 'react'
 import TimesTable from './timesTable'
-import storageService from '../services/storage'
-import intervalService from '../services/intervals'
+import { useSelector } from 'react-redux'
+import { intervalsDateMapper } from '../services/intervals'
 
+const Completed = () => {
 
-const Completed = ({ completed, setCompleted, projects }) => {
+    const intervals = useSelector( state => state.intervals )
 
     const [daysToShow, setDaysToShow] = useState(2)
-
-      const setIntervalProject = (interval_id, project) => {
-        const interval_completed_index = completed.findIndex( c => c.intervals.find( i => i.id === interval_id ) )
-        console.log('completed by index', completed[interval_completed_index])
-        const newSession = intervalService.setIntervalProject(completed[interval_completed_index], interval_id, project)
-        const newCompleted = completed.map( (c,i) => i === interval_completed_index ? newSession : c )
-        setCompleted( newCompleted )
-        const allIntervals = newCompleted.reduce( (array, cur) => array.concat(cur.intervals) , [] )
-        const newCompletedForStorage = intervalService.prepareIntervalsForStorage( {intervals: allIntervals} )
-        console.log('forStorage', newCompletedForStorage)
-        storageService.save('completed',  newCompletedForStorage )
-    }
 
     const handleDaysToShowSelection = (event) => {
         setDaysToShow( event.target.value )
     }
+
+    const dateMap = intervalsDateMapper(intervals)
+
+    const array = Object.keys( dateMap ).sort().slice(-daysToShow).reverse()
+    
 
     return (
         <div>
@@ -37,11 +31,11 @@ const Completed = ({ completed, setCompleted, projects }) => {
                     ) ) }
                 </select>
             </label>
-            { completed.slice(-daysToShow).reverse().map( c => (
-                <div className='completedCard' key={'c'+c.intervals[0].start.millis}>
-                    <TimesTable intervalsInfo={c} projects={projects} setProject={setIntervalProject} />
-
-                </div>))}
+            { array.map( day => (
+                <div className='completedCard' key={'c'+dateMap[day][0].start}>
+                    <TimesTable title={day} keyprefix='ctt' day={dateMap[day]} /> 
+                </div>
+            )) }
         </div>
     )
 

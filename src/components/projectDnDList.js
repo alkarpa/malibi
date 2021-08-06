@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
-import storageService from '../services/storage'
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { startDrag, endDrag } from '../reducers/dragndropReducer'
 
-const ProjectDnDList = ({ projects, setProjects, setDragging }) => {
-    const [name, setName] = useState('')
-    const [color, setColor] = useState('#efefef')
+const ProjectDnDList = () => {
+    const dispatch = useDispatch()
+
+    const projects = useSelector( state => state.projects.list )
 
     const handleDragStart = (event) => {
         const project = {
@@ -11,29 +13,12 @@ const ProjectDnDList = ({ projects, setProjects, setDragging }) => {
             id: event.target.attributes.projectid.value,
             title: event.target.innerText
         }
-        event.dataTransfer.setData('title', project.title)
-        event.dataTransfer.setData('color', project.color)
         event.dataTransfer.setData('id', project.id)
-        console.log('handleDragStart', event)
-        setDragging('project')
+        dispatch( startDrag('project') )
     }
 
     const handleDragEnd = () => {
-        console.log('handleDragEnd')
-        setDragging(undefined)
-    }
-
-    const addProject = () => {
-        const id = projects.list.reduce((max, cur) => Math.max(max, cur.id), 0) + 1
-        const newProjects = projects.list.concat({
-            id: id,
-            color: color,
-            title: name,
-        })
-        setName('')
-        setColor('#efefef')
-        setProjects({ ...projects, list: newProjects })
-        storageService.save('projects', { ...projects, list: newProjects })
+        dispatch( endDrag() )
     }
 
     return (
@@ -43,7 +28,7 @@ const ProjectDnDList = ({ projects, setProjects, setDragging }) => {
             <div>
                 <h2>Drag and Drop Projects List</h2>
                 <ul>
-                    {projects.list.map(proj => (
+                    {projects.map(proj => (
                         <li key={proj.id} style={{ backgroundColor: proj.color }}
                             className='project draggable'
                             projectid={proj.id}
@@ -55,12 +40,6 @@ const ProjectDnDList = ({ projects, setProjects, setDragging }) => {
                         </li>
                     ))}
                 </ul>
-            </div>
-            <div>
-                <h2>New projects area</h2>
-                <input name='projectname' type='text' value={name} onChange={(ev) => setName(ev.target.value)} />
-                <input name='projectcolor' type='color' value={color} onChange={(ev) => setColor(ev.target.value)} />
-                <button type='button' onClick={addProject}>Add project</button>
             </div>
         </div>
     )

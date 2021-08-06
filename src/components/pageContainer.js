@@ -1,33 +1,33 @@
 import React, {useState} from 'react'
 import Recent from './recent'
 import Calendar from './calendar'
+import Projects from './projects'
 
-const PageContainer = ({projects, setProjects, completed, setCompleted, setDragging}) => {
+const PageContainer = () => {
 
     const TABS = [
         "RECENT",
-        "CALENDAR"
+        "CALENDAR",
+        "PROJECTS"
     ]
 
     const [activePage, setActivePage] = useState( TABS[0] )
 
     const handleTabChange = ( tab ) => {
         setActivePage( tab )
-
     }
 
     let content
 
     switch ( activePage ) {
         case "RECENT": 
-                    content = (<Recent setDragging={setDragging}
-                                        completed={completed}
-                                        setCompleted={setCompleted}
-                                        projects={projects}
-                                        setProjects={setProjects} />)
+                    content = (<Recent />)
                     break;
         case "CALENDAR": 
-                    content = (<Calendar completed={completed} />)
+                    content = (<Calendar />)
+                    break;
+        case "PROJECTS":
+                    content = (<Projects />)
                     break;
         default:
     }

@@ -1,22 +1,8 @@
 import React from 'react'
-import timeCalc from '../services/timeCalculation'
 import IntervalProject from './intervalProject'
+import { useSelector } from 'react-redux'
+import TimeDisplay from './timeDisplay'
 
-const TimeDisplay = ({ time }) => {
-    if (!time) {
-        return (<div></div>)
-    }
-    const clock = time.clock
-    return (
-        <div className='mono large'>
-            <span className='hours'>{clock.hour}</span>
-        :
-            <span className='minutes'>{clock.minute}</span>
-        :
-            <span className='seconds'>{clock.second}</span>
-        </div>
-    )
-}
 
 const TotalRow = ({ total }) => (
     <tfoot className='rightalign'>
@@ -29,48 +15,30 @@ const TotalRow = ({ total }) => (
     </tfoot>
 )
 
-const DateCaption = ({intervals}) => {
-    let caption = 'Active session'
-    if ( intervals.length > 0 ) {
-        const firstInterval = intervals[0]
-        const lastInterval = intervals[ intervals.length - 1 ]
-        caption = firstInterval.start.date
-        if ( lastInterval.end && ( lastInterval.end.date !== firstInterval.start.date ) ) {
-            caption += ` - ${lastInterval.end.date}`
-        }
+const TimesTable = (
+    {  
+        day: intervals,
+        title='',
+        keyprefix = '',
+        showDates = false
     }
-    return (
-        <span>
-            {caption}
-        </span>
-    )
-}
+    ) => {
 
-const TimesTable = ({ intervalsInfo, sinceClick = undefined, projects = {}, setProject, showTotal = true }) => {
+    const elapsed = useSelector( state => state.elapsed )
 
-
-    const sinceClickClock = () => {
-        if (sinceClick) {
-            return { clock: timeCalc.getClockObject(sinceClick) }
-        }
-        return undefined
-    }
-
-    const intervals = intervalsInfo.intervals.map(interval => {
-        if (!interval.end) {
-            return {
-                ...interval,
-                difference: sinceClickClock()
-            }
-        }
-        return interval
-    })
+    const dayTotal = intervals.reduce( (sum, interval) => {
+        return interval.end 
+            ? sum + (interval.end - interval.start)
+            : sum + elapsed
+    }, 0 )
+    
 
     return (
         <table className='timesTable'>
-            <caption><DateCaption intervals={intervals} /></caption>
+            <caption>{title}</caption>
             <thead>
                 <tr>
+                    {showDates ? (<th>Date</th>) : (<></>)}
                     <th>Start</th>
                     <th>End</th>
                     <th>Time</th>
@@ -79,24 +47,20 @@ const TimesTable = ({ intervalsInfo, sinceClick = undefined, projects = {}, setP
             </thead>
             <tbody className='rightalign'>
                 {intervals.map(t => (
-                    <tr key={t.start.millis}>
-                        <td><TimeDisplay time={t.start} /></td>
-                        <td><TimeDisplay time={t.end} /></td>
+                    <tr key={`${keyprefix}${t.start}`}>
+                        {showDates ? (<td>{new Date(t).getUTCDate()}</td>) : (<></>)}
+                        <td><TimeDisplay isTime={true} time={t.start} /></td>
+                        <td><TimeDisplay isTime={true} time={t.end} /></td>
                         <td className='total'>
-                            <TimeDisplay time={t.difference} />
+                            <TimeDisplay isTime={false} time={t.end ? t.end - t.start : elapsed} />
                             </td>
                         <td className='projectCell'>
-                            <IntervalProject interval={t} 
-                                             project={projects[t.project]} 
-                                             setProject={setProject} />
+                            <IntervalProject interval={t} />
                             </td>
                     </tr>
                 ))}
             </tbody>
-            {showTotal
-                ? <TotalRow total={intervalsInfo.total} />
-                : <></>
-            }
+            <TotalRow total={dayTotal} />
         </table>
     )
 

@@ -1,25 +1,16 @@
 import React from 'react'
-import intervalService from '../../services/intervals'
-import storageService from '../../services/storage'
+import { useDispatch } from 'react-redux';
+import { togglePlay, createBreakpoint } from '../../reducers/trackingReducer';
 
-const TimerControls = ({running, intervals, setIntervals}) => {
-
-    const addClicks = (toAdd) => {
-        if (!toAdd) { 
-            return
-        }
-        const newIntervals = intervalService.buildIntervalInfo(intervals, toAdd)
-
-        setIntervals(newIntervals)
-        storageService.save('intervals', intervalService.prepareIntervalsForStorage(newIntervals))
-    }
+const TimerControls = ({running}) => {
+    const dispatch = useDispatch()
 
     const handlePause = () => {
-        addClicks([Date.now()])
+        dispatch(togglePlay())
     }
 
     const handleBreakpoint = () => {
-        addClicks([Date.now(), Date.now() + 1])
+        dispatch(createBreakpoint())
     }
 
     return (

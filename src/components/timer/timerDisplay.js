@@ -1,9 +1,9 @@
 import React from 'react'
-import timeCalc from '../../services/timeCalculation'
+import { getIntervalClockObject } from '../../services/timeDisplay'
 
 const TimerDisplay = ({elapsed}) => {
 
-    const clockValues = timeCalc.getClockObject(elapsed)
+    const clockValues = getIntervalClockObject(elapsed)
 
     return (
         <table className="mono rightalign veryLarge">

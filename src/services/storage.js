@@ -1,4 +1,3 @@
-const intervalService = require('./intervals')
 
 const storeInLocalStorageAsJSON = (key, obj) => {
     if (localStorage) {
@@ -32,34 +31,9 @@ const loadProjects = (setProjects) => {
     }
 }
 
-/**
- * Move to "Completed Model"?
- * @param {*} setCompleted 
- */
-const loadCompleted = (setCompleted) => {
-    const stored = load('completed')
-    if (stored) {
-      // group completed by date
-      // RETHINK AND REFACTOR
-      let last = ''
-      const grouped = stored.reduce( (arrays, cur) => {
-        const localDate = (new Date( cur.start )).toLocaleDateString()
-        if ( last !== localDate ) {
-          arrays.push([])
-          last = localDate
-        }
-        (arrays[ arrays.length - 1 ]).push( cur )
-        return arrays
-      }, [] )
-
-      const rebuilt = grouped.map( g => intervalService.buildIntervalInfoFromStorage( g ) )
-      setCompleted(rebuilt)
-    }
-}
 
 module.exports = {
     save,
     load,
     loadProjects,
-    loadCompleted,
 }
