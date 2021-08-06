@@ -1,22 +1,47 @@
 .calendargrid {
     background-color: white;
     display: grid;
-    grid-template-columns: repeat(7, 14%);
+    grid-template-columns: 3.5% repeat(7, 13.7%);
     grid-gap: 2px;
 }
 
 .day {
     background-color: #eeeeee;
     transition: 0.4s;
+    height: 6em;
 }
 
+.dayGrid {
+    display: grid;
+    grid-template-rows: min-content auto;
+    gap: 2px;
+}
+.dayGrid>div {
+    background-color: rgba(150,255,150,0.2);
+}
+.dayGrid h1 {
+    margin: 0px;
+}
+.dayInfoGrid {
+    display: grid;
+    grid-template-columns: min-content auto;
+    grid-template-rows: min-content;
+    gap: 2px;
+}
+.dayInfoGrid>div {
+    line-height: 100%;
+    background-color: lemonchiffon;
+}
 
 .day.tracked {
     background-color: #eeffee;
 }
 
 .day.inactive {
-    background-color: #cccccc;
+    background-color: #aaaaaa;
+}
+.day.inactive .dayInfoGrid>div {
+    background-color: gray;
 }
 
 .day:hover {
@@ -25,6 +50,14 @@
 .weekday {
     background-color: lightslategray;
     text-align: center;
+}
+.weeknumber {
+    background-color: burlywood;
+    font-size: large;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .monthHeader {
