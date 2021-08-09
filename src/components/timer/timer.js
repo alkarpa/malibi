@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import TimerControls from './timerControls'
 import TimerDisplay from './timerDisplay'
-import { tick } from '../../reducers/timerReducer'
+import { tick, reset } from '../../reducers/timerReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import IntervalProject from '../intervalProject'
 import TimeDisplay from '../timeDisplay'
@@ -40,6 +40,8 @@ const Timer = () => {
                 dispatch( tick(lastInterval) )
             }, 1000)
             return () => clearInterval(timer)
+        } else {
+            dispatch( reset() )
         }
     }, [running, lastInterval, dispatch])
 
