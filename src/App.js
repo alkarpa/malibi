@@ -1,8 +1,8 @@
 import React from 'react'
-import Timer from './components/timer/timer'
 import PageContainer from './components/pageContainer'
 import './dragndrop.css';
 import { useSelector } from 'react-redux';
+import Header from './components/header';
 
 function App() {
 const dragging = useSelector( state => state.dragndrop )
@@ -11,7 +11,7 @@ const dragging = useSelector( state => state.dragndrop )
 
   return (
     <div className={appClass}>
-      <Timer />
+      <Header />
     
       <PageContainer />
       

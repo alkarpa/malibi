@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '../../util/test_util'
+import { render, fireEvent } from '../../util/component_test_util'
 import { prettyDOM } from '@testing-library/jest-dom'
 import TimerControls from './timerControls'
 
@@ -12,11 +12,8 @@ describe('TimerControls', () => {
         expect(component.container).toHaveTextContent('Breakpoint')
     })
 
-    test('Clicking Start toggles between Start/Pause', () => {
-        const component = render(<TimerControls running={false} />)
-
-        const button = component.getByText('Start')
-        fireEvent.click(button)
+    test('Pause visible when running', async () => {
+        const component = render(<TimerControls running={true} />)
 
         expect(component.container).toHaveTextContent('Pause')
     })
@@ -32,6 +29,17 @@ describe('TimerControls', () => {
 
         const button = component.getByText('Breakpoint')
         expect(button).not.toBeDisabled()
+    })
+
+    describe('store dispatch', () => {
+
+        test('handlePause', () => {
+            const component = render(<TimerControls running={false} />)
+        
+            const button = component.getByText('Start')
+            fireEvent.click(button)
+        })
+
     })
 
 })

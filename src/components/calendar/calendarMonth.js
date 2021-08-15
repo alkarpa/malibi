@@ -11,7 +11,12 @@ const CalendarMonthHeader = ({ activeMonthDate, handleMonthAddition, handleMonth
                 onClick={() => handleMonthAddition(-1)}>
                 Previous month
             </button>
-            <input className="title" onChange={(e) => handleMonthPick(e)} type="month" value={ISO_yearmonth} />
+            <input id='calMonthPicker'
+                className="title" 
+                onChange={(e) => handleMonthPick(e)} 
+                type="month" 
+                value={ISO_yearmonth} 
+            />
             <button id='calNextMonthButton'
                 onClick={() => handleMonthAddition(1)}
             >Next month
@@ -20,7 +25,14 @@ const CalendarMonthHeader = ({ activeMonthDate, handleMonthAddition, handleMonth
     )
 }
 
-const CalendarMonth = ({ activeMonthDate, setActiveMonthDate, setActiveView, projectsMap, today, dateMap }) => {
+const CalendarMonth = ({ 
+        activeMonthDate, 
+        setActiveMonthDate = console.log, 
+        setActiveView = console.log, 
+        projectsMap = {}, 
+        today, 
+        dateMap = {}
+    }) => {
 
     const year = activeMonthDate.getFullYear()
     const month = activeMonthDate.getMonth()

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
 import ProjectDetails from './projectDetails'
 
 
 const Projects = () => {
-    const projects = useSelector(state => state.projects.list)
+    const projects = useSelector(state => state.projects)
     const [selectedProject, setSelectedProject] = useState(
         projects.length > 0 ? projects[0] : undefined
     )
@@ -24,29 +24,32 @@ const Projects = () => {
 
     return (
         <div>
-            <h1>Projects</h1>
-
-            <ul>
-                {projects.concat(newProject).map(p => (
-                    <li
-                        key={`projectlist_${p.id}`}
-                        className='project'
-                        style={{
-                            backgroundColor: p.color,
-                            cursor: 'pointer',
-                            color: p.id ? 'black' : 'white'
-                        }}
-                        onClick={() => handleProjectSelection(p.id)}
-                    >{p.title}</li>
-                ))}
-            </ul>
-
-            <div>
-                {
-                    selectedProject
-                        ? <ProjectDetails project={selectedProject} />
-                        : <></>
-                }
+            <div className='halfscreengrid'>
+                <div className='projectslist'>
+                    <h2>List of all projects</h2>
+                    <ul>
+                        {[newProject].concat(projects).map(p => (
+                            <li
+                                key={`projectlist_${p.id}`}
+                                className='project'
+                                style={{
+                                    backgroundColor: p.color,
+                                    cursor: 'pointer',
+                                    color: p.id ? 'black' : 'white',
+                                    marginBottom: p.id ? '4px' : '1.5em'
+                                }}
+                                onClick={() => handleProjectSelection(p.id)}
+                            >{p.title}</li>
+                        ))}
+                    </ul>
+                </div>
+                <div>
+                    {
+                        selectedProject
+                            ? <ProjectDetails project={selectedProject} />
+                            : <></>
+                    }
+                </div>
             </div>
 
         </div>

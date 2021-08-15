@@ -1,10 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import TimeDisplay from './timeDisplay'
+import TimeDisplay from '../timeDisplay'
 
 const Stats = ({ intervals = [] }) => {
 
-    const projects = useSelector(state => state.projects?.list)
+    const projects = useSelector(state => state.projects)
 
     const projectsGrouped = intervals.reduce((map, interval) => {
         const project = "" + interval.project
@@ -21,7 +21,7 @@ const Stats = ({ intervals = [] }) => {
         const absolute = (projectsGrouped[key] || []).reduce((acc, cur) => cur.end ? acc + (cur.end - cur.start) : acc, 0)
         return {
             id: parseInt(key),
-            project: projects.find(pr => pr.id === parseInt(key)) || {},
+            project: projects?.find(pr => pr.id === parseInt(key)) || {},
             absolute: absolute,
             relative: (absolute / totalMillis * 100).toFixed(2)
         }
@@ -38,13 +38,17 @@ const Stats = ({ intervals = [] }) => {
 
     const panelStyle = {
         margin: '2em',
-        boxShadow: '1em 0.5em 1em 0.5em black'
+        boxShadow: '1em 0.5em 1em 0.5em black',
+        backgroundColor: '#efffff',
     }
 
     return (
         <div>
-            <h2>Stats</h2>
             <div style={panelStyle}>
+                <h2>Stats</h2>
+                <div>
+                    <h3>Total completed</h3> <TimeDisplay time={totalMillis ? totalMillis : 1 /* show zero hack */} />
+                </div>
                 <h3>By project</h3>
                 <div style={{ maxWidth: '500px' }}>
                     {
@@ -65,10 +69,10 @@ const Stats = ({ intervals = [] }) => {
                     <div style={{ height: '1em', width: '490px', margin: '5px', border: '1px black solid' }}>
                         {
                             activeProjects.map(p => (
-                                <div key={'calbpbar'+p.id} style={{
+                                <div key={'calbpbar' + p.id} style={{
                                     display: 'inline-block',
                                     height: '100%',
-                                    width: `${(p.absolute/totalMillis*100)}%`,
+                                    width: `${(p.absolute / totalMillis * 100)}%`,
                                     backgroundColor: p.project.color
                                 }} />
                             ))

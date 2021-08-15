@@ -1,4 +1,4 @@
-import intervalsService from './intervals'
+import intervalsService, {intervalsDateMapper} from './intervals'
 import deepFreeze from 'deep-freeze'
 
 describe('intervalsService', () => {
@@ -49,6 +49,11 @@ describe('intervalsService', () => {
         const updatedInterval = {...intervals[0], project: 7}
         const updatedState = intervalsService.mapUpdated(intervals, updatedInterval)
         expect(updatedState[0].project).toBe(7)
+    })
+
+    test('no interval array returns an empty map', () => {
+        const map = intervalsDateMapper()
+        expect( map ).toEqual( {} )
     })
 
 })

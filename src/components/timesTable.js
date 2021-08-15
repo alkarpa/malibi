@@ -1,15 +1,19 @@
 import React from 'react'
 import IntervalProject from './intervalProject'
-import { useSelector } from 'react-redux'
-import TimeDisplay from './timeDisplay'
+import TimeDisplay, { ElapsedTimeDisplay } from './timeDisplay'
+import IntervalFormPopup from './intervalFormPopup'
 
 
-const TotalRow = ({ total }) => (
+const TotalRow = ({ total, active = false }) => (
     <tfoot className='rightalign'>
         <tr>
             <td className='tinfo'>total:</td>
             <td colSpan='3' className='total'>
-                <TimeDisplay time={total} />
+                {
+                    active
+                        ? <TimeDisplay time={total} />
+                        : <ElapsedTimeDisplay time={total} />
+                }
             </td>
         </tr>
     </tfoot>
@@ -19,26 +23,24 @@ const TimesTable = (
     {  
         day: intervals,
         title='',
-        keyprefix = '',
-        showDates = false
+        keyprefix = 'tt',
     }
     ) => {
 
-    const elapsed = useSelector( state => state.elapsed )
-
-    const dayTotal = intervals.reduce( (sum, interval) => {
+    const tableTotal = intervals.reduce( (sum, interval) => {
         return interval.end 
             ? sum + (interval.end - interval.start)
-            : sum + elapsed
+            : sum
     }, 0 )
-    
+
+    console.log('timestable rendered')
 
     return (
         <table className='timesTable'>
             <caption>{title}</caption>
             <thead>
                 <tr>
-                    {showDates ? (<th>Date</th>) : (<></>)}
+                    <th style={{minWidth:'1px'}}>Edit</th>
                     <th>Start</th>
                     <th>End</th>
                     <th>Time</th>
@@ -47,20 +49,24 @@ const TimesTable = (
             </thead>
             <tbody className='rightalign'>
                 {intervals.map(t => (
-                    <tr key={`${keyprefix}${t.start}`}>
-                        {showDates ? (<td>{new Date(t).getUTCDate()}</td>) : (<></>)}
+                    <tr key={`${keyprefix}${t.id}`}>
+                        <td><IntervalFormPopup interval={t} /></td>
                         <td><TimeDisplay isTime={true} time={t.start} /></td>
                         <td><TimeDisplay isTime={true} time={t.end} /></td>
                         <td className='total'>
-                            <TimeDisplay isTime={false} time={t.end ? t.end - t.start : elapsed} />
-                            </td>
+                            {
+                                t.end
+                                    ? <TimeDisplay isTime={false} time={t.end - t.start} />
+                                    : <ElapsedTimeDisplay time={0} />
+                            }
+                        </td>
                         <td className='projectCell'>
                             <IntervalProject interval={t} />
                             </td>
                     </tr>
                 ))}
             </tbody>
-            <TotalRow total={dayTotal} />
+            <TotalRow total={tableTotal} />
         </table>
     )
 

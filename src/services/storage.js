@@ -1,3 +1,4 @@
+const { testState } = process.env.NODE_ENV === 'test' ? require("../util/test_state_local") : {}
 
 const storeInLocalStorageAsJSON = (key, obj) => {
     if (localStorage) {
@@ -10,6 +11,7 @@ const loadFromLocalStorageAsObject = (key) => {
     if (localStorage && localStorage.getItem(key)) {
         parsed = JSON.parse( localStorage.getItem(key) )
     }
+    console.log('parsed: ' + parsed)
     return parsed
 }
 
@@ -17,23 +19,21 @@ const save = ( key, obj ) => {
     storeInLocalStorageAsJSON(key, obj)
 }
 const load = (key) => {
+    if (process.env.NODE_ENV === 'test') {
+        return testState[key]
+    }
     return loadFromLocalStorageAsObject(key)
 }
 
-/**
- * Move to "Projects Model"?
- * @param {*} setProjects 
- */
-const loadProjects = (setProjects) => {
-    const stored = load('projects')
-    if (stored) {
-      setProjects(stored)
-    }
+const loadIntervals = () => {
+    const intervals = load('datetracking')
+
+    return intervals
 }
 
 
 module.exports = {
     save,
     load,
-    loadProjects,
+    loadIntervals
 }

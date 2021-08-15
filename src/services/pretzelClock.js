@@ -90,7 +90,7 @@ const partialArcCommand = (i, startPercent, endPercent, move = true) => {
             y: Math.round(relativeToCenter.end.y - relativeToCenter.start.y)
         }
     }
-    
+
     const moveToStartPoint = move
         ? `m${drawingValues.startPoint.x},${drawingValues.startPoint.y} `
         : ``
@@ -104,20 +104,20 @@ const partialArcCommand = (i, startPercent, endPercent, move = true) => {
 
 export const prepareIntervalArc = (preparedInterval) => {
 
-    const startEighth = parseInt(preparedInterval.sS)
-    const endEighth = parseInt(preparedInterval.eS)
-    const startPer = parseInt((preparedInterval.sS - startEighth) * 100)
-    const endPer = parseInt((preparedInterval.eS - endEighth) * 100)
+    const startSegment = parseInt(preparedInterval.startSegment)
+    const endSegment = parseInt(preparedInterval.endSegment)
+    const startPer = parseInt((preparedInterval.startSegment - startSegment) * 100)
+    const endPer = parseInt((preparedInterval.endSegment - endSegment) * 100)
 
     let arc = ''
-    if (startEighth === endEighth) {
-        arc += partialArcCommand(startEighth, startPer, endPer, true) + ' '
+    if (startSegment === endSegment) {
+        arc += partialArcCommand(startSegment, startPer, endPer) + ' '
     } else {
-        arc += partialArcCommand(startEighth, startPer, 100, true) + ' '
-        for (let i = startEighth + 1; i < endEighth; ++i) {
+        arc += partialArcCommand(startSegment, startPer, 100) + ' '
+        for (let i = startSegment + 1; i < endSegment; ++i) {
             arc += partialArcCommand(i, 0, 100, false) + ' '
         }
-        arc += partialArcCommand(endEighth, 0, endPer, false) + ' '
+        arc += partialArcCommand(endSegment, 0, endPer, false) + ' '
     }
 
     return arc
@@ -138,15 +138,17 @@ export const prepareIntervals = (intervals) => {
     const D = DAYEND - DAYSTART
     const EIGHTH = D / 8
 
-    const p = intervals.map(iv => {
-        const percentStart = getMillisPercentage(Math.max(day0, iv.start))
-        const percentEnd = getMillisPercentage(Math.min(day24, iv.end))
-        return {
-            ...iv,
-            sS: percentStart / EIGHTH,
-            eS: percentEnd / EIGHTH,
-        }
-    })
+    const p = intervals
+        .filter(iv => iv.end)
+        .map(iv => {
+            const percentStart = getMillisPercentage(Math.max(day0, iv.start))
+            const percentEnd = getMillisPercentage(Math.min(day24, iv.end))
+            return {
+                ...iv,
+                startSegment: percentStart / EIGHTH,
+                endSegment: percentEnd / EIGHTH,
+            }
+        })
     const preparedIntervals = p.map(iv => ({ ...iv, arc: prepareIntervalArc(iv) }))
     return preparedIntervals
 }

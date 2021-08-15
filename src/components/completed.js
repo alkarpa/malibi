@@ -20,7 +20,6 @@ const Completed = () => {
 
     return (
         <div>
-            <h1>Recent</h1>
             <label>
                 Days to show
                 <select onChange={handleDaysToShowSelection} value={daysToShow}>

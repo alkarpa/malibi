@@ -1,5 +1,5 @@
 import React from 'react'
-import { getBGArcString, getTwentyfourHourIndicators, prepareIntervals } from '../services/pretzelClock'
+import { getBGArcString, getTwentyfourHourIndicators, prepareIntervals } from '../../services/pretzelClock'
 
 const PretzelClockBG = ({ startX, startY, BGWEIGHT = 20 }) => {
 

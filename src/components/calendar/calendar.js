@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './calendar.css'
 import { useSelector } from 'react-redux'
-import { intervalsDateMapper } from '../services/intervals'
+import { intervalsDateMapper } from '../../services/intervals'
 import Stats from './stats'
 import CalendarMonth from './calendarMonth'
 import CalendarDayInfo from './calendarDayInfo'
@@ -9,7 +9,7 @@ import CalendarDayInfo from './calendarDayInfo'
 
 const Calendar = ({ today = new Date() }) => {
     const intervals = useSelector(state => state.intervals) || []
-    const projects = useSelector(state => state.projects?.list) || []
+    const projects = useSelector(state => state.projects) || []
 
     const [activeView, setActiveView] = useState('MONTH')
 
@@ -64,8 +64,7 @@ const Calendar = ({ today = new Date() }) => {
     }
 
     return (
-        <div>
-            <h1>Calendar</h1>
+        <div style={{marginTop: '0.5em'}}>
             <div className="tabButtons">
                 {TABS.map(t => (
                     <button key={t}

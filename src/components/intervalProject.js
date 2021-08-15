@@ -6,7 +6,7 @@ import ProjectDropdown from './projectDropdown'
 const IntervalProject = ({ interval }) => {
     const dispatch = useDispatch()
 
-    const projects = useSelector( state => state.projects.list )
+    const projects = useSelector( state => state.projects )
 
     const project = projects.find( p => ""+p.id === interval.project )
 
@@ -18,8 +18,8 @@ const IntervalProject = ({ interval }) => {
         const project = {
             id: event.dataTransfer.getData('id'),
         }
-        const newInterval = {...interval, project: project.id}
-        dispatch( updateInterval(newInterval) )
+        const updatedInterval = {...interval, project: project.id}
+        dispatch( updateInterval(updatedInterval) )
     }
 
     const handleDragOver = (event) => {

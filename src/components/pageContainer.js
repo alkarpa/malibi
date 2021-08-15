@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Recent from './recent'
-import Calendar from './calendar'
+import Calendar from './calendar/calendar'
 import Projects from './projects'
 
 const PageContainer = () => {

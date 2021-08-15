@@ -5,7 +5,10 @@ import ProjectDnDList from './projectDnDList'
 const Recent = ({ setDragging }) => {
 
     return (
-        <div className='floatContainer'>
+        <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'min-content min-content'
+          }}>
                 <div className='floatLeft'>
                   <Completed />
                 </div>

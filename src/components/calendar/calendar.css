@@ -6,9 +6,9 @@
 }
 
 .day {
-    background-color: #eeeeee;
     transition: 0.4s;
     height: 6em;
+    background-color: var(--header-bg-color);
 }
 
 .dayGrid {
@@ -17,7 +17,7 @@
     gap: 2px;
 }
 .dayGrid>div {
-    background-color: rgba(150,255,150,0.2);
+    background-color: rgba(155,155,155,0.2);
 }
 .dayGrid h1 {
     margin: 0px;
@@ -30,29 +30,31 @@
 }
 .dayInfoGrid>div {
     line-height: 100%;
-    background-color: lemonchiffon;
+    background-color: white;
 }
-
 .day.tracked {
-    background-color: #eeffee;
+    background-color: var(--highlight-intense-color);
 }
 
 .day.inactive {
+    opacity: 0.5;
     background-color: #aaaaaa;
 }
 .day.inactive .dayInfoGrid>div {
-    background-color: gray;
+    background-color: #dddddd;
 }
 
 .day:hover {
-    background-color: wheat;
+    background-color: var(--highlight-intent-color);
 }
 .weekday {
-    background-color: lightslategray;
+    background-color: var(--header-shadow-color);
+    font-weight: bold;
+    line-height: 2em;
     text-align: center;
 }
 .weeknumber {
-    background-color: burlywood;
+    background-color: var(--header-shadow-color);
     font-size: large;
     font-weight: bold;
     display: flex;
@@ -61,7 +63,7 @@
 }
 
 .monthHeader {
-    background-color: hotpink;
+    background-color: var(--highlight-color);
     display: grid;
     grid-template-columns: 20% auto 20%;
 }
@@ -80,5 +82,14 @@
 }
 
 .monthHeader button:hover {
-    background-color: rgba(0,0,0,0.1);
+    background-color: var(--highlight-intent-color);
+}
+
+
+.day.today {
+    border: 1px var(--header-shadow-color) solid;
+}
+
+.clockarea {
+    background-color: var(--header-bg-color);
 }

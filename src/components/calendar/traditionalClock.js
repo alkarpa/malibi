@@ -28,29 +28,43 @@ const ClockSector = ({ center, radius, clockStart, clockEnd, intervalStart, inte
 
 }
 
-const TraditionalClock = ({ startTime, endTime, intervals = [], projectsMap = {} }) => {
-    const filtered = intervals.filter(a => a.end && a.start < endTime).map(a => a.end > endTime ? { ...a, end: endTime } : a)
+const TraditionalClock = ({ startTime, endTime, intervals = [], projectsMap = {}, startDigit = 0 }) => {
 
-    const SIZE = 200
+
+    const filtered = intervals.filter(
+            a => a.end && a.start < endTime && a.end > startTime
+        ).map(
+            a => a.end > endTime ? { ...a, end: endTime } : a
+        )
+
+    const SIZE = 240
 
     const center = SIZE / 2
-    const radius = SIZE / 2
+    const radius = (SIZE-40) / 2
 
     const twelve = new Array(12).fill(1).map((d, i) => ({
-        cos: Math.cos(Math.PI / 6 * i),
-        sin: Math.sin(Math.PI / 6 * i)
+        cos: Math.cos(Math.PI / 6 * i - Math.PI/2),
+        sin: Math.sin(Math.PI / 6 * i - Math.PI/2)
     }))
 
     return (
         <svg width={SIZE} height={SIZE}>
-            <circle cx={SIZE / 2} cy={SIZE / 2} r={SIZE / 2} fill="white" />
+            <circle cx={SIZE / 2} cy={SIZE / 2} r={radius} fill="white" />
             {
                 twelve.map((d, i) => (
-                    <line key={startTime + 'd' + i}
-                        x1={radius * 0.8 * d.cos + center} x2={radius * d.cos + center}
-                        y1={radius * 0.8 * d.sin + center} y2={radius * d.sin + center}
-                        style={{ stroke: 'lightgray', strokeWidth: '2' }}
-                    />
+                    <g key={startTime + 'd' + i}>
+                        <line
+                            x1={radius * 0.8 * d.cos + center} x2={radius * d.cos + center}
+                            y1={radius * 0.8 * d.sin + center} y2={radius * d.sin + center}
+                            style={{ stroke: 'lightgray', strokeWidth: '2' }}
+                        />
+                        <text 
+                            x={(radius + 10) * d.cos + center}
+                            y={(radius + 10) * d.sin + center}
+                            textAnchor='middle' dominantBaseline='middle'
+                            style={{ fill: 'gray', textAlign: 'center' }}
+                        >{startDigit+i}</text>
+                    </g>
                 ))
             }
 

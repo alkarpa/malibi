@@ -3,28 +3,35 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updateProject, createProject } from '../reducers/projectsReducer'
 import TimesTable from './timesTable'
 import { intervalsDateMapper } from '../services/intervals'
+import TimeDisplay from './timeDisplay'
 
 const ProjectIntervalsList = ({ projectid }) => {
     const allIntervals = useSelector(state => state.intervals)
     const projectIntervals = allIntervals.filter(
         interval => interval.project === "" + projectid
-                    || (!projectid && !interval.project) 
+            || (!projectid && !interval.project)
     )
 
+    const total = projectIntervals.reduce( (total, cur) => (
+        total + (cur.end ? cur.end - cur.start : 0)
+    ), 0 )
+
     const dateMap = intervalsDateMapper(projectIntervals)
-    const dates = Object.keys( dateMap )
+    const dates = Object.keys(dateMap)
 
     return (
         <div>
+            Total: <TimeDisplay time={total} />
             {
-                dates.map( d => (
-                    <TimesTable 
-                        title={d}
-                        key={'ttproject'+d}
-                        day={dateMap[d]} />
-                ) )
+                dates.map(d => (
+                    <div key={'ttproject' + d} className='completedCard'>
+                        <TimesTable
+                            title={d}
+                            day={dateMap[d]} />
+                    </div>
+                ))
             }
-            
+
         </div>
     )
 
@@ -83,55 +90,59 @@ const ProjectDetails = ({ project }) => {
 
     return (
         <div style={{
-            margin: '2em',
-            boxShadow: '1em 0.5em 1em 0.5em black'
+            margin: '1em',
+            boxShadow: '2px 2px 5px 2px green',
+            minWidth: '650px',
+            backgroundColor: 'white',
         }}>
             <div style={{ backgroundColor: project.color }}>
                 <h2>{title}</h2>
             </div>
-            <div>
-                <h3>{ project.id ? 'Edit' : 'New project' }</h3>
+            <div style={{margin: '2em'}}>
                 <div>
-                    <label>
-                        Title
-                        <input
-                            onChange={(event) => handleTitleChange(event.target.value)}
-                            value={title}
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Color
-                        <input
-                            type='color'
-                            onChange={(event) => handleColorChange(event.target.value)}
-                            value={color} />
-                    </label>
-                </div>
-                <div>
-                {
-                    project.id
-                        ? (
-                            <button
-                                type='button'
-                                onClick={handleUndo}
-                                disabled={!undoable}
-                            >Undo Changes</button>
-                        )
-                        : (
-                            <button
-                                type='button'
-                                onClick={handleSubmit}
-                            >Create</button>
-                        )
-                }
+                    <h3>{project.id ? 'Edit' : 'New project'}</h3>
+                    <div>
+                        <label>
+                            <span style={{display: 'inline-block',width: '6ch'}}>Title</span>
+                            <input
+                                onChange={(event) => handleTitleChange(event.target.value)}
+                                value={title}
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                        <span style={{display: 'inline-block',width: '6ch'}}>Color</span>
+                            <input
+                                type='color'
+                                onChange={(event) => handleColorChange(event.target.value)}
+                                value={color} />
+                        </label>
+                    </div>
+                    <div>
+                        {
+                            project.id
+                                ? (
+                                    <button
+                                        type='button'
+                                        onClick={handleUndo}
+                                        disabled={!undoable}
+                                    >Undo Changes</button>
+                                )
+                                : (
+                                    <button
+                                        type='button'
+                                        onClick={handleSubmit}
+                                    >Create</button>
+                                )
+                        }
+                    </div>
                 </div>
 
 
 
             </div>
-            <div>
+            <div style={{margin: '2em'}}>
                 <h3>Tracked</h3>
                 <ProjectIntervalsList projectid={project.id} />
             </div>

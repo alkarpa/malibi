@@ -1,3 +1,13 @@
+:root {
+  --main-bg-color: lightcyan;
+  --header-bg-color: lightgreen;
+  --shadow-pixels: 2px 2px 5px 2px;
+  --header-shadow-color: green;
+  --highlight-color: #ffdfdf;
+  --highlight-intent-color: #ffbaba;
+  --highlight-intense-color: #ffaaaa;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,59 +15,94 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: lightcyan;
+  background-color: var(--main-bg-color);
+}
+
+.header {
+  padding-top: 0.2em;
+  padding-bottom: 0.7em;
+  background-color: var(--header-bg-color);
 }
 
 .logo {
   width: 64px;
   height: 64px;
-  line-height: 64px;
-  background: url('images/temp_logo.png'), lightseagreen;
+  background: url('images/malibi_concept_64.png'), lightgreen;
   border-radius: 15px;
   text-align: center;
+  margin: 3px;
+  box-shadow: var(--shadow-pixels) var(--header-shadow-color);
+  position: relative;
 }
 
 .logo span {
-  color: yellow;
-  display: inline-block;
-  vertical-align: middle;
-  line-height: normal;
+  position: relative;
+  top: 64px;
+  font-weight: bold;
+  font-style: italic;
+  color: var(--header-shadow-color);
+  background-color: lightcoral;
+  padding: 3px 6px 0px 3px;
+  border-radius: 8px;
+  box-shadow: 2px 2px 1px 1px darkred;
 }
 
-.timerContainer {
+.speechbubble {
+  border-radius: 0.5em;
   background-color: white;
-  box-shadow: 0px 10px 10px hotpink;
+  border: 1px black solid;
+  padding-left: 1em;
+  margin-left: 1em;
+  box-shadow: var(--shadow-pixels) var(--header-shadow-color);
+  margin-bottom: 2px;
+  position: relative;
+}
+.speechbubble:after {
+  content: '';
+  position: absolute;
+  top: 25px;
+  left: -30px;
+  width: 35px;
+  height: 15px;
+  background-color: transparent;
+  border-bottom-left-radius: 50px;
+  box-shadow: 5px 10px 0px 0px white;
 }
 
 .buttonGrid {
   display: grid;
   grid-gap: 2px;
+  width: min-content;
+  margin: 2px;
 }
 
 .buttonGrid button {
   border: none;
   outline: none;
-  background-color: inherit;
+  background-color: #f1f1f1;
   font-size: large;
   transition: 0.3s;
+  padding-left: 1em;
+  padding-right: 1em;
+  border: 1px solid #d1d1d1 ;
 }
 
 .buttonGrid button:hover {
-  background-color: rgba(0,255,0,0.2);
+  background-color: var(--highlight-intent-color);
 }
 
 table td{
-  background-color: lightgreen;
+  background-color: var(--header-bg-color);
 }
 .tinfo,th {
-  background-color: green;
+  background-color: var(--header-shadow-color);
 }
 td.total {
-  background-color: lightyellow;
+  background-color: var(--highlight-color);
 }
 
 td.projectCell {
-  background-color: lightseagreen;
+  background-color: var(--header-bg-color);
   text-align: left;
 }
 td.projectCell div {
@@ -79,22 +124,22 @@ td.projectCell div {
 
 .tabButtons {
   overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  border: 1px solid var(--highlight-intense-color);
+  background-color: var(--highlight-color);
 }
 
 .tabButtons button:hover {
-  background-color: #ddd;
+  background-color: var(--highlight-intent-color);
 }
 
 .tabButtons button.active {
-  background-color: #ccc;
+  background-color: var(--highlight-intense-color);
 }
 
 
 .project {
   margin:2px;
-  border: 1px hotpink solid;
+  border: 1px var(--highlight-intense-color) solid;
   padding-left: 1em;
   max-width: 50em;
   cursor: grab;
@@ -126,10 +171,13 @@ td.projectCell div {
 }
 
 .completedCard {
-  border: 1px lightpink solid;
+  border: 1px gray solid;
+  background-color: white;
+  box-shadow: var(--shadow-pixels) var(--header-shadow-color);
   border-radius: 1em;
   padding: 1em;
   margin: 0.5em;
+  width: min-content;
 }
 
 .seconds {
@@ -150,7 +198,27 @@ td.projectCell div {
   float: left;
 }
 
-.panel {
-  border-radius: 0.2em;
-  box-shadow: 0px 10px 10px hotpink;
+
+.projectslist {
+  padding: 0.5em;
+  margin-left: 2em;
+  background-color: white;
+  min-width: 550px;
+  max-width: 1fr;
+  box-shadow: 2px 2px 5px 2px green;
+}
+.projectslist ul {
+  border: 1px gray solid;
+  padding: 0.5em;
+}
+.projectslist ul li {
+  margin-left: 0em;
+  text-overflow: ellipsis;
+  border-color: black;
+}
+
+.halfscreengrid {
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  justify-items: center;;
 }

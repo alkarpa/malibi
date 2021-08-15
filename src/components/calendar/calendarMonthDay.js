@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import TimeDisplay from './timeDisplay'
+import TimeDisplay from '../timeDisplay'
 
 
 const TodayTracked = ({ time }) => {
@@ -15,14 +15,23 @@ const TodayTracked = ({ time }) => {
  * @param {} param0 
  * @returns 
  */
-const CalendarMonthDay = ({ date, intervals = [], active, today, projectsMap, setActiveMonthDate, setActiveView }) => {
+const CalendarMonthDay = ({
+        date,
+        intervals = [],
+        active,
+        today,
+        projectsMap,
+        setActiveMonthDate,
+        setActiveView
+    }) => {
 
     const clock = intervals?.reduce((arr, cur) => (
-                    cur.end ? arr + (cur.end - cur.start) : arr
-                ), 0) 
+        cur.end ? arr + (cur.end - cur.start) : arr
+    ), 0)
 
     const activeClass = active ? "active" : "inactive"
     const clockClass = clock ? "tracked" : ""
+    const todayClass = today ? "today" : ""
 
     // DUPLICATE FROM stat.js
     const projectsGrouped = intervals.reduce((map, interval) => {
@@ -33,13 +42,14 @@ const CalendarMonthDay = ({ date, intervals = [], active, today, projectsMap, se
     }, {})
     // END DUPLICATE
 
+    const dateTitle = `${date.getDate()}`
 
     return (
         <div
             id={`cal${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`}
-            className={`day dayGrid ${activeClass} ${clockClass}`}>
-            <div onClick={() => { setActiveMonthDate( date ); setActiveView('DAY') }}>
-                <h1>{date.getDate()} {today ? "Today" : ""}</h1>
+            className={`day dayGrid ${activeClass} ${clockClass} ${todayClass}`}>
+            <div onClick={() => { setActiveMonthDate(date); setActiveView('DAY') }}>
+                <h1>{dateTitle}</h1>
             </div>
             <div className='dayInfoGrid'>
                 <div>&#128337;</div>
@@ -53,14 +63,14 @@ const CalendarMonthDay = ({ date, intervals = [], active, today, projectsMap, se
                 <div>P</div>
                 <div>
                     {
-                        Object.keys(projectsGrouped).map( p => (
+                        Object.keys(projectsGrouped).map(p => (
                             <div key={`caldayproj${date}${p}`} style={{
                                 display: 'inline-block',
                                 height: '100%',
-                                width: ( 100/ Object.keys(projectsGrouped).length ) +"%",
+                                width: (100 / Object.keys(projectsGrouped).length) + "%",
                                 backgroundColor: projectsMap[p]?.color || 'gray'
                             }} title={projectsMap[p]?.title}></div>
-                         ) )
+                        ))
                     }
                 </div>
             </div>

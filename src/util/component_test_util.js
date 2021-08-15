@@ -9,7 +9,9 @@ function render(
     ui,
     {
         preloadedState,
-        store = configureStore({ reducer: trackingReducer, preloadedState }),
+        store = configureStore({ 
+            reducer: { intervals: trackingReducer}, 
+            preloadedState }),
         ...renderOptions
     } = {}
 ) {

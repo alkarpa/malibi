@@ -1,13 +1,24 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import timeDisplay from '../services/timeDisplay'
 
-const TimeDisplay = ({ isTime, time }) => {
+export const ElapsedTimeDisplay = ({ time }) => {
+    const elapsed = useSelector(state => state.elapsed)
+    return (
+        <TimeDisplay time={time+elapsed} />
+    )
+}
+
+const TimeDisplay = ({ time, isTime, showDate = false}) => {
     if (!time) {
         return (<div></div>)
     }
     const clock = isTime? timeDisplay.getTimeClockObject( time ) : timeDisplay.getIntervalClockObject( time )
     return (
         <div className='mono large'>
+            {
+                showDate ? <span>{new Date(time).toISOString().substring(0,10)} </span> : <></>
+            }
             <span className='hours'>{clock.hour}</span>
         :
             <span className='minutes'>{clock.minute}</span>
