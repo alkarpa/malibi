@@ -8,18 +8,20 @@ const ClockSector = ({ center, radius, clockStart, clockEnd, intervalStart, inte
     const rotation = -Math.PI / 2
 
     const startRad = Math.max(0, 2 * Math.PI * intervalStartPercent)
-    const endRad = Math.min(2 * Math.PI, 2 * Math.PI * intervalEndPercent)
-
-    const largeArc = (endRad - startRad) > Math.PI ? 1 : 0
+    let endRad = Math.min(2 * Math.PI, 2 * Math.PI * intervalEndPercent)
+    
+    const largeArc = intervalEnd - intervalStart > startToEnd / 2 ? 1 : 0
 
     const lineX = Math.cos(startRad + rotation) * radius
     const lineY = Math.sin(startRad + rotation) * radius
     const line2X = Math.cos(endRad + rotation) * radius
     const line2Y = Math.sin(endRad + rotation) * radius
 
+    const xDif = Math.abs( line2X - lineX ) < 0.1 ? -0.0001 : line2X - lineX
+
     return (
         <path d={`M${center},${center} l${lineX},${lineY} 
-                    a${radius},${radius} 0 ${largeArc},1 ${line2X - lineX},${line2Y - lineY}
+                    a${radius},${radius} 0 ${largeArc},1 ${xDif},${line2Y - lineY}
                     l${-line2X},${-line2Y}
                 `} stroke='darkgray' fill={color} style={{ opacity: '0.8' }}
 
@@ -32,9 +34,12 @@ const TraditionalClock = ({ startTime, endTime, intervals = [], projectsMap = {}
 
 
     const filtered = intervals.filter(
-            a => a.end && a.start < endTime && a.end > startTime
+            a => a.end && !( (a.start < startTime && a.end < startTime) || (a.start > endTime && a.end > endTime) )
         ).map(
-            a => a.end > endTime ? { ...a, end: endTime } : a
+            a => ({ 
+                ...a,
+                start: a.start < startTime ? startTime : a.start,
+                end: a.end > endTime ? endTime: a.end })
         )
 
     const SIZE = 240

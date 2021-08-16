@@ -11,7 +11,6 @@ const loadFromLocalStorageAsObject = (key) => {
     if (localStorage && localStorage.getItem(key)) {
         parsed = JSON.parse( localStorage.getItem(key) )
     }
-    console.log('parsed: ' + parsed)
     return parsed
 }
 

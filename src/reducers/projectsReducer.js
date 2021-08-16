@@ -1,6 +1,6 @@
 import storageService from '../services/storage'
 
-const initialProjects = storageService.load('projects') || {}
+const initialProjects = storageService.load('projects') || []
 
 export const createProject = (title, color) => {
     return {

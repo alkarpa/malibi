@@ -1,8 +1,9 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { intervalsDateMapper } from '../../services/intervals'
 import TimeDisplay from '../timeDisplay'
 
-const Stats = ({ intervals = [] }) => {
+const Stats = ({ intervals = [], activeView }) => {
 
     const projects = useSelector(state => state.projects)
 
@@ -17,11 +18,23 @@ const Stats = ({ intervals = [] }) => {
         return acc + (cur.end ? cur.end - cur.start : 0)
     }, 0)
 
+
+    const statistics = [
+        { title: 'Total completed', value: totalMillis }
+    ]
+
+    if (activeView === 'MONTH') {
+        const dateMap = intervalsDateMapper(intervals)
+        const daysTracked = Object.keys(dateMap).length
+        //statistics.push({ title: 'Days tracked', value: daysTracked })
+        statistics.push({ title: 'Average per day', value: totalMillis / daysTracked })
+    }
+
     const activeProjects = Object.keys(projectsGrouped).map(key => {
-        const absolute = (projectsGrouped[key] || []).reduce((acc, cur) => cur.end ? acc + (cur.end - cur.start) : acc, 0)
+        const absolute = projectsGrouped[key]?.reduce((acc, cur) => cur.end ? acc + (cur.end - cur.start) : acc, 0)
         return {
-            id: parseInt(key),
-            project: projects?.find(pr => pr.id === parseInt(key)) || {},
+            id: key,
+            project: projects?.find(pr => ""+pr.id === ""+key) || {},
             absolute: absolute,
             relative: (absolute / totalMillis * 100).toFixed(2)
         }
@@ -29,55 +42,59 @@ const Stats = ({ intervals = [] }) => {
 
     activeProjects.sort((a, b) => b.absolute - a.absolute)
 
-    //console.log(projects)
-    /*
-    activeProjects.forEach((p) => {
-        console.log(p, projects[p.id])
-    })
-    */
-
-    const panelStyle = {
-        margin: '2em',
-        boxShadow: '1em 0.5em 1em 0.5em black',
-        backgroundColor: '#efffff',
-    }
-
     return (
         <div>
-            <div style={panelStyle}>
-                <h2>Stats</h2>
+            <div className='stats halfscreengrid'>
                 <div>
-                    <h3>Total completed</h3> <TimeDisplay time={totalMillis ? totalMillis : 1 /* show zero hack */} />
+                    <h3>Statistics</h3>
+                    <table className='mono large'>
+                        <tbody>
+                            {
+                                statistics.map(stat => (
+                                    <tr key={'stat' + stat.title}>
+                                        <td>
+                                            {stat.title} :
+                                        </td>
+                                        <td style={{backgroundColor: 'white'}}>
+                                            <TimeDisplay time={stat.value ? stat.value : 1 /* show zero hack */} />
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
                 </div>
-                <h3>By project</h3>
-                <div style={{ maxWidth: '500px' }}>
-                    {
-                        activeProjects.map(p => (
-                            <div key={'calbp' + p.id} style={{
-                                backgroundColor: p.project.color ? p.project.color : 'gray',
-                                margin: '5px',
-                                display: 'grid',
-                                gridTemplateColumns: '5fr 1fr 1fr',
-                                gap: '2px'
-                            }}>
-                                <div>{(p.project || { title: 'no project ' + p.id }).title}</div>
-                                <div style={{ backgroundColor: 'white', margin: '2px' }}><TimeDisplay time={p.absolute} /></div>
-                                <div style={{ backgroundColor: 'white', margin: '2px', textAlign: 'right' }}>{p.relative} %</div>
-                            </div>
-                        ))
-                    }
-                    <div style={{ height: '1em', width: '490px', margin: '5px', border: '1px black solid' }}>
+                <div>
+                    <h3>By project</h3>
+                    <div style={{ maxWidth: '500px' }}>
                         {
                             activeProjects.map(p => (
-                                <div key={'calbpbar' + p.id} style={{
-                                    display: 'inline-block',
-                                    height: '100%',
-                                    width: `${(p.absolute / totalMillis * 100)}%`,
-                                    backgroundColor: p.project.color
-                                }} />
+                                <div key={'calbp' + p.id + p.absolute} style={{
+                                    backgroundColor: p.project.color ? p.project.color : 'gray',
+                                    margin: '5px',
+                                    display: 'grid',
+                                    gridTemplateColumns: '5fr 1fr 1fr',
+                                    gap: '2px'
+                                }}>
+                                    <div>{p.project?.title}</div>
+                                    <div style={{ backgroundColor: 'white', margin: '2px' }}><TimeDisplay time={p.absolute} /></div>
+                                    <div style={{ backgroundColor: 'white', margin: '2px', textAlign: 'right' }}>{p.relative} %</div>
+                                </div>
                             ))
                         }
+                        <div style={{ height: '1em', width: '490px', margin: '5px', border: '1px black solid' }}>
+                            {
+                                activeProjects.map(p => (
+                                    <div key={'calbpbar' + p.id + p.absolute} style={{
+                                        display: 'inline-block',
+                                        height: '100%',
+                                        width: `${(p.absolute / totalMillis * 100)}%`,
+                                        backgroundColor: p.project.color
+                                    }} />
+                                ))
+                            }
 
+                        </div>
                     </div>
                 </div>
             </div>

@@ -8,8 +8,8 @@ import CalendarDayInfo from './calendarDayInfo'
 
 
 const Calendar = ({ today = new Date() }) => {
-    const intervals = useSelector(state => state.intervals) || []
-    const projects = useSelector(state => state.projects) || []
+    const intervals = useSelector(state => state.intervals)
+    const projects = useSelector(state => state.projects)
 
     const [activeView, setActiveView] = useState('MONTH')
 
@@ -19,12 +19,11 @@ const Calendar = ({ today = new Date() }) => {
 
     const dateMap = intervalsDateMapper(intervals)
 
-
     //const today = new Date()
     today.setUTCHours(12, 0, 0)
     const [activeDate, setActiveDate] = useState(today)
 
-    const millisIsMonth = (millis, activeDate, andDate = false) => {
+    const millisIsMonth = (millis, activeDate, andDate) => {
         const millisDate = new Date(millis)
         return millisDate.getMonth() === activeDate.getMonth()
             && millisDate.getFullYear() === activeDate.getFullYear()
@@ -32,22 +31,12 @@ const Calendar = ({ today = new Date() }) => {
     }
 
     const TABS = [
-        'MONTH',
+        'MONTH', //default
         'DAY'
     ]
 
     let content
     switch (activeView) {
-        case "MONTH":
-            content = (<CalendarMonth
-                activeMonthDate={activeDate}
-                setActiveMonthDate={setActiveDate}
-                setActiveView={setActiveView}
-                projectsMap={projectsMap}
-                today={today}
-                dateMap={dateMap}
-            />)
-            break;
         case "DAY":
             content = (<CalendarDayInfo
                 activeDate={activeDate}
@@ -56,7 +45,15 @@ const Calendar = ({ today = new Date() }) => {
                 projectsMap={projectsMap}
             />)
             break;
-        default:
+        default: // MONTH
+            content = (<CalendarMonth
+                activeMonthDate={activeDate}
+                setActiveMonthDate={setActiveDate}
+                setActiveView={setActiveView}
+                projectsMap={projectsMap}
+                today={today}
+                dateMap={dateMap}
+            />)
     }
 
     const handleTabChange = (tab) => {
@@ -79,7 +76,10 @@ const Calendar = ({ today = new Date() }) => {
 
 
             <div>
-                <Stats intervals={intervals.filter(iv => millisIsMonth(iv.start, activeDate, activeView === 'DAY'))} />
+                <Stats 
+                    intervals={intervals.filter(iv => millisIsMonth(iv.start, activeDate, activeView === 'DAY'))}
+                    activeView={activeView}
+                 />
             </div>
 
         </div>

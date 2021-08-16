@@ -1,4 +1,8 @@
 
+/**
+ * Testing is pretty tied to these being static.
+ * Add new intervals to different months if need be.
+ */
 export const testState = {
     datetracking: [
         {
@@ -18,6 +22,12 @@ export const testState = {
             start: new Date(Date.UTC(2021, 7, 16, 12, 20)).getTime(),
             end: new Date(Date.UTC(2021, 7, 16, 16)).getTime(),
             project: 'testproject'
+        },
+        {
+            id: 'mo4',
+            start: new Date(Date.UTC(2021, 7, 17, 12)).getTime(),
+            end: new Date(Date.UTC(2021, 7, 17, 13)).getTime(),
+            project: undefined
         }
     ],
     projects: [

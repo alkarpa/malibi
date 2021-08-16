@@ -5,10 +5,10 @@ const Header = () => {
 
 
     return (
-        <div className='header'
+        <header
             style={{
                 display: 'grid',
-                gridTemplateColumns: 'min-content auto auto'
+                gridTemplateColumns: 'min-content min-content auto'
             }}
         >
             <div className='logo'>
@@ -18,7 +18,7 @@ const Header = () => {
                 <TimerContainer />
             </div>
 
-        </div>
+        </header>
     )
 
 }

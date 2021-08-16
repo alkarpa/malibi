@@ -18,7 +18,7 @@ const IntervalProject = ({ interval }) => {
         const project = {
             id: event.dataTransfer.getData('id'),
         }
-        const updatedInterval = {...interval, project: project.id}
+        const updatedInterval = { id: interval.id , project: project.id}
         dispatch( updateInterval(updatedInterval) )
     }
 
@@ -33,7 +33,7 @@ const IntervalProject = ({ interval }) => {
     }
 
     return (
-        <div style={{ backgroundColor: color }}
+        <div style={{ backgroundColor: color, textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             title={title}

@@ -1,3 +1,4 @@
+import { twoDigit } from "./timeDisplay"
 
 const generateId = () => Date.now().toString(36) + Math.random().toString(36).substring(2)
 
@@ -46,17 +47,37 @@ const mapUpdated = ( intervals, updatedInterval ) => {
         //console.log('No update conflict')
     }
 
+    const original = intervals.find( iv => iv.id === updatedInterval.id )
+    const replacement = { ...original, ...updatedInterval }
     return intervals.map( interval => (
         updatedInterval.id === interval.id
-            ? updatedInterval
+            ? replacement
             : interval
     ) )
 }
 
 export const intervalsDateMapper = ( intervals ) => {
     if (!intervals) return {}
-    return intervals.reduce( (map, interval) => {
-        const date = (new Date(interval.start)).toISOString().substring(0, 10)
+
+    const iso = (date) => `${date.getFullYear()}-${twoDigit(date.getMonth()+1)}-${twoDigit(date.getDate())}`
+
+    const breakIntervalAtMidnight = (iv) => {
+        const array = []
+        let iterator = new Date(iv.start)
+        let dayEnd = new Date( iterator.getFullYear(), iterator.getMonth(), iterator.getDate(), 23, 59, 59, 999 )
+        while ( iv.end > dayEnd.getTime() ) {
+            array.push( { ...iv, start: iterator.getTime(), end: dayEnd.getTime() } )
+            
+            iterator = new Date( dayEnd.getTime() + 1 )
+            dayEnd.setDate( dayEnd.getDate() + 1 )
+        }
+        array.push( { ...iv, start: iterator.getTime() } )
+        return array
+    } 
+    const brokenIntervals = intervals.reduce( (arr,iv) => arr.concat(breakIntervalAtMidnight(iv)), [] )
+
+    return brokenIntervals.reduce( (map, interval) => {
+        const date = iso(new Date(interval.start))
         map[date] = map[date] 
             ? map[date].concat(interval) 
             : [interval]

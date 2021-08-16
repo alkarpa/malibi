@@ -4,13 +4,16 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 
 import trackingReducer from '../reducers/trackingReducer'
+import projectsReducer from '../reducers/projectsReducer'
 
 function render(
     ui,
     {
         preloadedState,
         store = configureStore({ 
-            reducer: { intervals: trackingReducer}, 
+            reducer: { 
+                intervals: trackingReducer,
+                projects: projectsReducer}, 
             preloadedState }),
         ...renderOptions
     } = {}

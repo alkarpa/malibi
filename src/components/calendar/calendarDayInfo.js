@@ -86,8 +86,10 @@ const CalendarDayInfo = ({ activeDate, setActiveDate, intervals = [], projectsMa
             <CalendarDayHeader activeDate={activeDate} setActiveDate={setActiveDate} />
 
             <div className='halfscreengrid'>
-                <ClockArea dateStart={dateStart} midday={midday} dateEnd={dateEnd} intervals={intervals} projectsMap={projectsMap} />
-                <div style={{ width: 'min-content' }}>
+                <div className='completedCard'>
+                    <ClockArea dateStart={dateStart} midday={midday} dateEnd={dateEnd} intervals={intervals} projectsMap={projectsMap} />
+                </div>
+                <div className='completedCard'>
                     <TimesTable day={intervals || []} />
                 </div>
             </div>

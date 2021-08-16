@@ -54,6 +54,46 @@ describe('Calendar', () => {
 
     })
 
+    describe('Day view transition', () => {
+        test('Clicking 15(th day) opens Day', () => {
+            const component = render(
+                <Calendar />
+            )
+
+            const fifteenth = component.getByText(/15/)
+            fireEvent.click(fifteenth)
+
+            const prevday = component.getByText(/Previous day/)
+
+            expect(prevday).toBeInTheDocument()
+        })
+        test('Clicking DAY opens Day', () => {
+            const component = render(
+                <Calendar />
+            )
+
+            const dayTab = component.getByText(/DAY/)
+            fireEvent.click(dayTab)
+
+            const prevday = component.getByText(/Previous day/)
+
+            expect(prevday).toBeInTheDocument()
+        })
+        test('Clicking DAY, prev, next works', () => {
+            const component = render(
+                <Calendar />
+            )
+            const dayTab = component.getByText(/DAY/)
+            fireEvent.click(dayTab)
+            const prevday = component.getByText(/Previous day/)
+            fireEvent.click(prevday)
+            const nextday = component.getByText(/Next day/)
+            fireEvent.click(nextday)
+
+            expect(prevday).toBeInTheDocument()
+        })
+    })
+
 
     describe('Tracking data', () => {
 
@@ -71,7 +111,7 @@ describe('Calendar', () => {
             const tc = component.getByText(/Total completed/,)
                 .parentElement
 
-            expect( tc ).toHaveTextContent(/6:56:00/)
+            expect( tc ).toHaveTextContent(/7:56:00/)
         })
 
         test('3 hour interval on 15th', () => {
@@ -81,6 +121,11 @@ describe('Calendar', () => {
                 
             const textContent = ftth.textContent
             expect( textContent ).toContain('3:16:00')
+        })
+
+        test('by projects has textproject 3:56', () => {
+            const project = component.getByText(/Project Test/)
+            expect( project.parentElement ).toHaveTextContent('3:56')
         })
     })
 

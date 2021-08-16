@@ -16,9 +16,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--main-bg-color);
+  min-height: 100vh;
 }
 
-.header {
+.app {
+  display: grid;
+  grid-template-rows: min-content auto min-content;
+  min-height: 100vh;
+}
+
+header {
+  justify-content: center;
   padding-top: 0.2em;
   padding-bottom: 0.7em;
   background-color: var(--header-bg-color);
@@ -52,6 +60,7 @@ body {
   background-color: white;
   border: 1px black solid;
   padding-left: 1em;
+  padding-right: 1em;
   margin-left: 1em;
   box-shadow: var(--shadow-pixels) var(--header-shadow-color);
   margin-bottom: 2px;
@@ -199,14 +208,6 @@ td.projectCell div {
 }
 
 
-.projectslist {
-  padding: 0.5em;
-  margin-left: 2em;
-  background-color: white;
-  min-width: 550px;
-  max-width: 1fr;
-  box-shadow: 2px 2px 5px 2px green;
-}
 .projectslist ul {
   border: 1px gray solid;
   padding: 0.5em;
@@ -221,4 +222,20 @@ td.projectCell div {
   display: grid; 
   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   justify-items: center;;
+}
+
+.grid600 {
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+}
+.w600 {
+  width: 600px;
+}
+
+footer {
+  text-align: center;
+  padding: 1em;
+  color: rgb(0,0,0,0.7)
+}
+footer a {
+  color: inherit;
 }

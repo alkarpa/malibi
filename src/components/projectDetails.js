@@ -89,12 +89,7 @@ const ProjectDetails = ({ project }) => {
     }
 
     return (
-        <div style={{
-            margin: '1em',
-            boxShadow: '2px 2px 5px 2px green',
-            minWidth: '650px',
-            backgroundColor: 'white',
-        }}>
+        <div className='completedCard w600'>
             <div style={{ backgroundColor: project.color }}>
                 <h2>{title}</h2>
             </div>
@@ -142,7 +137,7 @@ const ProjectDetails = ({ project }) => {
 
 
             </div>
-            <div style={{margin: '2em'}}>
+            <div>
                 <h3>Tracked</h3>
                 <ProjectIntervalsList projectid={project.id} />
             </div>

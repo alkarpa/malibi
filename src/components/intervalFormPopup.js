@@ -27,7 +27,7 @@ const IntervalFormPopup = ({ interval }) => {
                         >
                             X
                         </div>
-                        <IntervalForm interval={interval} />
+                        <IntervalForm intervalId={interval.id} />
                     </div>
                 )
             }

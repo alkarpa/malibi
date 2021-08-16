@@ -10,10 +10,7 @@ const TimerDisplay = ({ elapsed, fontSize = 30 }) => {
         <div className='mono'
             style={{
                 fontSize: fontSize + 'px',
-                display: 'flex',
-                alignItems: 'flex-end',
-                lineHeight: '100%',
-                justifyContent: 'flex-end',
+                display: 'inline-block',
                 backgroundColor: '#ffffff',
                 margin: '2px',
                 minWidth: '9ch'

@@ -2,7 +2,7 @@
 export const tick = ( openInterval ) => {
     return {
         type: 'TICK',
-        openIntervalStart: openInterval.start
+        openIntervalStart: openInterval?.start
     }
 }
 

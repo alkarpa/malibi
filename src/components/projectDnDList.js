@@ -24,7 +24,7 @@ const ProjectDnDList = () => {
     return (
         <div>
             <ul>
-                {projects.map(proj => (
+                {projects?.map(proj => (
                     <li key={proj.id} style={{ backgroundColor: proj.color }}
                         className='project draggable'
                         projectid={proj.id}

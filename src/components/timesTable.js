@@ -33,7 +33,6 @@ const TimesTable = (
             : sum
     }, 0 )
 
-    console.log('timestable rendered')
 
     return (
         <table className='timesTable'>

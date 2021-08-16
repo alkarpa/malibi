@@ -9,24 +9,23 @@ const TimerContainer = () => {
     const intervals = useSelector(state => state.intervals)
 
     const lastInterval = [undefined, ...intervals].slice(-1)[0]
-    const running = !lastInterval?.end
+    const running = lastInterval && !lastInterval.end
 
     const getTodayCompleted = () => {
         let now = new Date()
         now.setHours(0, 0, 0, 0)
         const todayStart = now.getTime()
-        console.log('todayCompleted calculated')
         return intervals
             .filter(v => v.start > todayStart && v.end)
             .reduce((acc, cur) => {
                 return acc + (cur.end - cur.start)
             }, 0)
     }
-    console.log('TimerContainer rendered')
+
     return (
         <div style={{
             display: 'grid',
-            gridTemplateColumns: 'min-content auto auto'
+            gridTemplateColumns: 'min-content min-content'
         }}>
             <div style={{
                 display: 'grid',
@@ -35,10 +34,17 @@ const TimerContainer = () => {
             }}>
                 <div style={{
                     display: 'grid',
-                    gridTemplateRows: 'min-content min-content'
+                    gridTemplateRows: 'auto auto',
+                    alignItems: 'end',
+                    textAlign: 'right'
                 }}>
-                    <Timer running={running} lastInterval={lastInterval} />
-                    <TotalToday todayCompleted={getTodayCompleted()} />
+                    <div>
+                        <Timer running={running} lastInterval={lastInterval} />
+                    </div>
+                    <div style={{fontSize: '14px'}}>
+                        Σ Today
+                        <TotalToday todayCompleted={getTodayCompleted()} />
+                    </div>
                 </div>
                 <TimerControls running={running} />
             </div>

@@ -17,7 +17,8 @@ const IntervalCard = ({ interval, title }) => {
             )}
             <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'min-content auto'
+                gridTemplateColumns: 'min-content auto',
+                minWidth: '20vw'
             }}>
 
                 <div>

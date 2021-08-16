@@ -93,3 +93,9 @@
 .clockarea {
     background-color: var(--header-bg-color);
 }
+
+.stats {
+    background-color: var(--header-bg-color);
+    margin: 2em;
+    box-shadow: var(--shadow-pixels) var(--header-shadow-color);
+}

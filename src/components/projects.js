@@ -5,14 +5,16 @@ import ProjectDetails from './projectDetails'
 
 const Projects = () => {
     const projects = useSelector(state => state.projects)
-    const [selectedProject, setSelectedProject] = useState(
-        projects.length > 0 ? projects[0] : undefined
-    )
 
     const newProject = {
         title: '--no project--',
         color: '#777777'
     }
+
+    const [selectedProject, setSelectedProject] = useState(
+        projects.length > 0 ? projects[0] : newProject
+    )
+
 
     const handleProjectSelection = (id) => {
         const byId = projects.find(p => p.id === id)
@@ -24,8 +26,8 @@ const Projects = () => {
 
     return (
         <div>
-            <div className='halfscreengrid'>
-                <div className='projectslist'>
+            <div className='halfscreengrid grid600'>
+                <div className='completedCard projectslist w600'>
                     <h2>List of all projects</h2>
                     <ul>
                         {[newProject].concat(projects).map(p => (
@@ -44,11 +46,7 @@ const Projects = () => {
                     </ul>
                 </div>
                 <div>
-                    {
-                        selectedProject
-                            ? <ProjectDetails project={selectedProject} />
-                            : <></>
-                    }
+                    <ProjectDetails project={selectedProject} />
                 </div>
             </div>
 
