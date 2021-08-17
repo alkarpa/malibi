@@ -1,7 +1,7 @@
 import intervalsService from '../services/intervals'
 import storageService from '../services/storage'
 
-const defaultState = storageService.loadIntervals() || []
+const defaultState = storageService.load('datetracking') || []
 
 export const togglePlay = () => {
     return {

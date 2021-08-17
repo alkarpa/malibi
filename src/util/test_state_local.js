@@ -41,6 +41,14 @@ export const testState = {
             title: 'Project Test',
             color: '123456'
         }
-    ]
-
+    ],
 }
+
+const load = (key) => testState[key]
+const save = (key, object) => testState[key] = object
+
+const storageTestData = {
+    load, save
+}
+
+export default storageTestData
