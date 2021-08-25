@@ -11,8 +11,8 @@ const TotalRow = ({ total, active = false }) => (
             <td colSpan='3' className='total'>
                 {
                     active
-                        ? <TimeDisplay time={total} />
-                        : <ElapsedTimeDisplay time={total} />
+                        ? <ElapsedTimeDisplay time={total} />
+                        : <TimeDisplay time={total} />
                 }
             </td>
         </tr>
@@ -33,6 +33,7 @@ const TimesTable = (
             : sum
     }, 0 )
 
+    const lastIntervalOpen = [ {}, ...intervals ].slice(-1)[0].end === undefined
 
     return (
         <table className='timesTable'>
@@ -65,7 +66,7 @@ const TimesTable = (
                     </tr>
                 ))}
             </tbody>
-            <TotalRow total={tableTotal} />
+            <TotalRow total={tableTotal} active={lastIntervalOpen} />
         </table>
     )
 

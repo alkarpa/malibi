@@ -22,10 +22,12 @@ const ProjectDnDList = () => {
     }
 
     return (
-        <div>
-            <ul>
+        <div className='completedCard'>
+            <h2>Drag and Drop projects</h2>
+            <ul style={{paddingLeft: '0px'}}>
                 {projects?.map(proj => (
-                    <li key={proj.id} style={{ backgroundColor: proj.color }}
+                    <li key={proj.id} 
+                        style={{ backgroundColor: proj.color }}
                         className='project draggable'
                         projectid={proj.id}
                         draggable={true}
