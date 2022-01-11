@@ -1,46 +1,39 @@
 import storageService from '../services/storage'
 
-const initialProjects = storageService.load('projects') || []
+const initialProjects = /*process.env.NODE_ENV === 'test' ? storageService.load('project') :*/ []
 
-export const createProject = (title, color) => {
-    return {
+export const createProject = (title, color) => async (dispatch, getState) => {
+    await storageService.add('project', {title: title, color: color})
+    const projects = await storageService.load('project')
+    //const projects = getState().projects.concat(project)
+
+    dispatch({
         type: 'ADD_PROJECT',
-        project: {
-            id: Date.now().toString(36),
-            title: title,
-            color: color
-        }
-    }
+        projects: projects
+    })
 }
 
-export const updateProject = (project) => {
-    return {
+export const updateProject = (project) => async (dispatch, getState) => {
+    await storageService.update('project', project)
+    const projects = await storageService.load('project')
+    /*const state = getState().projects
+    const projects = state.map(p =>
+        p.id === project.id
+            ? { ...project }
+            : p
+    )*/
+    dispatch({
         type: 'UPDATE_PROJECT',
-        project: {
-            ...project
-        }
-    }
+        projects: projects
+    })
 }
 
-const store = (state) => {
-    storageService.save('projects', state)
-    return state
-}
 
 const projectsReducer = (state = initialProjects, action) => {
     switch (action.type) {
-        case 'ADD_PROJECT':
-            return store(
-                state.concat(action.project)
-            )
-        case 'UPDATE_PROJECT':
-            return store(
-                state.map(p =>
-                    p.id === action.project.id
-                        ? action.project
-                        : p
-                )
-            )
+        case 'INITIALIZE': return action.projects
+        case 'ADD_PROJECT': return action.projects
+        case 'UPDATE_PROJECT': return action.projects
         default: return state
     }
 }

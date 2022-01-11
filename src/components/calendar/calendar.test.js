@@ -97,6 +97,10 @@ describe('Calendar', () => {
 
     describe('Tracking data', () => {
 
+        it('async initial state is something to figure out', done => {
+            done.fail('TODO: tests')
+        })
+        /*
         let component
 
         beforeEach( () => {
@@ -127,6 +131,7 @@ describe('Calendar', () => {
             const project = component.getByText(/Project Test/)
             expect( project.parentElement ).toHaveTextContent('3:56')
         })
+        */
     })
 
 })

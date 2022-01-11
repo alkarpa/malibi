@@ -1,55 +1,57 @@
 import { twoDigit } from "./timeDisplay"
 
-const generateId = () => Date.now().toString(36) + Math.random().toString(36).substring(2)
 
-const newInterval = ( startClick ) => {
-    return {
-        id: generateId(),
-        start: startClick,
-        end: undefined,
-        project: undefined,
-    }
+/**
+ * 
+ * @param {*} stateIntervals 
+ * @param {*} clickInterval 
+ * @returns 
+ */
+const concatAddedClick = ( stateIntervals, clickInterval ) => {
+    return stateIntervals.find( si => clickInterval.id === si.id )
+        ? stateIntervals.map( si => clickInterval.id === si.id ? clickInterval : si )
+        : stateIntervals.concat( clickInterval )
 }
 
-const concatAddedClick = ( intervals, click = Date.now() ) => {
-    const lastInterval = [undefined, ...intervals].slice(-1)[0]
-    if ( !lastInterval || lastInterval.end ) {
-        return intervals.concat( newInterval(click) )
-    }
-    return intervals.map( (interval, index) => (
-        index === intervals.length - 1 ? { ...interval, end: click } : interval
-    ) )
+/**
+ * 
+ * @param {*} stateIntervals 
+ * @param {*} breakpointIntervals 
+ * @returns 
+ */
+const concatBreakpoint = ( stateIntervals, breakpointIntervals ) => {
+    if ( stateIntervals.length === 0 || stateIntervals.slice(-1)[0].end) return stateIntervals
+    if ( breakpointIntervals.length < 2 ) return stateIntervals 
+    return stateIntervals
+        .map( si => breakpointIntervals[0].id === si.id ? breakpointIntervals[0] : si )
+        .concat( breakpointIntervals[1] )
 }
 
-const concatBreakpoint = ( intervals ) => {
-    const lastInterval = [undefined, ...intervals].slice(-1)[0]
-    if ( lastInterval && !lastInterval.end ) {
-        return concatAddedClick(
-            concatAddedClick(intervals, Date.now() - 1) 
-        )
-    }
-    return intervals
-}
-
-const mapUpdated = ( intervals, updatedInterval ) => {
-
-    if ( updatedInterval.start > updatedInterval.end ) return intervals
+/**
+ * 
+ * @param {*} stateIntervals 
+ * @param {*} updatedInterval 
+ * @returns 
+ */
+const updateIntoIntervalState = ( stateIntervals, updatedInterval ) => {
+    
+    if ( updatedInterval.start > updatedInterval.end ) return stateIntervals
 
     // validity check
     const validCheck = (i,u) => {
         return ( i.id !== u.id && ((u.start < i.start && i.start < u.end) || (u.start < i.end && i.end < u.end )) )
     }
-    const conflict = intervals.find( iv => validCheck(iv, updatedInterval) )
+    const conflict = stateIntervals.find( iv => validCheck(iv, updatedInterval) )
     if ( conflict ) {
         //console.log('CONFLICTING INTERVAL -> ', conflict)
-        return intervals
+        return stateIntervals
     } else {
         //console.log('No update conflict')
     }
 
-    const original = intervals.find( iv => iv.id === updatedInterval.id )
+    const original = stateIntervals.find( iv => iv.id === updatedInterval.id )
     const replacement = { ...original, ...updatedInterval }
-    return intervals.map( interval => (
+    return stateIntervals.map( interval => (
         updatedInterval.id === interval.id
             ? replacement
             : interval
@@ -88,7 +90,7 @@ export const intervalsDateMapper = ( intervals ) => {
 const intervalsService = {
     concatAddedClick,
     concatBreakpoint,
-    mapUpdated
+    updateIntoIntervalState
 }
 
 export default intervalsService

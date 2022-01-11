@@ -1,29 +1,38 @@
-import projectsReducer, { createProject, updateProject } from "./projectsReducer";
+import { createProject, updateProject } from "./projectsReducer";
+import initialize from '../services/initializeData'
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import { testState } from "../util/test_state_local";
-import deepFreeze from "deep-freeze";
 
-describe('projectsReducer', () => {
+const middlewares = [thunk]
+const mockStore = configureMockStore(middlewares)
 
-    test('default state is testState.projects', () => {
-        const state = projectsReducer(undefined, 'TEST_ACTION')
-        expect( state ).toEqual( testState.projects )
+describe('async action creators', () => {
+
+    test('initialize', () => {
+        const store = mockStore({ projects: [], intervals: [] })
+
+        return store.dispatch(initialize ).then( () => {
+            expect(store.getActions()[0].projects).toEqual(testState.project)
+        } )
+    }) 
+
+    test('createProject', () => {
+        const store = mockStore({ projects: [] })
+        const testStateProjectsLength = testState.project.length + 1
+        return store.dispatch(createProject('test', 'yellow')).then( () => {
+            expect(store.getActions()[0].projects.length).toBe(testStateProjectsLength)
+        } )
     })
 
-    test('ADD_PROJECT to empty state', () => {
-        const state = []
-        deepFreeze(state)
-        const newState = projectsReducer(state, createProject('test','#123456'))
-        expect( newState.length ).toBe(1)
-    })
-
-    test('UPDATE_PROJECT updates', () => {
-        const state = testState.projects
-        deepFreeze(state)
-        const updated = { ...testState.projects[1], title: 'Updated' }
-        const action = updateProject(updated)
-        const newState = projectsReducer(state, action)
-        const expected = state.map( p => p.id === updated.id ? updated : p )
-        expect( newState ).toEqual( expected )
+    test('updateProject', () => {
+        const store = mockStore({ projects: [] })
+        const testStateProjectsLength = testState.project.length
+        const updated = { ...testState.project[1], title: 'Updated' }
+        return store.dispatch(updateProject(updated)).then( () => {
+            expect(store.getActions()[0].projects.length).toBe(testStateProjectsLength)
+            expect(store.getActions()[0].projects[1].title).toEqual( updated.title )
+        } )
     })
 
 })

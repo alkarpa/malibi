@@ -6,8 +6,12 @@ import IntervalProject from './intervalProject'
 
 describe('IntervalProject', () => {
 
-    const interval = testState.datetracking[0]
+    const interval = testState.alibi[0]
 
+    test('All fail because the initial state is async', done => {
+        done.fail('Figure out how to inject the state')
+    })
+    /*
     test.only('Change project with the dropdown', () => {
         const component = render(
             <IntervalProject interval={interval} />
@@ -21,5 +25,5 @@ describe('IntervalProject', () => {
         fireEvent.click(select, {target: {value: 'testproject'}})
         expect(select.value).toEqual('testproject')
     })
-
+    */
 })
