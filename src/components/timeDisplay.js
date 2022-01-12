@@ -11,11 +11,11 @@ export const ElapsedTimeDisplay = ({ time }) => {
 
 const TimeDisplay = ({ time, isTime, showDate = false}) => {
     if (!time) {
-        return (<div></div>)
+        return (<div className='mono large timedisplay'>&nbsp;</div>)
     }
     const clock = isTime? timeDisplay.getTimeClockObject( time ) : timeDisplay.getIntervalClockObject( time )
     return (
-        <div className='mono large'>
+        <div className='mono large timedisplay'>
             {
                 showDate ? <span>{new Date(time).toISOString().substring(0,10)} </span> : <></>
             }

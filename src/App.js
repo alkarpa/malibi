@@ -1,6 +1,7 @@
 import React from 'react'
 import PageContainer from './components/pageContainer'
 import './dragndrop.css';
+import './timestable.css';
 import { useSelector } from 'react-redux';
 import Header from './components/header';
 import Footer from './components/footer';

@@ -1,21 +1,13 @@
 import React from 'react'
 import { getIntervalClockObject } from '../../services/timeDisplay'
 
-const TimerDisplay = ({ elapsed, fontSize = 30 }) => {
+const TimerDisplay = ({ elapsed }) => {
 
     const clockValues = getIntervalClockObject(elapsed)
 
     return (
 
-        <div className='mono'
-            style={{
-                fontSize: fontSize + 'px',
-                display: 'inline-block',
-                backgroundColor: '#ffffff',
-                margin: '2px',
-                minWidth: '9ch'
-            }}
-        >
+        <div className='timerdisplay mono'>
             <span>{clockValues.hour}:{clockValues.minute}</span>
             <span style={{ color: 'gray' }}>:{clockValues.second}</span>
         </div>

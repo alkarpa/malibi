@@ -9,8 +9,8 @@ const IntervalFormPopup = ({ interval }) => {
     }
 
     return (
-        <div style={{position: 'relative', textAlign: 'left'}}>
-            <button onClick={handleButton}>Edit</button>
+        <div style={{position: 'relative', textAlign: 'left', paddingRight: '1em'}}>
+            <button onClick={handleButton} title='Edit'>&#9998;</button>
             {
                 showForm && (
                     <div style={{

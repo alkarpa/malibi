@@ -16,7 +16,7 @@ const ProjectDropdown = ({
     }
 
     return (
-        <div onClick={() => setSelecting(!selecting)}>
+        <div className='intervalproject '>
             {
                 selecting
                     ? (
@@ -31,9 +31,8 @@ const ProjectDropdown = ({
                              ) ) }
                         </select>
                       )
-                    : (<span>{value.title}</span>)
+                    : (<span onClick={() => setSelecting(!selecting)}>{value.title}</span>)
             }
-
         </div>
     )
 }
