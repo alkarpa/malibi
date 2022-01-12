@@ -7,7 +7,7 @@ const Projects = () => {
     const projects = useSelector(state => state.projects)
 
     const newProject = {
-        title: '--no project--',
+        title: '--no project / new project--',
         color: '#777777'
     }
 
@@ -26,8 +26,8 @@ const Projects = () => {
 
     return (
         <div>
-            <div className='halfscreengrid grid600'>
-                <div className='completedCard projectslist w600'>
+            <div className=''>
+                <div className='completedCard projectslist'>
                     <h2>List of all projects</h2>
                     <ul>
                         {[newProject].concat(projects).map(p => (

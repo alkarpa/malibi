@@ -37,6 +37,7 @@ body {
 }
 
 .tabButtons {
+  max-width: 100vw;
   overflow: hidden;
   border: 1px solid var(--highlight-intense-color);
   background-color: var(--highlight-color);
@@ -86,7 +87,7 @@ body {
   border-radius: 1em;
   padding: 1em;
   margin: 0.5em;
-  width: minmax( min-content, 100vw );
+  max-width: 95vw;
 }
 
 .seconds {
@@ -143,8 +144,14 @@ footer a {
 
 .timedisplay {
   display: inline-block;
+}
+.timedisplay.seconds {
   width: 9ch;
 }
+.timedisplay.justminutes {
+  width: 5ch;
+}
+
 .settings {
   text-align: center;
   background-color: rgba(0,0,0,0.2);
@@ -156,4 +163,8 @@ footer a {
   overflow: hidden;
   text-overflow: ellipsis "..";
   white-space: nowrap;
+}
+
+.pageContainer {
+  max-width: 100vw;
 }

@@ -9,21 +9,21 @@ export const ElapsedTimeDisplay = ({ time }) => {
     )
 }
 
-const TimeDisplay = ({ time, isTime, showDate = false}) => {
+const TimeDisplay = ({ time, isTime, showDate = false, seconds = true}) => {
     if (!time) {
         return (<div className='mono large timedisplay'>&nbsp;</div>)
     }
     const clock = isTime? timeDisplay.getTimeClockObject( time ) : timeDisplay.getIntervalClockObject( time )
     return (
-        <div className='mono large timedisplay'>
+        <div className={'mono large timedisplay'+ (seconds ? ' seconds' : ' justminutes') }>
             {
                 showDate ? <span>{new Date(time).toISOString().substring(0,10)} </span> : <></>
             }
-            <span className='hours'>{clock.hour}</span>
-        :
-            <span className='minutes'>{clock.minute}</span>
-        :
-            <span className='seconds'>{clock.second}</span>
+            <span className='hoursminutes'>{clock.hour}:{clock.minute}</span>
+            {
+                seconds ? <span className='seconds'>:{clock.second}</span> : <></>
+            }
+            
         </div>
     )
 }

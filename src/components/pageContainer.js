@@ -33,7 +33,7 @@ const PageContainer = () => {
     }
 
     return (
-        <div>
+        <div className='pageContainer'>
             <div className="tabButtons">
                 { TABS.map( t => (
                     <button key={t}
