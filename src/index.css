@@ -25,101 +25,6 @@ body {
   min-height: 100vh;
 }
 
-header {
-  justify-content: center;
-  padding-top: 0.2em;
-  padding-bottom: 0.7em;
-  background-color: var(--header-bg-color);
-}
-
-.logo {
-  width: 64px;
-  height: 64px;
-  background: url('images/malibi_concept_64.png'), lightgreen;
-  border-radius: 15px;
-  text-align: center;
-  margin: 3px;
-  box-shadow: var(--shadow-pixels) var(--header-shadow-color);
-  position: relative;
-}
-
-.logo span {
-  position: relative;
-  top: 64px;
-  font-weight: bold;
-  font-style: italic;
-  color: var(--header-shadow-color);
-  background-color: lightcoral;
-  padding: 3px 6px 0px 3px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 1px 1px darkred;
-}
-
-.speechbubble {
-  border-radius: 0.5em;
-  background-color: white;
-  border: 1px black solid;
-  padding-left: 1em;
-  padding-right: 1em;
-  margin-left: 1em;
-  box-shadow: var(--shadow-pixels) var(--header-shadow-color);
-  margin-bottom: 2px;
-  position: relative;
-}
-.speechbubble:after {
-  content: '';
-  position: absolute;
-  top: 25px;
-  left: -30px;
-  width: 35px;
-  height: 15px;
-  background-color: transparent;
-  border-bottom-left-radius: 50px;
-  box-shadow: 5px 10px 0px 0px white;
-}
-
-.buttonGrid {
-  display: grid;
-  grid-gap: 2px;
-  width: min-content;
-  margin: 2px;
-}
-
-.buttonGrid button {
-  border: none;
-  outline: none;
-  background-color: #f1f1f1;
-  font-size: large;
-  transition: 0.3s;
-  padding-left: 1em;
-  padding-right: 1em;
-  border: 1px solid #d1d1d1 ;
-}
-
-.buttonGrid button:hover {
-  background-color: var(--highlight-intent-color);
-}
-
-table td{
-  background-color: var(--header-bg-color);
-}
-.tinfo,th {
-  background-color: var(--header-shadow-color);
-}
-td.total {
-  background-color: var(--highlight-color);
-}
-
-td.projectCell {
-  background-color: var(--header-bg-color);
-  text-align: left;
-}
-td.projectCell div {
-  width: 15em;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
 
 .tabButtons button {
   background-color: inherit;
@@ -132,6 +37,7 @@ td.projectCell div {
 }
 
 .tabButtons {
+  max-width: 100vw;
   overflow: hidden;
   border: 1px solid var(--highlight-intense-color);
   background-color: var(--highlight-color);
@@ -144,7 +50,6 @@ td.projectCell div {
 .tabButtons button.active {
   background-color: var(--highlight-intense-color);
 }
-
 
 .project {
   margin:2px;
@@ -175,10 +80,6 @@ td.projectCell div {
 }
 
 
-.timesTable th {
-  min-width: 10ex;
-}
-
 .completedCard {
   border: 1px gray solid;
   background-color: white;
@@ -186,7 +87,7 @@ td.projectCell div {
   border-radius: 1em;
   padding: 1em;
   margin: 0.5em;
-  width: min-content;
+  max-width: 95vw;
 }
 
 .seconds {
@@ -219,8 +120,9 @@ td.projectCell div {
 }
 
 .halfscreengrid {
+  max-width: 100vw;
   display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(40vw, auto));
   justify-items: center;;
 }
 
@@ -238,4 +140,31 @@ footer {
 }
 footer a {
   color: inherit;
+}
+
+.timedisplay {
+  display: inline-block;
+}
+.timedisplay.seconds {
+  width: 9ch;
+}
+.timedisplay.justminutes {
+  width: 5ch;
+}
+
+.settings {
+  text-align: center;
+  background-color: rgba(0,0,0,0.2);
+  box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
+}
+
+.intervalproject {
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis "..";
+  white-space: nowrap;
+}
+
+.pageContainer {
+  max-width: 100vw;
 }

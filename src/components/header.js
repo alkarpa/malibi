@@ -1,23 +1,19 @@
 import React from 'react'
 import TimerContainer from './timer/timerContainer'
+import './header.css'
 
 const Header = () => {
 
-
     return (
-        <header
-            style={{
-                display: 'grid',
-                gridTemplateColumns: 'min-content min-content auto'
-            }}
-        >
+        <header>
             <div className='logo'>
-                <span>M'alibi</span>
+                <svg viewBox="0 0 60 20">
+                    <text x="5" y="15">M'alibi</text>
+                </svg>
             </div>
             <div className='speechbubble'>
                 <TimerContainer />
             </div>
-
         </header>
     )
 

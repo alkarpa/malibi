@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import TimerDisplay from './timerDisplay'
+import TotalToday from './totalToday'
 import { tick, reset } from '../../reducers/timerReducer'
 import { useDispatch, useSelector } from 'react-redux'
 
 
-const Timer = ({ running, lastInterval }) => {
+const Timer = ({ running, lastInterval, todayCompleted }) => {
 
     const dispatch = useDispatch()
     const elapsed = useSelector(state => state.elapsed)
@@ -21,7 +22,13 @@ const Timer = ({ running, lastInterval }) => {
     }, [running, lastInterval, dispatch])
 
     return (
-        <TimerDisplay elapsed={elapsed} title='Timer' />
+        <div className='times labelvaluegrid valuebubbled'>
+            <label>Timer</label>
+            <TimerDisplay elapsed={elapsed} title='Timer' />
+            <label>Σ Today</label>
+            <TotalToday todayCompleted={todayCompleted} />
+        </div>
+
     )
 
 }

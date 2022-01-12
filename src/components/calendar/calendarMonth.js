@@ -11,12 +11,14 @@ const CalendarMonthHeader = ({ activeMonthDate, handleMonthAddition, handleMonth
                 onClick={() => handleMonthAddition(-1)}>
                 Previous month
             </button>
-            <input id='calMonthPicker'
-                className="title" 
-                onChange={(e) => handleMonthPick(e)} 
-                type="month" 
-                value={ISO_yearmonth} 
-            />
+            <div className='datepickercontainer'>
+                <input id='calMonthPicker'
+                    className="title" 
+                    onChange={(e) => handleMonthPick(e)} 
+                    type="month" 
+                    value={ISO_yearmonth} 
+                />
+            </div>
             <button id='calNextMonthButton'
                 onClick={() => handleMonthAddition(1)}
             >Next month
@@ -42,11 +44,14 @@ const CalendarMonth = ({
     const monthLastDay = new Date(Date.UTC(year, month + 1, 0, 12))
     // console.log('monthLastDate', monthLastDay)
 
+    let mondayModifier = -monthFirstDay.getDay() + 1
+    if (mondayModifier > 0) mondayModifier -= 7
     const firstWeekMonday = new Date(
-        Date.UTC(year, month, 1 - monthFirstDay.getDay() + 1 - 7, 12)
+        Date.UTC(year, month, 1 + mondayModifier, 12)
     )
+    let sundayModifier = monthLastDay.getDay() === 0 ? 0 : 7 - monthLastDay.getDay()
     const lastWeekSunday = new Date(
-        Date.UTC(year, month + 1, 7 - monthLastDay.getDay(), 12)
+        Date.UTC(year, month + 1, sundayModifier, 12)
     )
 
     //console.log('firstWeekMonday', firstWeekMonday)

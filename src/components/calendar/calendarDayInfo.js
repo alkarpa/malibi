@@ -30,22 +30,15 @@ const ClockArea = ({ dateStart, midday, dateEnd, intervals, projectsMap, }) => {
 
 
     return (
-        <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'min-content auto',
-            width: 'min-content'
-        }}>
-            <div style={{
-                display: 'grid',
-                gridTemplateRows: 'auto auto',
-                gridTemplateColumns: 'min-content auto'
-            }}>
-                <div>12</div>
-                <div className='clockarea'
+            <div style={{display: 'flex', flexWrap:'wrap', justifyContent: 'space-evenly', maxWidth: '95vw'}}>
+                
+                <fieldset className='clockarea'
                     style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'min-content min-content'
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center'
                     }}>
+                        <legend>12 hour clocks</legend>
                     <TraditionalClock 
                         startTime={dateStart.getTime()} 
                         endTime={midday.getTime()} 
@@ -59,15 +52,13 @@ const ClockArea = ({ dateStart, midday, dateEnd, intervals, projectsMap, }) => {
                         projectsMap={projectsMap}
                         startDigit={12}
                     />
-                </div>
+                </fieldset>
 
-                <div>24</div>
-                <div className='clockarea'>
+                <fieldset className='clockarea'>
+                    <legend>24 hour clock</legend>
                     <PretzelClock intervals={intervals} projectsMap={projectsMap} />
-                </div>
+                </fieldset>
             </div>
-
-        </div>
     )
 }
 
@@ -85,10 +76,8 @@ const CalendarDayInfo = ({ activeDate, setActiveDate, intervals = [], projectsMa
         <div className='dayInfo'>
             <CalendarDayHeader activeDate={activeDate} setActiveDate={setActiveDate} />
 
-            <div className='halfscreengrid'>
-                <div className='completedCard'>
+            <div className=''>
                     <ClockArea dateStart={dateStart} midday={midday} dateEnd={dateEnd} intervals={intervals} projectsMap={projectsMap} />
-                </div>
                 <div className='completedCard'>
                     <TimesTable day={intervals || []} />
                 </div>

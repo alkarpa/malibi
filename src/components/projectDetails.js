@@ -89,13 +89,13 @@ const ProjectDetails = ({ project }) => {
     }
 
     return (
-        <div className='completedCard w600'>
+        <div className='completedCard'>
             <div style={{ backgroundColor: project.color }}>
                 <h2>{title}</h2>
             </div>
             <div style={{margin: '2em'}}>
-                <div>
-                    <h3>{project.id ? 'Edit' : 'New project'}</h3>
+                <fieldset>
+                    <legend>{project.id ? 'Edit' : 'New project'}</legend>
                     <div>
                         <label>
                             <span style={{display: 'inline-block',width: '6ch'}}>Title</span>
@@ -132,7 +132,7 @@ const ProjectDetails = ({ project }) => {
                                 )
                         }
                     </div>
-                </div>
+                </fieldset>
 
 
 

@@ -6,7 +6,7 @@ import TimeDisplay from '../timeDisplay'
 const TodayTracked = ({ time }) => {
     const elapsed = useSelector(state => state.elapsed)
     return (
-        <TimeDisplay time={time + elapsed} />
+        <TimeDisplay time={time + elapsed} seconds={false} />
     )
 }
 
@@ -45,23 +45,21 @@ const CalendarMonthDay = ({
     const dateTitle = `${date.getDate()}`
 
     return (
-        <div
+        <div onClick={() => { setActiveMonthDate(date); setActiveView('DAY') }}
             id={`cal${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`}
             className={`day dayGrid ${activeClass} ${clockClass} ${todayClass}`}>
-            <div onClick={() => { setActiveMonthDate(date); setActiveView('DAY') }}>
-                <h1>{dateTitle}</h1>
+            <div >
+                {dateTitle}
             </div>
             <div className='dayInfoGrid'>
-                <div>&#128337;</div>
-                <div>
+                <div>&#128337;
                     {
                         today
                             ? <TodayTracked time={clock} />
-                            : <TimeDisplay time={clock} />
+                            : <TimeDisplay time={clock} seconds={false} />
                     }
                 </div>
-                <div>P</div>
-                <div>
+                <div className='dateprojectbar'>
                     {
                         Object.keys(projectsGrouped).map(p => (
                             <div key={`caldayproj${date}${p}`} style={{

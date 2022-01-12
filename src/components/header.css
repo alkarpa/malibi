@@ -1,0 +1,92 @@
+
+header {
+    width: 100vw;
+    justify-content: center;
+    padding-top: 0.2em;
+    padding-bottom: 0.7em;
+    background-color: var(--header-bg-color);
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+
+
+.logo {
+    max-width: 64px;
+    min-width: 32px;
+    width: 100%;
+    aspect-ratio: 1;
+    background: url('../images/malibi_concept_64.png'), lightgreen;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-radius: 15px;
+    text-align: center;
+    margin: 3px;
+    box-shadow: var(--shadow-pixels) var(--header-shadow-color);
+    position: relative;
+  }
+
+
+.logo svg {
+    width: 90%;
+    position: relative;
+    top: 100%;
+    font-weight: bold;
+    font-style: italic;
+    color: var(--header-shadow-color);
+    background-color: lightcoral;
+    padding: 3px 6px 0px 3px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 1px 1px darkred;
+  }
+
+
+.buttonGrid {
+    flex-grow: 1;
+    display: grid;
+    grid-gap: 2px;
+    margin: 2px;
+    grid-template-columns: repeat(auto-fit, minmax(10ch, 15ch));
+    justify-content: space-around;
+    
+  }
+  
+  .speechbubble {
+    border-radius: 0.5em;
+    background-color: white;
+    border: 1px black solid;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-left: 1em;
+    box-shadow: var(--shadow-pixels) var(--header-shadow-color);
+    margin-bottom: 2px;
+    position: relative;
+    margin-right: 1em;
+  }
+  .speechbubble:after {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: -30px;
+    width: 35px;
+    height: 15px;
+    background-color: transparent;
+    border-bottom-left-radius: 50px;
+    box-shadow: 5px 10px 0px 0px white;
+  }
+
+  .buttonGrid button {
+    outline: none;
+    background-color: var(--highlight-intense-color);
+    font-size: large;
+    transition: 0.3s;
+    padding-left: 1em;
+    padding-right: 1em;
+    border: 1px solid darkmagenta;
+    border-radius: 0.5em;
+    box-shadow: 1px 1px 2px 2px black;
+    margin: 2px;
+  }
+  
+  .buttonGrid button:not([disabled]):hover {
+    background-color: var(--highlight-intent-color);
+  }

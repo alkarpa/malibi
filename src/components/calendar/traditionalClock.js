@@ -24,7 +24,6 @@ const ClockSector = ({ center, radius, clockStart, clockEnd, intervalStart, inte
                     a${radius},${radius} 0 ${largeArc},1 ${xDif},${line2Y - lineY}
                     l${-line2X},${-line2Y}
                 `} stroke='darkgray' fill={color} style={{ opacity: '0.8' }}
-
         />
     )
 

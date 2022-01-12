@@ -8,6 +8,12 @@ const IntervalProject = ({ interval }) => {
 
     const projects = useSelector( state => state.projects )
 
+    if (!interval) {
+        return (
+            <div>Start your alibi first</div>
+        )
+    }
+
     const project = projects.find( p => ""+p.id === interval.project )
 
     const title = project ? project.title : '--No project--'
@@ -33,11 +39,11 @@ const IntervalProject = ({ interval }) => {
     }
 
     return (
-        <div style={{ backgroundColor: color, textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+        <div className='projectDraggable'
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             title={title}
-            className='projectDraggable'
+            style={{backgroundColor: color}}
         >
             <div>
                 <ProjectDropdown 

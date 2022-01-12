@@ -1,0 +1,45 @@
+
+.timercontainer {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 90vw;
+    min-width: 70vw;
+}
+
+.timer {
+    display: grid;
+    grid-template-columns: min-content min-content;
+}
+
+.labelvaluegrid {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: repeat( 2, min-content );
+}
+.labelvaluegrid label {
+    text-align: right;
+    line-height: 150%;
+}
+.labelvaluegrid > div {
+    border: 2px solid green;
+    padding-right: 1ch;
+}
+
+.labelvaluegrid.valuebubbled > div{
+    border-radius: 0.4em;
+}
+
+.timercontainer .timerdisplay {
+    background-color: #ffffff;
+    margin: 2px;
+    min-width: 9ch;
+    font-size: x-large;
+    text-align: right;
+}
+.timercontainer .timedisplay {
+    width: inherit;
+    margin: 2px;
+    min-width: 9ch;
+    font-size: x-large;
+    text-align: right;
+}
