@@ -6,14 +6,8 @@ const Recent = ({ setDragging }) => {
 
   return (
     <div>
-      <div>
-        <Completed />
-      </div>
-      <div>
-        <ProjectDnDList
-          setDragging={setDragging}
-        />
-      </div>
+      <ProjectDnDList setDragging={setDragging} />
+      <Completed />
     </div>
   )
 

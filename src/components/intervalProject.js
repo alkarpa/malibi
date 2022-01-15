@@ -38,6 +38,8 @@ const IntervalProject = ({ interval }) => {
         )
     }
 
+    const filteredProjects = projects.filter( p => p.id === project?.id || !p.inactive )
+
     return (
         <div className='projectDraggable'
             onDrop={handleDrop}
@@ -48,7 +50,7 @@ const IntervalProject = ({ interval }) => {
             <div>
                 <ProjectDropdown 
                     interval={interval} 
-                    options={projects} 
+                    options={filteredProjects} 
                     value={project} 
                     handleChange={handleUpdate}
                 />
