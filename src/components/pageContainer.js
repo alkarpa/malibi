@@ -44,10 +44,7 @@ const PageContainer = () => {
                     </button>
                 ) ) }
             </div>
-            <div>
                 {content}
-            </div>
-
         </div>
     )
 

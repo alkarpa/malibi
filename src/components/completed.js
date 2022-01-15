@@ -7,7 +7,7 @@ const Completed = () => {
 
     const intervals = useSelector( state => state.intervals )
 
-    const [daysToShow, setDaysToShow] = useState(2)
+    const [daysToShow, setDaysToShow] = useState(3)
 
     const handleDaysToShowSelection = (event) => {
         setDaysToShow( event.target.value )
@@ -25,7 +25,7 @@ const Completed = () => {
             <label>
              Days to show
                 <select onChange={handleDaysToShowSelection} value={daysToShow}>
-                    { Array.from({length:5}, (v,i) => i+1).map( v => (
+                    { Array.from({length:7}, (v,i) => i+1).map( v => (
                         <option key={`daysToShow${v}`} value={v}>
                             {v}
                         </option>

@@ -8,6 +8,7 @@
   .draggable {
       position: relative;
       z-index: 2;
+      cursor: grab;
   }
 
   .projectDraggable {

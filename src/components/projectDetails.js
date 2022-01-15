@@ -4,6 +4,7 @@ import { updateProject, createProject } from '../reducers/projectsReducer'
 import TimesTable from './timesTable'
 import { intervalsDateMapper } from '../services/intervals'
 import TimeDisplay from './timeDisplay'
+import SwitchInput from './switchinput'
 
 const ProjectIntervalsList = ({ projectid }) => {
     const allIntervals = useSelector(state => state.intervals)
@@ -12,16 +13,25 @@ const ProjectIntervalsList = ({ projectid }) => {
             || (!projectid && !interval.project)
     )
 
-    const total = projectIntervals.reduce( (total, cur) => (
+    const total = projectIntervals.reduce((total, cur) => (
         total + (cur.end ? cur.end - cur.start : 0)
-    ), 0 )
+    ), 0)
+
+    if (total === 0) {
+        const projectDescriptor = projectid ? 'this project' : 'no project'
+        return (<div style={{textAlign: 'center', margin: '2em'}}>
+            No alibis with {projectDescriptor}
+        </div>)
+    }
 
     const dateMap = intervalsDateMapper(projectIntervals)
     const dates = Object.keys(dateMap)
 
     return (
-        <div>
-            Total: <TimeDisplay time={total} />
+        <div className='projecttracked'>
+            <div className='projecttrackedtotal'>
+                Total: <TimeDisplay time={total} />
+            </div>
             {
                 dates.map(d => (
                     <div key={'ttproject' + d} className='completedCard'>
@@ -34,13 +44,27 @@ const ProjectIntervalsList = ({ projectid }) => {
 
         </div>
     )
-
 }
 
-const ProjectDetails = ({ project }) => {
+const ProjectFormInputField = ({ children, label, visible = true }) => {
+    if (!visible) return (<></>)
+
+    return (
+        <>
+            <label className='projectformeditlabel'>
+                {label}
+            </label>
+            {children}
+        </>
+    )
+}
+
+const ProjectForm = ({ project }) => {
     const dispatch = useDispatch()
+
     const [title, setTitle] = useState(project.title)
     const [color, setColor] = useState(project.color)
+    const [inactive, setInactive] = useState(false)
     const [undoable, setUndoable] = useState(false)
 
     const undo = { ...project }
@@ -48,6 +72,7 @@ const ProjectDetails = ({ project }) => {
     useEffect(() => {
         setTitle(project.title)
         setColor(project.color)
+        setInactive(project.inactive ? true : false)
     }, [project])
 
     const handleTitleChange = (value) => {
@@ -60,15 +85,10 @@ const ProjectDetails = ({ project }) => {
         setUndoable(true)
         handleUpdate('color', value)
     }
-
-    const handleUpdate = (prop, value) => {
-        if (project.id) {
-            dispatch(
-                updateProject({
-                    ...project, [prop]: value
-                })
-            )
-        }
+    const handleInactiveChange = (value) => {
+        console.log('inactive', value)
+        setInactive(value)
+        handleUpdate('inactive', value)
     }
 
     const handleUndo = () => {
@@ -82,65 +102,103 @@ const ProjectDetails = ({ project }) => {
         )
     }
 
-    const handleSubmit = () => {
+    const handleUpdate = (prop, value) => {
+        if (project.id) {
+            dispatch(
+                updateProject({
+                    ...project, [prop]: value
+                })
+            )
+        }
+    }
+    const handleSubmit = (title, color) => {
         dispatch(
             createProject(title, color)
         )
     }
 
     return (
-        <div className='completedCard'>
-            <div style={{ backgroundColor: project.color }}>
-                <h2>{title}</h2>
+        <form className='projectform'>
+            <div className='fields'>
+                <h3>Properties</h3>
+                <ProjectFormInputField label='Title'>
+                    <input
+                        onChange={(event) => handleTitleChange(event.target.value)}
+                        value={title}
+                    />
+                </ProjectFormInputField>
+                <ProjectFormInputField label='Color'>
+                    <label style={{display: 'flex'}}>
+                     <input style={{flexGrow:'1'}}
+                        type='color'
+                        onChange={(event) => handleColorChange(event.target.value)}
+                        value={color} />
+                        <span>{color}</span>
+                    </label>
+                </ProjectFormInputField>
+
+                <h3>Management</h3>
+                <ProjectFormInputField label='Activeness' visible={project.id ? true : false}>
+                    <SwitchInput onlabel='Inactive' offlabel='Active'
+                        onChange={(event) => handleInactiveChange(event.target.checked)}
+                        checked={inactive} />
+                </ProjectFormInputField>
             </div>
-            <div style={{margin: '2em'}}>
-                <fieldset>
-                    <legend>{project.id ? 'Edit' : 'New project'}</legend>
-                    <div>
-                        <label>
-                            <span style={{display: 'inline-block',width: '6ch'}}>Title</span>
-                            <input
-                                onChange={(event) => handleTitleChange(event.target.value)}
-                                value={title}
-                            />
-                        </label>
-                    </div>
-                    <div>
-                        <label>
-                        <span style={{display: 'inline-block',width: '6ch'}}>Color</span>
-                            <input
-                                type='color'
-                                onChange={(event) => handleColorChange(event.target.value)}
-                                value={color} />
-                        </label>
-                    </div>
-                    <div>
-                        {
-                            project.id
-                                ? (
-                                    <button
-                                        type='button'
-                                        onClick={handleUndo}
-                                        disabled={!undoable}
-                                    >Undo Changes</button>
-                                )
-                                : (
-                                    <button
-                                        type='button'
-                                        onClick={handleSubmit}
-                                    >Create</button>
-                                )
-                        }
-                    </div>
-                </fieldset>
+            <div className='buttons'>
+                {
+                    project.id
+                        ? (
+                            <button
+                                type='button'
+                                onClick={handleUndo}
+                                disabled={!undoable}
+                            >Undo Changes</button>
+                        )
+                        : (
+                            <button
+                                type='button'
+                                onClick={handleSubmit}
+                            >Create</button>
+                        )
+                }
+            </div>
+        </form>
+    )
+}
+
+const DetailsSection = ({ children }) => {
+    const [section, setSection] = useState(0)
+
+    const titles = children.map( c => c.props.title )
+    return (
+        <div className='detailssection'>
+            <div className='tabButtons'>
+                { titles.map( (t,i) => <button key={`projdet${t}`} 
+                            className={ section === i ? "active" : "" } 
+                            onClick={() => setSection(i)}>{t}</button> )}
+            </div>
+            <div className={`content ${section ? '' : 'hide'}`} >
+                {children[section]}
+            </div>
+        </div>
+    )
+}
+
+const ProjectDetails = ({ project }) => {
 
 
-
+    return (
+        <div className='projectdetails'>
+            <div className='projecttitle' style={{ backgroundColor: project.color }}>
+                <h2>{project.title}</h2>
             </div>
             <div>
-                <h3>Tracked</h3>
-                <ProjectIntervalsList projectid={project.id} />
+                <DetailsSection >
+                    <ProjectForm title={ project.id ? 'Edit' : 'New project' } project={project} />
+                    <ProjectIntervalsList title='Tracked' projectid={project.id} />
+                </DetailsSection>
             </div>
+
         </div>
     )
 

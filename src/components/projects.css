@@ -1,0 +1,115 @@
+.projectsPage {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    overflow: hidden;
+    max-height: 90vh;
+}
+
+.projectslist {
+    background-color: var(--highlight-color);
+    text-align: center;
+}
+
+.projectslist>ul {
+    max-width: 95%;
+    padding: 0.5em;
+    list-style-type: none;
+}
+.projectslist>ul>li {
+    overflow: hidden;
+    white-space: nowrap;
+    margin-left: 0em;
+    text-overflow: ellipsis;
+    border: 1px solid black;
+    padding: 0.5em;
+    margin-bottom: 0.7em;
+    box-shadow: 2px 2px 2px 2px gray;
+}
+
+.projectslist>ul>li:first-child {
+    margin-bottom: 2em;
+    text-align: center;
+    color: white;
+}
+.projectslist>ul>li:first-child {
+    text-shadow: 1px 1px black;
+}
+
+.listedproject {
+    cursor: pointer;
+}
+.projectslist>ul>li.selectedproject {
+    border-color: white;
+    box-shadow: 2px 2px 2px 2px var(--highlight-intent-color);
+    text-shadow: 1px 1px var(--highlight-intent-color);
+    margin-left: 0.5em;
+}
+
+.projectdetails {
+    display: grid;
+    grid-template-rows: min-content auto;
+    flex-grow: 1;
+    overflow-x:hidden;
+}
+.projecttracked {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 0px;
+}
+.projecttracked>div {
+    padding: 10px;
+}
+.projecttrackedtotal {
+    text-align: center;
+    font-weight: bold;
+}
+
+.projecttitle {
+    margin: 0px !important;
+    text-align: center;
+}
+
+
+.projectform .fields {
+    display: grid;
+    grid-template-columns: minmax(9ch, min-content) 1fr;
+    gap: 1em;
+    background-color: var(--header-bg-color);
+    padding: 0.5em;
+    margin: 1em;
+}
+.fields>h3 {
+    text-align: center;
+    grid-column: 1 / -1;
+}
+.fields>label,.fields>input {
+    background-color: var(--main-bg-color);
+    width: 95%;
+}
+
+
+
+.projectform .buttons {
+    grid-column: 2;
+    margin: 1em;
+}
+
+.projectform label {
+    text-align: right;
+    padding-right: 1ch;
+}
+
+.detailssection {
+    height: 100%;
+}
+
+.detailssection>.title {
+    font-size: xx-large;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.detailssection>.content {
+    margin-right: 1em;
+}
