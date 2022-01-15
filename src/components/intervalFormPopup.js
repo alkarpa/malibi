@@ -1,34 +1,34 @@
 import React, { useState } from 'react'
 import IntervalForm from './intervalForm'
 
+const EditForm = ({ interval, hideForm }) => {
+
+    return (
+        <div className='alibiformcontainer'>
+            <div className='alibiform'>
+                <button onClick={hideForm} className="closebutton">Close &times;</button>
+                <IntervalForm intervalId={interval.id} />
+            </div>
+        </div>
+    )
+}
+
 const IntervalFormPopup = ({ interval }) => {
     const [showForm, setShowForm] = useState(false)
 
     const handleButton = () => {
         setShowForm(true)
     }
+    const hideForm = () => {
+        setShowForm(false)
+    }
 
     return (
-        <div style={{position: 'relative', textAlign: 'left', paddingRight: '1em'}}>
-            <button onClick={handleButton} title='Edit'>&#9998;</button>
+        <div className='alibiedit'>
+            <button className={`${showForm ? 'selected' : ''}`} onClick={handleButton} title='Edit'>&#9998;</button>
             {
                 showForm && (
-                    <div style={{
-                        position: 'absolute',
-                        minWidth: '300px',
-                        backgroundColor: 'white',
-                        border: '1px black solid',
-                        top: '5px',
-                        left: '5px',
-                        zIndex: 5,
-                    }}>
-                        <div onClick={() => setShowForm(false)}
-                            style={{backgroundColor: 'gray', textAlign: 'center', cursor: 'pointer'}}
-                        >
-                            X
-                        </div>
-                        <IntervalForm intervalId={interval.id} />
-                    </div>
+                    <EditForm interval={interval} hideForm={hideForm} />
                 )
             }
 
