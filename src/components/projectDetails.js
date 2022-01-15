@@ -86,7 +86,6 @@ const ProjectForm = ({ project }) => {
         handleUpdate('color', value)
     }
     const handleInactiveChange = (value) => {
-        console.log('inactive', value)
         setInactive(value)
         handleUpdate('inactive', value)
     }
@@ -111,7 +110,7 @@ const ProjectForm = ({ project }) => {
             )
         }
     }
-    const handleSubmit = (title, color) => {
+    const handleSubmit = () => {
         dispatch(
             createProject(title, color)
         )
