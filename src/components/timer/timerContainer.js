@@ -25,18 +25,18 @@ const TimerContainer = () => {
 
     return (
         <div className='timercontainer'>
-            <div>
+            <div style={{width: '100%', overflowX: 'hidden'}}>
 
-                <div className='labelvaluegrid'>
-                    <label>Active project:</label>
+                <div style={{display: 'grid', gridTemplateColumns: 'min-content 1fr'}}>
+                    <label>Project:</label>
                     <IntervalProject interval={lastInterval} />
                 </div>
                 <div className='timer'>
-                    <Timer running={running} lastInterval={lastInterval} todayCompleted={getTodayCompleted()} />
-
                     <IntervalCard interval={lastInterval}
                         title={running ? 'Active' : 'Latest'}
                     />
+                    <Timer running={running} lastInterval={lastInterval} todayCompleted={getTodayCompleted()} />
+
                 </div>
             </div>
             <TimerControls running={running} />

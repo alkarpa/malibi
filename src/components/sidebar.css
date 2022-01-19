@@ -7,11 +7,39 @@
 .sidebarcontent {
     height: 100%;
     background-color: var(--highlight-color);
+    text-align: center;
+    overflow-y: hidden;
 }
 
 .sidebaropener {
     display: none;
   }
+
+.sidebarcontent ul {
+    max-width: 95%;
+    padding: 0.5em;
+    list-style-type: none;
+}
+.sidebarcontent ul>li {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-left: 0em;
+  text-overflow: ellipsis;
+  border: 1px solid black;
+  padding: 0.5em;
+  margin-bottom: 0.7em;
+  box-shadow: 2px 2px 2px 2px gray;
+  cursor: pointer;
+}
+.sidebarcontent ul>li.active {
+  border-color: white;
+  color: white;
+  background-color: var(--highlight-intense-color);
+}
+.sidebar + div.content {
+  height: 100%;
+}
   
   @media screen and (max-width: 1000px) {
   
@@ -47,7 +75,7 @@
       filter: brightness(50%);
     }
 
-    .sidebar + div .content {
+    .sidebar + div.content {
         margin-left: 2ch;
     }
     

@@ -52,7 +52,7 @@ const CalendarMonthDay = ({
                 {dateTitle}
             </div>
             <div className='dayInfoGrid'>
-                <div>&#128337;
+                <div>
                     {
                         today
                             ? <TodayTracked time={clock} />

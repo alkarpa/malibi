@@ -7,6 +7,10 @@ const Stats = ({ intervals = [], activeView }) => {
 
     const projects = useSelector(state => state.projects)
 
+    if ( intervals.length === 0 ) {
+        return ( <div>No data</div> )
+    }
+
     const projectsGrouped = intervals.reduce((map, interval) => {
         const project = "" + interval.project
         map[project] = map[project] || []

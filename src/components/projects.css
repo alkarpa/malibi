@@ -1,31 +1,14 @@
-.projectsPage {
-    position: relative;
-    display: flex;
-    align-items: stretch;
-    height: 100%;
-    overflow: hidden;
-    max-height: 90vh;
-}
 
 .projectslist {
     background-color: var(--highlight-color);
     text-align: center;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    height: 100%;
 }
 
 .projectslist>ul {
-    max-width: 95%;
-    padding: 0.5em;
-    list-style-type: none;
-}
-.projectslist>ul>li {
-    overflow: hidden;
-    white-space: nowrap;
-    margin-left: 0em;
-    text-overflow: ellipsis;
-    border: 1px solid black;
-    padding: 0.5em;
-    margin-bottom: 0.7em;
-    box-shadow: 2px 2px 2px 2px gray;
+    overflow-y: auto;
 }
 
 .projectslist>ul>li:first-child {
@@ -99,17 +82,4 @@
 .projectform label {
     text-align: right;
     padding-right: 1ch;
-}
-
-.detailssection {
-    height: 100%;
-}
-
-.detailssection>.title {
-    font-size: xx-large;
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.1);
-}
-.detailssection>.content {
-    margin-right: 1em;
 }

@@ -16,7 +16,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--main-bg-color);
-  min-height: 100vh;
+  height: 100%;
 }
 
 .app {
@@ -25,6 +25,14 @@ body {
   min-height: 100vh;
 }
 
+.page {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    overflow: hidden;
+    max-height: 90vh;
+}
 
 .tabButtons>button {
   background-color: inherit;
@@ -51,13 +59,62 @@ body {
   background-color: var(--highlight-intense-color);
 }
 
+.detailssection {
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  flex-grow: 1;
+}
+
+.detailssection>.title {
+  font-size: xx-large;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.nocontent {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.nocontent .backstyling {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: url('./images/nocontent.png');
+  opacity: 0.5;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  align-items: center;
+  display: flex;
+}
+
+.moretoload>button {
+  width: 100%;
+  text-align: center;
+  padding: 1em;
+  background-color: var(--header-bg-color);
+  cursor: pointer;
+}
 
 .mono {
-  font-family: monospace
+  font-family: monospace;
 }
 
 .rightalign {
-  text-align: right
+  text-align: right;
 }
 
 .large {
@@ -76,7 +133,7 @@ body {
   border-radius: 1em;
   padding: 1em;
   margin: 0.5em;
-  max-width: 95vw;
+  max-width: 95%;
 }
 
 .seconds {
@@ -113,10 +170,10 @@ footer a {
   display: inline-block;
 }
 .timedisplay.hasseconds {
-  width: 9ch;
+  width: 8ch;
 }
 .timedisplay.justminutes {
-  width: 5ch;
+  width: 4ch;
 }
 
 .settings {
@@ -126,6 +183,7 @@ footer a {
 }
 
 .intervalproject {
+  max-width: 100%;
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis "..";
@@ -134,11 +192,10 @@ footer a {
 
 .pageContainer {
   position: relative;
-  width: 100vw;
+  width: 100%;
   overflow-x: hidden;
   display: grid;
   grid-template-rows: min-content 1fr;
-  height: 80vh;
 }
 
 .dndlist {

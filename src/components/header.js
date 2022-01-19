@@ -6,10 +6,12 @@ const Header = () => {
 
     return (
         <header>
-            <div className='logo'>
-                <svg viewBox="0 0 60 20">
-                    <text x="5" y="15">M'alibi</text>
-                </svg>
+            <div>
+                <div className='logo'>
+                    <svg viewBox="0 0 55 20">
+                        <text x="5" y="15">M'alibi</text>
+                    </svg>
+                </div>
             </div>
             <div className='speechbubble'>
                 <TimerContainer />

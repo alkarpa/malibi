@@ -5,6 +5,7 @@ import TimesTable from './timesTable'
 import { intervalsDateMapper } from '../services/intervals'
 import TimeDisplay from './timeDisplay'
 import SwitchInput from './switchinput'
+import DetailsSection from './detailsSection'
 
 const ProjectIntervalsList = ({ projectid }) => {
     const allIntervals = useSelector(state => state.intervals)
@@ -165,23 +166,7 @@ const ProjectForm = ({ project }) => {
     )
 }
 
-const DetailsSection = ({ children }) => {
-    const [section, setSection] = useState(0)
 
-    const titles = children.map( c => c.props.title )
-    return (
-        <div className='detailssection'>
-            <div className='tabButtons'>
-                { titles.map( (t,i) => <button key={`projdet${t}`} 
-                            className={ section === i ? "active" : "" } 
-                            onClick={() => setSection(i)}>{t}</button> )}
-            </div>
-            <div className={`content ${section ? '' : 'hide'}`} >
-                {children[section]}
-            </div>
-        </div>
-    )
-}
 
 const ProjectDetails = ({ project }) => {
 
@@ -193,8 +178,8 @@ const ProjectDetails = ({ project }) => {
             </div>
             <div>
                 <DetailsSection >
-                    <ProjectForm title={ project.id ? 'Edit' : 'New project' } project={project} />
-                    <ProjectIntervalsList title='Tracked' projectid={project.id} />
+                    <ProjectForm buttontitle={ project.id ? 'Edit' : 'New project' } project={project} />
+                    <ProjectIntervalsList buttontitle='Tracked' projectid={project.id} />
                 </DetailsSection>
             </div>
 
