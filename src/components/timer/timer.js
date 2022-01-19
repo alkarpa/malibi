@@ -22,11 +22,16 @@ const Timer = ({ running, lastInterval, todayCompleted }) => {
     }, [running, lastInterval, dispatch])
 
     return (
-        <div className='times labelvaluegrid valuebubbled'>
-            <label>Timer</label>
-            <TimerDisplay elapsed={elapsed} title='Timer' />
-            <label>Σ Today</label>
-            <TotalToday todayCompleted={todayCompleted} />
+        <div className='times'>
+            <div className='labelvaluegrid valuebubbled'>
+                <label>&#128337;</label>
+                <TimerDisplay elapsed={elapsed} title='Timer' />
+            </div>
+            <div className='labelvaluegrid valuebubbled'>
+                <label>Σ&#128337;</label>
+                <TotalToday todayCompleted={todayCompleted} />
+            </div>
+
         </div>
 
     )

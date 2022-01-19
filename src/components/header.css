@@ -1,12 +1,11 @@
 
 header {
-    width: 100vw;
+    width: 100%;
     justify-content: center;
     padding-top: 0.2em;
     padding-bottom: 0.7em;
     background-color: var(--header-bg-color);
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
   }
 
 
@@ -30,27 +29,21 @@ header {
     width: 90%;
     position: relative;
     top: 100%;
+    font-family: cursive;
     font-weight: bold;
     font-style: italic;
     color: var(--header-shadow-color);
-    background-color: lightcoral;
+    background-color: lightblue;
     padding: 3px 6px 0px 3px;
     border-radius: 8px;
+    border: 1px blue solid;
     box-shadow: 2px 2px 1px 1px darkred;
   }
 
 
-.buttonGrid {
-    flex-grow: 1;
-    display: grid;
-    grid-gap: 2px;
-    margin: 2px;
-    grid-template-columns: repeat(auto-fit, minmax(10ch, 15ch));
-    justify-content: space-around;
-    
-  }
   
   .speechbubble {
+    max-width: 70vw;
     border-radius: 0.5em;
     background-color: white;
     border: 1px black solid;
@@ -74,6 +67,17 @@ header {
     box-shadow: 5px 10px 0px 0px white;
   }
 
+
+.buttonGrid {
+  flex-grow: 1;
+  display: grid;
+  grid-gap: 2px;
+  margin: 2px;
+  grid-template-columns: repeat(auto-fit, minmax(5ch, 1fr));
+  justify-content: space-around;
+  
+}
+
   .buttonGrid button {
     outline: none;
     background-color: var(--highlight-intense-color);
@@ -89,4 +93,7 @@ header {
   
   .buttonGrid button:not([disabled]):hover {
     background-color: var(--highlight-intent-color);
+  }
+  .buttonGrid button:disabled {
+    box-shadow: 100px 100px 0px 0px rgba(0,0,0,0.2) inset;
   }

@@ -5,6 +5,44 @@ import { intervalsDateMapper } from '../../services/intervals'
 import Stats from './stats'
 import CalendarMonth from './calendarMonth'
 import CalendarDayInfo from './calendarDayInfo'
+import Sidebar from '../sidebar'
+import DetailsSection from '../detailsSection'
+import CalendarHeader from './calendarHeader'
+
+const CalendarNavigation = ({ activeDate, setActiveDate, activeView, tabs, handleTabChange, toggleSidebar = () => (undefined) }) => {
+
+    const handleClick = (tab) => {
+        toggleSidebar()
+        handleTabChange(tab)
+    }
+
+    const handleChange = (event) => {
+        const newDate = new Date(event.target.value)
+        setActiveDate(newDate)
+    }
+
+    return (
+        <div className='calendarnavigation'>
+            <div>
+                <label><h2>Active&nbsp;date</h2>
+                    <input type="date" onChange={handleChange} value={activeDate.toISOString().substring(0,10)} />
+                </label>
+            </div>
+            <h2>Select&nbsp;view</h2>
+            <ul>
+            {tabs.map(t => (
+                <li key={t}
+                    onClick={() => handleClick(t)}
+                    className={activeView === t ? "active" : ""}
+                >
+                    {t}
+                </li>
+
+            ))}
+            </ul>
+        </div>
+    )
+}
 
 
 const Calendar = ({ today = new Date() }) => {
@@ -61,25 +99,23 @@ const Calendar = ({ today = new Date() }) => {
     }
 
     return (
-        <div style={{marginTop: '0.5em'}}>
-            <div className="tabButtons">
-                {TABS.map(t => (
-                    <button key={t}
-                        onClick={() => handleTabChange(t)}
-                        className={activeView === t ? "active" : ""}
-                    >
-                        {t}
-                    </button>
-                ))}
-            </div>
-            {content}
-
-
-            <div>
-                <Stats 
-                    intervals={intervals.filter(iv => millisIsMonth(iv.start, activeDate, activeView === 'DAY'))}
-                    activeView={activeView}
-                 />
+        <div className='page'>
+            <Sidebar>
+                <CalendarNavigation activeDate={activeDate} setActiveDate={setActiveDate} 
+                    activeView={activeView} tabs={TABS} handleTabChange={handleTabChange} 
+                />
+            </Sidebar>
+            <div className='content calview'>
+                <CalendarHeader activeDate={activeDate} setActiveDate={setActiveDate}  tab={activeView}/>
+                <DetailsSection>
+                    <div buttontitle='Calendar' className='calendar'>
+                        {content}
+                    </div>
+                    <Stats buttontitle="Statistics"
+                        intervals={intervals.filter(iv => millisIsMonth(iv.start, activeDate, activeView === 'DAY'))}
+                        activeView={activeView}
+                    />
+                </DetailsSection>
             </div>
 
         </div>

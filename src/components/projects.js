@@ -55,7 +55,7 @@ const Projects = () => {
     const [selectedProject, setSelectedProject] = useState(newProject)
 
     return (
-        <div className='projectsPage'>
+        <div className='page'>
             <Sidebar>
                 <ProjectsList newProject={newProject} selectedProject={selectedProject} setSelection={setSelectedProject} />
             </Sidebar>

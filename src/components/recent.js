@@ -5,7 +5,7 @@ import ProjectDnDList from './projectDnDList'
 const Recent = ({ setDragging }) => {
 
   return (
-    <div>
+    <div className='page recent content'>
       <ProjectDnDList setDragging={setDragging} />
       <Completed />
     </div>

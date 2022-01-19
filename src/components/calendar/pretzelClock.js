@@ -43,6 +43,7 @@ const PretzelInterval = ({ startX, startY, fillWeight, preparedInterval, project
         fill='none'
         strokeWidth={fillWeight}
         style={{ opacity: 0.8 }}
+        className='pretzelsector'
     />
 )
 

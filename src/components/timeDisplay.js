@@ -21,7 +21,7 @@ export const DateTimeDisplay = ({time}) => {
 }
 
 const TimeDisplay = ({ time, isTime, seconds = true}) => {
-    const cName = 'mono large timedisplay'+ (seconds ? ' hasseconds' : ' justminutes')
+    const cName = 'mono timedisplay'+ (seconds ? ' hasseconds' : ' justminutes')
     if (!time) {
         return (<div className={ cName }>&nbsp;</div>)
     }
