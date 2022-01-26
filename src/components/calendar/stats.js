@@ -7,6 +7,10 @@ const Stats = ({ intervals = [], activeView }) => {
 
     const projects = useSelector(state => state.projects)
 
+    if ( intervals.length === 0 ) {
+        return ( <div>No data</div> )
+    }
+
     const projectsGrouped = intervals.reduce((map, interval) => {
         const project = "" + interval.project
         map[project] = map[project] || []
@@ -44,7 +48,7 @@ const Stats = ({ intervals = [], activeView }) => {
 
     return (
         <div>
-            <div className='stats halfscreengrid'>
+            <div className='stats'>
                 <div>
                     <h3>Statistics</h3>
                     <table className='mono large'>
@@ -82,7 +86,7 @@ const Stats = ({ intervals = [], activeView }) => {
                                 </div>
                             ))
                         }
-                        <div style={{ height: '1em', width: '490px', margin: '5px', border: '1px black solid' }}>
+                        <div style={{ height: '1em', width: '90%', margin: '5px', border: '1px black solid' }}>
                             {
                                 activeProjects.map(p => (
                                     <div key={'calbpbar' + p.id + p.absolute} style={{

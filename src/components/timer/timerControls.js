@@ -15,7 +15,7 @@ const TimerControls = ({running}) => {
 
     return (
         <div className="buttonGrid">
-            <button onClick={handlePause}>{running ? "Pause" : "Start"}</button>
+            <button onClick={handlePause}>{running ? "Stop" : "Start"}</button>
             <button disabled={!running} onClick={handleBreakpoint}>Breakpoint</button>
         </div>
     )

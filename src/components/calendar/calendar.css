@@ -1,37 +1,34 @@
+.calview {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+}
+
+.calendar {
+    height: 100%;
+}
+
+.calendarnavigation {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
 .calendargrid {
+    max-width: 100vw;
     background-color: white;
     display: grid;
-    grid-template-columns: 3.5% repeat(7, 13.7%);
+    grid-template-columns: 1fr repeat(7, 3fr);
+    grid-template-rows: min-content repeat(auto-fit, 2ch, 1fr);
     grid-gap: 2px;
+    height: 100%;
 }
 
 .day {
     transition: 0.4s;
-    height: 6em;
     background-color: var(--header-bg-color);
+    max-width: 13.5vw;
 }
 
-.dayGrid {
-    display: grid;
-    grid-template-rows: min-content auto;
-    gap: 2px;
-}
-.dayGrid>div {
-    background-color: rgba(155,155,155,0.2);
-}
-.dayGrid h1 {
-    margin: 0px;
-}
-.dayInfoGrid {
-    display: grid;
-    grid-template-columns: min-content auto;
-    grid-template-rows: min-content;
-    gap: 2px;
-}
-.dayInfoGrid>div {
-    line-height: 100%;
-    background-color: white;
-}
+
 .day.tracked {
     background-color: var(--highlight-intense-color);
 }
@@ -40,18 +37,26 @@
     opacity: 0.5;
     background-color: #aaaaaa;
 }
-.day.inactive .dayInfoGrid>div {
-    background-color: #dddddd;
-}
 
 .day:hover {
     background-color: var(--highlight-intent-color);
 }
+
+.dateprojectbar {
+    height: 1em;
+    border-radius: 0.4em;
+    overflow: hidden;
+    margin: 2px;
+}
+
 .weekday {
     background-color: var(--header-shadow-color);
     font-weight: bold;
     line-height: 2em;
     text-align: center;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space: nowrap;
 }
 .weeknumber {
     background-color: var(--header-shadow-color);
@@ -65,7 +70,15 @@
 .monthHeader {
     background-color: var(--highlight-color);
     display: grid;
-    grid-template-columns: 20% auto 20%;
+    grid-template-columns: 1fr 3fr 1fr;
+    height: 2em;
+}
+
+.datepickercontainer {
+    text-align: center;
+}
+.datepickercontainer>input {
+    max-width: 50%;
 }
 
 .monthHeader .title {
@@ -73,12 +86,25 @@
     font-size: xx-large;
 }
 
-.monthHeader button {
-    border: none;
+.monthHeader>button {
+    position: relative;
     outline: none;
-    background-color: inherit;
+    background-color: var(--header-bg-color);
     cursor: pointer;
     transition: 0.3s;
+    text-shadow: 1px 1px white;
+}
+.monthHeader>button>svg {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    opacity: 0.3;
+}
+.monthHeader>button>svg.left {
+    left: 0;
+}
+.monthHeader>button>svg.right {
+    right: 0;
 }
 
 .monthHeader button:hover {
@@ -98,4 +124,18 @@
     background-color: var(--header-bg-color);
     margin: 2em;
     box-shadow: var(--shadow-pixels) var(--header-shadow-color);
+}
+
+.clocksector {
+    transition: 0.3s;
+}
+.clocksector:hover {
+    fill: lightyellow;
+    stroke: darkorange;
+}
+.pretzelsector {
+    transition: 0.3s;
+}
+.pretzelsector:hover {
+    stroke: orange;
 }

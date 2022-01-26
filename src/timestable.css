@@ -1,0 +1,60 @@
+
+.timesTable {
+    max-width: 90vw;
+    display: grid;
+    grid-template-rows: min-content auto min-content;
+}
+.timesTable .dateTitle {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.timesTable .timedisplay {
+    background-color: white;
+    border-radius: 0.2em;
+    padding-top: 2px;
+    margin-bottom: 2px;
+}
+
+.alibi {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 30vw;
+    max-width: 95vw;
+    border: 1px solid var(--header-shadow-color);
+    margin-bottom: 2px;
+    background-color: rgba(0,0,0,0.1);
+}
+.alibi.active {
+    background-color: rgba(0, 255, 150, 0.2);
+}
+
+
+.alibi .clocks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.alibi .projectCell {
+    padding-left: 1em;
+    padding-right: 1em;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: min-content auto;
+    min-width: 30vw;
+}
+.alibi .projectCell div {
+    border-radius: 0.2em;
+    font-size: small;
+    text-align: center;
+    line-height: 2em;
+}
+
+.alibi label {
+    text-align: left;
+    font-size: small;
+}
+
+.timesTable .daytotal {
+    font-weight: bold;
+}

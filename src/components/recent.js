@@ -4,18 +4,12 @@ import ProjectDnDList from './projectDnDList'
 
 const Recent = ({ setDragging }) => {
 
-    return (
-        <div className='halfscreengrid'>
-                <div>
-                  <Completed />
-                </div>
-                <div>
-                  <ProjectDnDList
-                    setDragging={setDragging}
-                  />
-                </div>
-              </div>
-    )
+  return (
+    <div className='page recent content'>
+      <ProjectDnDList setDragging={setDragging} />
+      <Completed />
+    </div>
+  )
 
 }
 

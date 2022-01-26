@@ -16,114 +16,26 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--main-bg-color);
-  min-height: 100vh;
+  height: 100%;
 }
 
 .app {
   display: grid;
-  grid-template-rows: min-content auto min-content;
+  grid-template-rows: min-content 1fr min-content;
   min-height: 100vh;
 }
 
-header {
-  justify-content: center;
-  padding-top: 0.2em;
-  padding-bottom: 0.7em;
-  background-color: var(--header-bg-color);
+.page {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    overflow: hidden;
+    max-height: 90vh;
 }
 
-.logo {
-  width: 64px;
-  height: 64px;
-  background: url('images/malibi_concept_64.png'), lightgreen;
-  border-radius: 15px;
-  text-align: center;
-  margin: 3px;
-  box-shadow: var(--shadow-pixels) var(--header-shadow-color);
-  position: relative;
-}
-
-.logo span {
-  position: relative;
-  top: 64px;
-  font-weight: bold;
-  font-style: italic;
-  color: var(--header-shadow-color);
-  background-color: lightcoral;
-  padding: 3px 6px 0px 3px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 1px 1px darkred;
-}
-
-.speechbubble {
-  border-radius: 0.5em;
-  background-color: white;
-  border: 1px black solid;
-  padding-left: 1em;
-  padding-right: 1em;
-  margin-left: 1em;
-  box-shadow: var(--shadow-pixels) var(--header-shadow-color);
-  margin-bottom: 2px;
-  position: relative;
-}
-.speechbubble:after {
-  content: '';
-  position: absolute;
-  top: 25px;
-  left: -30px;
-  width: 35px;
-  height: 15px;
-  background-color: transparent;
-  border-bottom-left-radius: 50px;
-  box-shadow: 5px 10px 0px 0px white;
-}
-
-.buttonGrid {
-  display: grid;
-  grid-gap: 2px;
-  width: min-content;
-  margin: 2px;
-}
-
-.buttonGrid button {
-  border: none;
-  outline: none;
-  background-color: #f1f1f1;
-  font-size: large;
-  transition: 0.3s;
-  padding-left: 1em;
-  padding-right: 1em;
-  border: 1px solid #d1d1d1 ;
-}
-
-.buttonGrid button:hover {
-  background-color: var(--highlight-intent-color);
-}
-
-table td{
-  background-color: var(--header-bg-color);
-}
-.tinfo,th {
-  background-color: var(--header-shadow-color);
-}
-td.total {
-  background-color: var(--highlight-color);
-}
-
-td.projectCell {
-  background-color: var(--header-bg-color);
-  text-align: left;
-}
-td.projectCell div {
-  width: 15em;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.tabButtons button {
+.tabButtons>button {
   background-color: inherit;
-  float: left;
   border: none;
   outline: none;
   cursor: pointer;
@@ -132,38 +44,77 @@ td.projectCell div {
 }
 
 .tabButtons {
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat( auto-fill, minmax(9ch, 1fr));
+  max-width: 100%;
   border: 1px solid var(--highlight-intense-color);
   background-color: var(--highlight-color);
 }
 
-.tabButtons button:hover {
+.tabButtons>button:hover {
   background-color: var(--highlight-intent-color);
 }
 
-.tabButtons button.active {
+.tabButtons>button.active {
   background-color: var(--highlight-intense-color);
 }
 
+.detailssection {
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  flex-grow: 1;
+}
 
-.project {
-  margin:2px;
-  border: 1px var(--highlight-intense-color) solid;
-  padding-left: 1em;
-  max-width: 50em;
-  cursor: grab;
-  border-radius: 1ex;
+.detailssection>.title {
+  font-size: xx-large;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.nocontent {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+}
+.nocontent .backstyling {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: url('./images/nocontent.png');
+  opacity: 0.5;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  align-items: center;
+  display: flex;
+}
+
+.moretoload>button {
+  width: 100%;
+  text-align: center;
+  padding: 1em;
+  background-color: var(--header-bg-color);
+  cursor: pointer;
 }
 
 .mono {
-  font-family: monospace
+  font-family: monospace;
 }
 
 .rightalign {
-  text-align: right
+  text-align: right;
 }
 
 .large {
@@ -175,10 +126,6 @@ td.projectCell div {
 }
 
 
-.timesTable th {
-  min-width: 10ex;
-}
-
 .completedCard {
   border: 1px gray solid;
   background-color: white;
@@ -186,7 +133,7 @@ td.projectCell div {
   border-radius: 1em;
   padding: 1em;
   margin: 0.5em;
-  width: min-content;
+  max-width: 95%;
 }
 
 .seconds {
@@ -208,34 +155,209 @@ td.projectCell div {
 }
 
 
-.projectslist ul {
-  border: 1px gray solid;
-  padding: 0.5em;
-}
-.projectslist ul li {
-  margin-left: 0em;
-  text-overflow: ellipsis;
-  border-color: black;
-}
-
-.halfscreengrid {
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  justify-items: center;;
-}
-
-.grid600 {
-  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-}
-.w600 {
-  width: 600px;
-}
 
 footer {
   text-align: center;
   padding: 1em;
-  color: rgb(0,0,0,0.7)
+  color: rgb(0,0,0,0.7);
+  background-color: var(--highlight-color);
 }
 footer a {
   color: inherit;
+}
+
+.timedisplay {
+  display: inline-block;
+}
+.timedisplay.hasseconds {
+  width: 8ch;
+}
+.timedisplay.justminutes {
+  width: 4ch;
+}
+
+.settings {
+  text-align: center;
+  background-color: rgba(0,0,0,0.2);
+  box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
+}
+
+.intervalproject {
+  max-width: 100%;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis "..";
+  white-space: nowrap;
+}
+
+.pageContainer {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  display: grid;
+  grid-template-rows: min-content 1fr;
+}
+
+.dndlist {
+  display: none;
+  position: relative;
+}
+.dndmenu {
+  top: 100%;
+  position: absolute;
+  z-index: 999;
+  background-color: var(--header-bg-color);
+  border: 1px solid var(--header-shadow-color);
+  border-radius: 0.2em;
+}
+
+/* Small screens are better off without the drag and drop list */
+@media only screen and (min-width: 600px) {
+  .dndlist {
+    position: absolute;
+    display: block;
+  }
+}
+.dndlist>button {
+  background-color: var(--highlight-color);
+  border: 1px solid var(--highlight-intent-color)
+}
+.dndmenu>label {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(255,255,255,0.4);
+}
+.dndmenu .project {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-bottom: 0.4em;
+  transition: 0.2s;
+  border: 1px solid gray;
+  max-width: 40ch;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.dndmenu .project:hover {
+  color: white;
+  border-color: white;
+}
+
+/* Custom switch inputs */
+.switch {
+  position: relative;
+  display: inline-block;
+  border: 3px solid var(--main-bg-color);
+  margin: -3px;
+  cursor: pointer;
+  border-radius: 0.5em;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.switch .slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  background-color: var(--highlight-intent-color);
+  transition: 0.5s;
+  text-align: center;
+  border-radius: 0.5em;
+}
+/*
+.switch input:checked + .slider {
+  background-color: gray;
+}
+*/
+.switch input:checked + .slider {
+  transform: translateX(100%)
+}
+
+/* Alibi edit popup */
+.alibiedit {
+  position: relative;
+  text-align: left; 
+  padding-right: 1em;
+}
+.alibiedit>button.selected {
+  background-color: var(--highlight-color);
+}
+.alibiedit>.alibiformcontainer {
+  position: fixed;
+  width: 300px;
+  background-color: var(--highlight-color);
+  border: 1px black solid;
+  border-radius: 0.5em;
+  overflow: hidden;
+  box-shadow: 5px 5px 5px 5px gray;
+  top: 25%;
+  left: 50%;
+  margin-left: -150px;
+  z-index: 500;
+  text-align: center;
+}
+.alibiedit>.alibiformcontainer:before {
+  z-index: -1;
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+.alibiform>.closebutton {
+  width: 96%;
+  background-color: gray;
+  text-align: center; 
+  cursor: pointer;
+  border-radius: 0.5em;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 0.2em;
+  transition: 0.2s;
+}
+.alibiform>.closebutton:hover {
+  background-color: darkred;
+  color: white;
+}
+.alibiform{
+  background-color: var(--highlight-color);
+}
+.alibiform>.updatebutton {
+  width: 96%;
+  cursor: pointer;
+  border-radius: 0.5em;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-bottom: 0.2em;
+  border-color: var(--header-shadow-color);
+  background-color: var(--header-bg-color);
+  transition: 0.2s;
+}
+.alibiform>.updatebutton:hover {
+  background-color: var(--main-bg-color);
+}
+.alibiformsections {
+  margin-top: 0.2em;
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+  border-radius: 1em;
+  overflow: hidden;
+  border: 1px solid gray;
+}
+.alibiformsection {
+  padding-bottom: 1em;
+  background-color: var(--main-bg-color);
+}
+.alibiformsection>.title {
+  background-color: var(--highlight-intent-color);
+  text-align: center;
 }

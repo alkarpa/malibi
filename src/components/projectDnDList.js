@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { startDrag, endDrag } from '../reducers/dragndropReducer'
 
-const ProjectDnDList = () => {
+const ProjectDnDMenu = () => {
     const dispatch = useDispatch()
 
     const projects = useSelector(state => state.projects)
-
     const handleDragStart = (event) => {
         const project = {
             color: event.target.style.backgroundColor,
@@ -21,12 +20,14 @@ const ProjectDnDList = () => {
         dispatch(endDrag())
     }
 
+    const filteredProjects = projects.filter( p => !p.inactive )
+
     return (
-        <div className='completedCard'>
-            <h2>Drag and Drop projects</h2>
-            <ul style={{paddingLeft: '0px'}}>
-                {projects?.map(proj => (
-                    <li key={proj.id} 
+        <div className='dndmenu'>
+            <label>Drag and Drop projects</label>
+            <ul style={{ paddingLeft: '0px' }}>
+                {filteredProjects?.map(proj => (
+                    <li key={proj.id}
                         style={{ backgroundColor: proj.color }}
                         className='project draggable'
                         projectid={proj.id}
@@ -39,6 +40,41 @@ const ProjectDnDList = () => {
                 ))}
             </ul>
         </div>
+    )
+}
+
+const ProjectDnDList = () => {
+
+    const [menuOpen, setMenuOpen] = useState(false)
+
+
+    const toggleMenu = () => {
+        if (menuOpen) {
+            closeMenu()
+        } else {
+            openMenu()
+        }
+    }
+    const openMenu = () => {
+        setMenuOpen(true)
+    }
+    const closeMenu = () => {
+        setMenuOpen(false)
+    }
+
+    const style = menuOpen ? { backgroundColor: 'gray' } : {}
+
+    return (
+        <div className='dndlist'>
+            <button onClick={toggleMenu} style={style}>&#9995;Projects</button>
+            {
+                menuOpen
+                    ? <ProjectDnDMenu />
+                    : <></>
+            }
+
+        </div>
+
     )
 
 }

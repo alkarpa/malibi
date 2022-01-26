@@ -6,9 +6,15 @@ import ProjectDropdown from './projectDropdown'
 const IntervalProject = ({ interval }) => {
     const dispatch = useDispatch()
 
-    const projects = useSelector( state => state.projects )
+    const projects = useSelector(state => state.projects)
 
-    const project = projects.find( p => ""+p.id === interval.project )
+    if (!interval) {
+        return (
+            <div style={{textAlign: 'center', backgroundColor: 'rgba(0,0,0,0.2)'}}>Start your alibi first</div>
+        )
+    }
+
+    const project = projects.find(p => "" + p.id === interval.project)
 
     const title = project ? project.title : '--No project--'
     const color = project ? project.color : 'gray'
@@ -18,35 +24,35 @@ const IntervalProject = ({ interval }) => {
         const project = {
             id: event.dataTransfer.getData('id'),
         }
-        const updatedInterval = { id: interval.id , project: project.id}
-        dispatch( updateInterval(updatedInterval) )
+        const updatedInterval = { id: interval.id, project: project.id }
+        dispatch(updateInterval(updatedInterval))
     }
 
     const handleDragOver = (event) => {
         event.preventDefault()
     }
 
-    const handleUpdate = ( interval, projectid ) => {
+    const handleUpdate = (interval, projectid) => {
         dispatch(
-            updateInterval( { ...interval, project: projectid } )
+            updateInterval({ ...interval, project: projectid })
         )
     }
 
+    const filteredProjects = projects.filter(p => p.id === project?.id || !p.inactive)
+
     return (
-        <div style={{ backgroundColor: color, textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+        <div className='projectDraggable'
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             title={title}
-            className='projectDraggable'
+            style={{ backgroundColor: color }}
         >
-            <div>
-                <ProjectDropdown 
-                    interval={interval} 
-                    options={projects} 
-                    value={project} 
-                    handleChange={handleUpdate}
-                />
-            </div>
+            <ProjectDropdown
+                interval={interval}
+                options={filteredProjects}
+                value={project}
+                handleChange={handleUpdate}
+            />
         </div>
     )
 

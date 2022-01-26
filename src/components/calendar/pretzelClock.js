@@ -43,16 +43,17 @@ const PretzelInterval = ({ startX, startY, fillWeight, preparedInterval, project
         fill='none'
         strokeWidth={fillWeight}
         style={{ opacity: 0.8 }}
+        className='pretzelsector'
     />
 )
 
 
-const PretzelClock = ({ intervals, size = 250, startX = 185, startY = 140, FILLWEIGHT = 15, projectsMap = {} }) => {
+const PretzelClock = ({ intervals, size = 250, startX = 100, startY = 140, FILLWEIGHT = 15, projectsMap = {} }) => {
 
     const preparedIntervals = prepareIntervals(intervals)
 
     return (
-        <svg width={2 * size} height={size}>
+        <svg width={1.3 * size} height={size}>
             <PretzelClockBG startX={startX} startY={startY} />
 
             {

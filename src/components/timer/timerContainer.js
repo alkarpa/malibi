@@ -1,9 +1,10 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import TimerControls from './timerControls'
-import TotalToday from './totalToday'
 import Timer from './timer'
-import IntervalCard from '../intervalCard'
+import IntervalCard from './intervalCard'
+import IntervalProject from '../intervalProject'
+import './timer.css'
 
 const TimerContainer = () => {
     const intervals = useSelector(state => state.intervals)
@@ -23,34 +24,22 @@ const TimerContainer = () => {
     }
 
     return (
-        <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'min-content min-content'
-        }}>
-            <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(2, min-content)',
-                border: '1px #d1d1d1 solid',
-            }}>
-                <div style={{
-                    display: 'grid',
-                    gridTemplateRows: 'auto auto',
-                    alignItems: 'end',
-                    textAlign: 'right'
-                }}>
-                    <div>
-                        <Timer running={running} lastInterval={lastInterval} />
-                    </div>
-                    <div style={{fontSize: '14px'}}>
-                        Σ Today
-                        <TotalToday todayCompleted={getTodayCompleted()} />
-                    </div>
+        <div className='timercontainer'>
+            <div style={{width: '100%', overflowX: 'hidden'}}>
+
+                <div style={{display: 'grid', gridTemplateColumns: 'min-content 1fr'}}>
+                    <label>Project:</label>
+                    <IntervalProject interval={lastInterval} />
                 </div>
-                <TimerControls running={running} />
+                <div className='timer'>
+                    <IntervalCard interval={lastInterval}
+                        title={running ? 'Active' : 'Latest'}
+                    />
+                    <Timer running={running} lastInterval={lastInterval} todayCompleted={getTodayCompleted()} />
+
+                </div>
             </div>
-            <IntervalCard interval={lastInterval}
-                title={running ? 'Active' : 'Latest'}
-            />
+            <TimerControls running={running} />
         </div>
     )
 }
