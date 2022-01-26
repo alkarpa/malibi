@@ -17,5 +17,3 @@ You can start your tracking session by pressing the Start/Pause button of the ti
 Every two time points create a time interval that can be marked to have been used towards a project. The projects can be assigned to a time interval by dragging and dropping the project from the Projects list to the project slot of the time interval.
 
 There is a Breakpoint button for ending the active time interval and starting another one immediately afterwards for convenience. 
-
-You can end the active session (grouped together set of time intervals) by pressing the Complete button at which point the intervals are moved to the Completed intervals area.

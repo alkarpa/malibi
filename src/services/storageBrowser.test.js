@@ -12,12 +12,12 @@ describe('storageBrowser', () => {
 
         spyLoad.mockRestore()
     })
-    test('localStorage save is called', () => {
+    test('localStorage add is called', () => {
         const spySave = jest.spyOn(
             window.localStorage.__proto__, 
             'setItem'
         )
-        storageBrowser.save('testkey', 'testdata')
+        storageBrowser.add('testkey', 'testdata')
         expect( spySave ).toBeCalled()
 
         spySave.mockRestore()

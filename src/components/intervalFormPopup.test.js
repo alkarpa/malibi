@@ -6,7 +6,7 @@ import { testState } from '../util/test_state_local'
 
 describe('IntervalFormPopup', () => {
 
-    const interval = testState.datetracking[0]
+    const interval = testState.alibi[0]
 
     describe('Open form', () => {
 

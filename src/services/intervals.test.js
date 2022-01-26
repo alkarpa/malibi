@@ -3,10 +3,14 @@ import deepFreeze from 'deep-freeze'
 
 describe('intervalsService', () => {
 
+    const TEST_INTERVAL = { id: 'test', start: 5000 }
+    const TEST_INTERVAL2 = { ...TEST_INTERVAL, end: 5005}
+    const TEST2_INTERVAL = { id: 'test2', start: 5006}
+
     test('empty array clicked returns an array with an interval', () => {
         const array = []
         deepFreeze(array)
-        const intervals = intervalsService.concatAddedClick(array)
+        const intervals = intervalsService.concatAddedClick(array, TEST_INTERVAL)
         expect(Array.isArray(intervals)).toBeTruthy()
         expect(intervals.length).toBe(1)
     })
@@ -14,7 +18,7 @@ describe('intervalsService', () => {
     test('empty array breakpoint does nothing', () => {
         const array = []
         deepFreeze(array)
-        const intervals = intervalsService.concatBreakpoint(array)
+        const intervals = intervalsService.concatBreakpoint(array, [TEST_INTERVAL, TEST2_INTERVAL])
         expect(intervals).toEqual(array)
     })
 
@@ -22,7 +26,7 @@ describe('intervalsService', () => {
         const array = []
         deepFreeze(array)
         const intervals = intervalsService.concatAddedClick(
-            intervalsService.concatAddedClick(array)
+            intervalsService.concatAddedClick(array, TEST_INTERVAL), TEST_INTERVAL2
         )
         expect(intervals.length).toBe(1)
         expect(intervals[0].start).toBeTruthy()
@@ -32,9 +36,9 @@ describe('intervalsService', () => {
     test('breakpoint works on a half complete interval', () => {
         const array = []
         deepFreeze(array)
-        const intervals = intervalsService.concatAddedClick(array)
+        const intervals = intervalsService.concatAddedClick(array, TEST_INTERVAL)
         deepFreeze(intervals)
-        const breakpoint = intervalsService.concatBreakpoint(intervals)
+        const breakpoint = intervalsService.concatBreakpoint(intervals, [TEST_INTERVAL2, TEST2_INTERVAL])
         expect(breakpoint.length).toBe(2)
         expect(breakpoint[0].end).toBeTruthy()
         expect(breakpoint[1].end).toBeFalsy()
@@ -44,10 +48,10 @@ describe('intervalsService', () => {
     test('update changes project', () => {
         const array = []
         deepFreeze(array)
-        const intervals = intervalsService.concatAddedClick(array)
+        const intervals = intervalsService.concatAddedClick(array, TEST_INTERVAL)
         deepFreeze(intervals)
         const updatedInterval = { id: intervals[0].id, project: 7 }
-        const updatedState = intervalsService.mapUpdated(intervals, updatedInterval)
+        const updatedState = intervalsService.updateIntoIntervalState(intervals, updatedInterval)
         expect(updatedState[0].project).toBe(7)
     })
 

@@ -6,7 +6,7 @@ import { testState } from '../util/test_state_local'
 
 describe('IntervalForm', () => {
 
-    const id = testState.datetracking[0].id
+    const id = testState.alibi[0].id
 
     let component
     let updateButton
@@ -19,13 +19,18 @@ describe('IntervalForm', () => {
     })
 
     describe('first interval from test data', () => {
+
+        test('All fail because the initial state is async', done => {
+            done.fail('Figure out how to inject the state')
+        })
+        /*
         beforeEach( () => {
             component = render(
                 <IntervalForm intervalId={id} />
             )
             updateButton = component.getByRole('button',{name: 'Update'})
         } )
-    
+        
         test('change start date', () => {
             const input = component.getByLabelText('Start Date')
             fireEvent.change(input, {target: {value: '2021-08-10'}})
@@ -62,6 +67,7 @@ describe('IntervalForm', () => {
             expect( component.container ).not.toHaveTextContent(/End time cannot/)
 
         })
+        */
     })
 
 

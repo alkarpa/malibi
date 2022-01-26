@@ -1,41 +1,48 @@
 import intervalsService from '../services/intervals'
 import storageService from '../services/storage'
 
-const defaultState = storageService.load('datetracking') || []
+const defaultState = /*process.env.NODE_ENV === 'test' ? storageService.load('alibi') :*/ []
 
-export const togglePlay = () => {
-    return {
+export const togglePlay = () => async (dispatch, getState) => {
+    const response = await storageService.click()
+    const state = getState().intervals
+    const intervals = intervalsService.concatAddedClick( state, response )
+    dispatch ({
         type: 'PLAY_TOGGLE',
-    }
+        intervals: intervals
+    })
 }
 
-export const createBreakpoint = () => {
-    return {
-        type: 'BREAKPOINT'
-    }
+export const createBreakpoint = () => async (dispatch, getState) => {
+    const response = await storageService.breakpoint()
+    const state = getState().intervals
+    const intervals = intervalsService.concatBreakpoint( state, response )
+    dispatch ({
+        type: 'BREAKPOINT',
+        intervals: intervals
+    })
 }
 
-export const updateInterval = ( interval ) => {
-    return {
+export const updateInterval = ( interval ) => async (dispatch, getState) => {
+    await storageService.update('alibi', interval)
+    const state  = getState().intervals
+    const intervals = intervalsService.updateIntoIntervalState( state, interval )
+    dispatch ({
         type: 'UPDATE',
-        interval: interval
-    }
-
-}
-
-const store = (state) => {
-    storageService.save('datetracking', state)
-    return state
+        intervals: intervals
+    })
 }
 
 const trackingReducer = ( state = defaultState, action ) => {
     switch( action.type ) {
+        case 'INITIALIZE':
+            return action.intervals
         case 'PLAY_TOGGLE': 
-            return store( intervalsService.concatAddedClick(state) )
+            return action.intervals
         case 'BREAKPOINT': 
-            return store( intervalsService.concatBreakpoint(state) )
+            return action.intervals
         case 'UPDATE':
-            return store( intervalsService.mapUpdated(state, action.interval) )
+            return action.intervals
         default:
             return state
     }

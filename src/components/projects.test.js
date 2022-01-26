@@ -6,8 +6,12 @@ import { testState } from '../util/test_state_local'
 
 describe('Projects component', () => {
 
-    const testProjects = testState.projects
+    const testProjects = testState.project
 
+    test('All fail because the initial state is async', done => {
+        done.fail('Figure out how to inject the state')
+    })
+    /*
     test('-no project- selectable', () => {
         const component = render(
             <Projects />
@@ -28,6 +32,6 @@ describe('Projects component', () => {
 
         expect( table ).toHaveTextContent( testProjects[1].title )
     })
-
+    */
 
 })

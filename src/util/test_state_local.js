@@ -4,7 +4,7 @@
  * Add new intervals to different months if need be.
  */
 export const testState = {
-    datetracking: [
+    alibi: [
         {
             id: 'mo',
             start: new Date(Date.UTC(2021, 7, 15, 12)).getTime(),
@@ -30,7 +30,7 @@ export const testState = {
             project: undefined
         }
     ],
-    projects: [
+    project: [
         {
             id: '15',
             title: 'Test Project',
@@ -44,10 +44,24 @@ export const testState = {
     ],
 }
 
-const load = (key) => testState[key]
+const click = () => {}
+const breakpoint = () => {}
+const add = (key, object) => {
+    object.id = 'test'+Date.now()
+    testState[key] = testState[key].concat(object)
+    return object
+}
+const update = (key, object) => {
+    const index = testState[key].findIndex( o => o.id === object.id )
+    if (index > -1) {
+        testState[key][index] = object
+    }
+ }
+const load = (key) =>  (testState[key])
 const save = (key, object) => testState[key] = object
 
 const storageTestData = {
+    add, click, breakpoint, update,
     load, save
 }
 
