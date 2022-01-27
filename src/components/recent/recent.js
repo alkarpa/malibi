@@ -1,12 +1,10 @@
 import React from 'react'
 import Completed from './completed'
-import ProjectDnDList from './projectDnDList'
 
-const Recent = ({ setDragging }) => {
+const Recent = () => {
 
   return (
     <div className='page recent content'>
-      <ProjectDnDList setDragging={setDragging} />
       <Completed />
     </div>
   )

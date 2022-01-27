@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import ProjectDetails from './projectDetails'
 import './projects.css'
-import Sidebar from './sidebar'
+import Sidebar from '../sidebar'
 
 const ProjectRow = ({ project, handleSelection, selected }) => {
 

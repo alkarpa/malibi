@@ -47,6 +47,7 @@
 .projecttrackedtotal {
     text-align: center;
     font-weight: bold;
+    background-color: var(--header-bg-color);
 }
 
 .projecttitle {
@@ -54,29 +55,71 @@
     text-align: center;
 }
 
+form.projectform {
+    height: 100%;
+    position: relative;
+    background-color: var(--header-bg-color);
+}
 
 .projectform .fields {
     display: grid;
     grid-template-columns: minmax(9ch, min-content) 1fr;
     gap: 1em;
-    background-color: var(--header-bg-color);
     padding: 0.5em;
     margin: 1em;
 }
 .fields>h3 {
     text-align: center;
     grid-column: 1 / -1;
+    background-color: var(--header-shadow-color);
+    color: white;
+    margin-bottom: 0;
 }
 .fields>label,.fields>input {
-    background-color: var(--main-bg-color);
     width: 95%;
 }
-
+.projectformdescription {
+    position: relative;
+    font-size: small;
+    margin-left: 8ch;
+    margin-right: 5%;
+    padding-left: 2ch;
+    padding-right: 2ch;
+    grid-column: 1 / -1;
+    box-shadow: 1px 1px 1px 1px gray inset;
+    background-color: rgba(0,0,0,0.2);
+}
+.projectformdescription:before {
+    content: '?';
+    font-size: large;
+    position: absolute;
+    right: 100%;
+    margin-right: 5px;
+    line-height: 0.7em;
+    height: 100%;
+}
 
 
 .projectform .buttons {
-    grid-column: 2;
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(20vw, 1fr) );
     margin: 1em;
+    gap: 1em;
+    position: absolute;
+    bottom: 2em;
+    left: 2em;
+    right: 2em;
+}
+.projectform .buttons>button {
+  width: 100%;
+  text-align: center;
+  padding: 1em;
+  background-color: var(--highlight-intent-color);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.projectform .buttons>button:not(:disabled):hover {
+  background-color: var(--highlight-color)
 }
 
 .projectform label {

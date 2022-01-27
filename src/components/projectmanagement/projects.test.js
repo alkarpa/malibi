@@ -1,8 +1,8 @@
 import React from 'react'
-import { render, fireEvent } from '../util/component_test_util'
+import { render, fireEvent } from '../../util/component_test_util'
 import { prettyDOM } from '@testing-library/jest-dom'
 import Projects from './projects'
-import { testState } from '../util/test_state_local'
+import { testState } from '../../util/test_state_local'
 
 describe('Projects component', () => {
 

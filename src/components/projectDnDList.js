@@ -24,7 +24,7 @@ const ProjectDnDMenu = () => {
 
     return (
         <div className='dndmenu'>
-            <label>Drag and Drop projects</label>
+            <label>Drag and Drop projects to alibis</label>
             <ul style={{ paddingLeft: '0px' }}>
                 {filteredProjects?.map(proj => (
                     <li key={proj.id}
@@ -66,7 +66,7 @@ const ProjectDnDList = () => {
 
     return (
         <div className='dndlist'>
-            <button onClick={toggleMenu} style={style}>&#9995;Projects</button>
+            <button onClick={toggleMenu} style={style}>&#9995;</button>
             {
                 menuOpen
                     ? <ProjectDnDMenu />
