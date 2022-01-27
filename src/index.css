@@ -60,6 +60,7 @@ body {
 }
 
 .detailssection {
+  height: 100%;
   display: grid;
   grid-template-rows: min-content 1fr;
   flex-grow: 1;
@@ -72,6 +73,7 @@ body {
 }
 
 .content {
+  display: contents;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -80,6 +82,7 @@ body {
 
 .nocontent {
   height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,11 +124,6 @@ body {
   font-size: large;
 }
 
-.veryLarge {
-  font-size: xx-large
-}
-
-
 .completedCard {
   border: 1px gray solid;
   background-color: white;
@@ -140,20 +138,6 @@ body {
   color: gray;
   font-size: small;
 }
-
-.fiveRowScrollable {
-  height: 10em;
-  overflow-y: auto;
-}
-
-.floatContainer {
-  overflow: hidden;
-}
-
-.floatLeft {
-  float: left;
-}
-
 
 
 footer {
@@ -176,12 +160,6 @@ footer a {
   width: 4ch;
 }
 
-.settings {
-  text-align: center;
-  background-color: rgba(0,0,0,0.2);
-  box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.4);
-}
-
 .intervalproject {
   max-width: 100%;
   text-align: center;
@@ -200,51 +178,58 @@ footer a {
 
 .dndlist {
   display: none;
-  position: relative;
-}
-.dndmenu {
-  top: 100%;
-  position: absolute;
-  z-index: 999;
-  background-color: var(--header-bg-color);
-  border: 1px solid var(--header-shadow-color);
-  border-radius: 0.2em;
 }
 
 /* Small screens are better off without the drag and drop list */
 @media only screen and (min-width: 600px) {
   .dndlist {
-    position: absolute;
+    position: fixed;
     display: block;
+    right: 0;
+    z-index: 999;
+    margin-top: 1em;
+  }
+
+  .dndmenu {
+    position: absolute;
+    background-color: var(--header-bg-color);
+    border: 1px solid var(--header-shadow-color);
+    border-radius: 0.2em;
+    top: 0;
+    right: 100%;
+  }
+  .dndlist>button {
+    background-color: var(--highlight-intense-color);
+    border: 1px solid var(--highlight-intent-color);
+    border-radius: 0.5em;
+    box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.2);
+    text-shadow: 1px 0px black;
+  }
+  .dndmenu>label {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(255,255,255,0.4);
+  }
+  .dndmenu .project {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 0.4em;
+    transition: 0.2s;
+    border: 1px solid gray;
+    max-width: 40ch;
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .dndmenu .project:hover {
+    color: white;
+    border-color: white;
   }
 }
-.dndlist>button {
-  background-color: var(--highlight-color);
-  border: 1px solid var(--highlight-intent-color)
-}
-.dndmenu>label {
-  display: block;
-  width: 100%;
-  text-align: center;
-  background-color: rgba(255,255,255,0.4);
-}
-.dndmenu .project {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin-bottom: 0.4em;
-  transition: 0.2s;
-  border: 1px solid gray;
-  max-width: 40ch;
-  padding-left: 1em;
-  padding-right: 1em;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-.dndmenu .project:hover {
-  color: white;
-  border-color: white;
-}
+
 
 /* Custom switch inputs */
 .switch {

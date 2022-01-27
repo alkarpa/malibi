@@ -17,7 +17,7 @@
     background-color: white;
     display: grid;
     grid-template-columns: 1fr repeat(7, 3fr);
-    grid-template-rows: min-content repeat(auto-fit, 2ch, 1fr);
+    grid-template-rows: 1.5em repeat(auto-fit, minmax( 2ch, 1fr));
     grid-gap: 2px;
     height: 100%;
 }
@@ -30,7 +30,7 @@
 
 
 .day.tracked {
-    background-color: var(--highlight-intense-color);
+    box-shadow: 0px 0px 0px 1px var(--highlight-intent-color) inset;
 }
 
 .day.inactive {
@@ -47,12 +47,13 @@
     border-radius: 0.4em;
     overflow: hidden;
     margin: 2px;
+    border: 1px black solid;
 }
 
 .weekday {
     background-color: var(--header-shadow-color);
     font-weight: bold;
-    line-height: 2em;
+    line-height: 1.5em;
     text-align: center;
     overflow: hidden;
     text-overflow: clip;
@@ -110,10 +111,28 @@
 .monthHeader button:hover {
     background-color: var(--highlight-intent-color);
 }
-
+.day>.date {
+    background-color: rgba(0,0,0,0.1);
+}
 
 .day.today {
-    border: 1px var(--header-shadow-color) solid;
+    box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.2) inset;
+}
+.day.today>.date {
+    white-space: nowrap;
+    overflow-x: hidden;
+    background-color: rgba(0,0,0,0.2);
+    color: white;
+    text-shadow: 0px 0px 2px black;
+}
+
+.dayGrid {
+    display: grid;
+    grid-template-rows: min-content 1fr;
+}
+.dayInfoGrid {
+    display: grid;
+    grid-template-rows: 1fr min-content;
 }
 
 .clockarea {
@@ -121,9 +140,27 @@
 }
 
 .stats {
-    background-color: var(--header-bg-color);
     margin: 2em;
-    box-shadow: var(--shadow-pixels) var(--header-shadow-color);
+}
+.stat {
+    text-align: right;
+}
+
+.stats .byproject{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.chartcontainer {
+    flex-grow: 1;
+}
+
+.projectbarchart {
+    height: 100%;
+    width: 100%;
+    border: 1px black solid;
+    background-color: white;
 }
 
 .clocksector {

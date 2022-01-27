@@ -1,7 +1,7 @@
 import React from 'react'
 import IntervalProject from './intervalProject'
 import TimeDisplay, { ElapsedTimeDisplay } from './timeDisplay'
-import IntervalFormPopup from './intervalFormPopup'
+import IntervalFormPopup from './intervalform/intervalFormPopup'
 
 
 const TotalRow = ({ total, active = false }) => (

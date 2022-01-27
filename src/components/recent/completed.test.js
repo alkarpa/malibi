@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '../util/component_test_util'
+import { render, fireEvent } from '../../util/component_test_util'
 import { prettyDOM } from '@testing-library/jest-dom'
 import Completed from './completed'
 

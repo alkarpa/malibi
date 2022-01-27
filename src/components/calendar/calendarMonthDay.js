@@ -10,29 +10,10 @@ const TodayTracked = ({ time }) => {
     )
 }
 
-/**
- * Monthly calendar day
- * @param {} param0 
- * @returns 
- */
-const CalendarMonthDay = ({
-        date,
-        intervals = [],
-        active,
-        today,
-        projectsMap,
-        setActiveMonthDate,
-        setActiveView
-    }) => {
-
-    const clock = intervals?.reduce((arr, cur) => (
-        cur.end ? arr + (cur.end - cur.start) : arr
-    ), 0)
-
-    const activeClass = active ? "active" : "inactive"
-    const clockClass = clock ? "tracked" : ""
-    const todayClass = today ? "today" : ""
-
+const DateProjectBar = ({ date, intervals, projectsMap }) => {
+    if ( intervals.length === 0) {
+        return (<div>&nbsp;</div>)
+    }
     // DUPLICATE FROM stat.js
     const projectsGrouped = intervals.reduce((map, interval) => {
         const project = "" + interval.project
@@ -42,35 +23,67 @@ const CalendarMonthDay = ({
     }, {})
     // END DUPLICATE
 
+    return (
+        <div className='dateprojectbar'>
+            {
+                Object.keys(projectsGrouped).map(p => (
+                    <div key={`caldayproj${date}${p}`} style={{
+                        display: 'inline-block',
+                        height: '100%',
+                        width: (100 / Object.keys(projectsGrouped).length) + "%",
+                        backgroundColor: projectsMap[p]?.color || 'gray'
+                    }} title={projectsMap[p]?.title}></div>
+                ))
+            }
+        </div>
+    )
+}
+
+/**
+ * Monthly calendar day
+ * @param {} param0 
+ * @returns 
+ */
+const CalendarMonthDay = ({
+    date,
+    intervals = [],
+    active,
+    today,
+    projectsMap,
+    setActiveMonthDate,
+    setActiveView
+}) => {
+
+    const clock = intervals?.reduce((arr, cur) => (
+        cur.end ? arr + (cur.end - cur.start) : arr
+    ), 0)
+
+    const activeClass = active ? "active" : "inactive"
+    const clockClass = clock ? "tracked" : ""
+    const todayClass = today ? "today" : ""
+
+    
+
     const dateTitle = `${date.getDate()}`
 
     return (
         <div onClick={() => { setActiveMonthDate(date); setActiveView('DAY') }}
             id={`cal${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`}
             className={`day dayGrid ${activeClass} ${clockClass} ${todayClass}`}>
-            <div >
-                {dateTitle}
+
+            <div className='date'>
+                <span>{dateTitle} {today ? 'Today' : ''}</span>
             </div>
+
             <div className='dayInfoGrid'>
-                <div>
+                <div style={{textAlign: 'center'}}>
                     {
                         today
                             ? <TodayTracked time={clock} />
                             : <TimeDisplay time={clock} seconds={false} />
                     }
                 </div>
-                <div className='dateprojectbar'>
-                    {
-                        Object.keys(projectsGrouped).map(p => (
-                            <div key={`caldayproj${date}${p}`} style={{
-                                display: 'inline-block',
-                                height: '100%',
-                                width: (100 / Object.keys(projectsGrouped).length) + "%",
-                                backgroundColor: projectsMap[p]?.color || 'gray'
-                            }} title={projectsMap[p]?.title}></div>
-                        ))
-                    }
-                </div>
+                <DateProjectBar date={date} intervals={intervals} projectsMap={projectsMap} />
             </div>
 
 

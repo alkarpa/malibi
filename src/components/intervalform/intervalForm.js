@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateInterval } from '../reducers/trackingReducer'
-import { twoDigit } from '../services/timeDisplay'
-import IntervalProject from './intervalProject'
-import TimeDisplay, { DateTimeDisplay } from './timeDisplay'
+import { updateInterval } from '../../reducers/trackingReducer'
+import { twoDigit } from '../../services/timeDisplay'
+import IntervalProject from '../intervalProject'
+import TimeDisplay, { DateTimeDisplay } from '../timeDisplay'
 
 const TimeInput = ({ time = 0, updateFunction, min, max, labelPrefix }) => {
 

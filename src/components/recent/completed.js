@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import TimesTable from './timesTable'
+import TimesTable from '../timesTable'
 import { useSelector } from 'react-redux'
-import { intervalsDateMapper } from '../services/intervals'
-import EmptyAlibis from './emptyalibis'
-import calendarService from '../services/calendar'
+import { intervalsDateMapper } from '../../services/intervals'
+import EmptyAlibis from '../emptyalibis'
+import calendarService from '../../services/calendar'
+import ProjectDnDList from '../projectDnDList'
 
 const Completed = () => {
 
@@ -38,22 +39,9 @@ const Completed = () => {
     }
 
     return (
-        <div>
-            {/*
-            <div className='settings'>
-                &#9881;
-                <label>
-                    Days to show
-                    <select onChange={handleDaysToShowSelection} value={daysToShow}>
-                        {Array.from({ length: 7 }, (v, i) => i + 1).map(v => (
-                            <option key={`daysToShow${v}`} value={v}>
-                                {v}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-            </div>
-            */}
+        <div className='completedCardContainer'>
+            <ProjectDnDList />
+            
             {array.map(day => (
                 <div className='completedCard' key={'c' + dateMap[day][0].start}>
                     <TimesTable title={buildTitle(day)} keyprefix='ctt' day={dateMap[day]} />
