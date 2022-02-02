@@ -1,6 +1,7 @@
 :root {
   --main-bg-color: lightcyan;
   --header-bg-color: lightgreen;
+  --header-bg-color-dark: rgb(115, 190, 115);
   --shadow-pixels: 2px 2px 5px 2px;
   --header-shadow-color: green;
   --highlight-color: #ffdfdf;
@@ -124,15 +125,6 @@ body {
   font-size: large;
 }
 
-.completedCard {
-  border: 1px gray solid;
-  background-color: white;
-  box-shadow: var(--shadow-pixels) var(--header-shadow-color);
-  border-radius: 1em;
-  padding: 1em;
-  margin: 0.5em;
-  max-width: 95%;
-}
 
 .seconds {
   color: gray;
@@ -265,84 +257,3 @@ footer a {
   transform: translateX(100%)
 }
 
-/* Alibi edit popup */
-.alibiedit {
-  position: relative;
-  text-align: left; 
-  padding-right: 1em;
-}
-.alibiedit>button.selected {
-  background-color: var(--highlight-color);
-}
-.alibiedit>.alibiformcontainer {
-  position: fixed;
-  width: 300px;
-  background-color: var(--highlight-color);
-  border: 1px black solid;
-  border-radius: 0.5em;
-  overflow: hidden;
-  box-shadow: 5px 5px 5px 5px gray;
-  top: 25%;
-  left: 50%;
-  margin-left: -150px;
-  z-index: 500;
-  text-align: center;
-}
-.alibiedit>.alibiformcontainer:before {
-  z-index: -1;
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
-}
-.alibiform>.closebutton {
-  width: 96%;
-  background-color: gray;
-  text-align: center; 
-  cursor: pointer;
-  border-radius: 0.5em;
-  margin-left: 2%;
-  margin-right: 2%;
-  margin-top: 0.2em;
-  transition: 0.2s;
-}
-.alibiform>.closebutton:hover {
-  background-color: darkred;
-  color: white;
-}
-.alibiform{
-  background-color: var(--highlight-color);
-}
-.alibiform>.updatebutton {
-  width: 96%;
-  cursor: pointer;
-  border-radius: 0.5em;
-  margin-left: 2%;
-  margin-right: 2%;
-  margin-bottom: 0.2em;
-  border-color: var(--header-shadow-color);
-  background-color: var(--header-bg-color);
-  transition: 0.2s;
-}
-.alibiform>.updatebutton:hover {
-  background-color: var(--main-bg-color);
-}
-.alibiformsections {
-  margin-top: 0.2em;
-  margin-left: 0.2em;
-  margin-right: 0.2em;
-  border-radius: 1em;
-  overflow: hidden;
-  border: 1px solid gray;
-}
-.alibiformsection {
-  padding-bottom: 1em;
-  background-color: var(--main-bg-color);
-}
-.alibiformsection>.title {
-  background-color: var(--highlight-intent-color);
-  text-align: center;
-}

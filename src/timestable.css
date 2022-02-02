@@ -1,9 +1,26 @@
+.completedCardContainer {
+    display: grid;
+    grid-template-rows: repeat( auto-fit, min-content );
+    justify-items: center;
+    height: min-content;
+}
+
+.completedCard {
+    border: 1px gray solid;
+    background-color: white;
+    box-shadow: var(--shadow-pixels) var(--header-shadow-color);
+    border-radius: 1em;
+    padding: 1em;
+    margin: 0.5em;
+    max-width: min( 95%, 1000px );
+  }
 
 .timesTable {
     max-width: 90vw;
     display: grid;
     grid-template-rows: min-content auto min-content;
 }
+
 .timesTable .dateTitle {
     font-weight: bold;
     text-align: center;
@@ -17,14 +34,19 @@
     margin-bottom: 2px;
 }
 
+.alibiContainer {
+    width: 100%;
+}
+
 .alibi {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
-    min-width: 30vw;
-    max-width: 95vw;
+    width: 100%;
     border: 1px solid var(--header-shadow-color);
     margin-bottom: 2px;
     background-color: rgba(0,0,0,0.1);
+    justify-content: center;
 }
 .alibi.active {
     background-color: rgba(0, 255, 150, 0.2);
@@ -32,6 +54,7 @@
 
 
 .alibi .clocks {
+    flex-grow: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
@@ -41,7 +64,7 @@
     flex-grow: 1;
     display: grid;
     grid-template-columns: min-content auto;
-    min-width: 30vw;
+    width: 30vw;
 }
 .alibi .projectCell div {
     border-radius: 0.2em;
@@ -55,6 +78,93 @@
     font-size: small;
 }
 
+.alibi .total {
+    margin-left: auto;
+}
+
 .timesTable .daytotal {
     font-weight: bold;
 }
+
+/* Alibi edit popup */
+.alibiedit {
+    margin-right: auto;
+    position: relative;
+    text-align: left; 
+    padding-right: 1em;
+  }
+  .alibiedit>button.selected {
+    background-color: var(--highlight-color);
+  }
+  .alibiedit>.alibiformcontainer {
+    position: fixed;
+    width: 300px;
+    background-color: var(--highlight-color);
+    border: 1px black solid;
+    border-radius: 0.5em;
+    overflow: hidden;
+    box-shadow: 5px 5px 5px 5px gray;
+    top: 25%;
+    left: 50%;
+    margin-left: -150px;
+    z-index: 500;
+    text-align: center;
+  }
+  .alibiedit>.alibiformcontainer:before {
+    z-index: -1;
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+  }
+  .alibiform>.closebutton {
+    width: 96%;
+    background-color: gray;
+    text-align: center; 
+    cursor: pointer;
+    border-radius: 0.5em;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 0.2em;
+    transition: 0.2s;
+  }
+  .alibiform>.closebutton:hover {
+    background-color: darkred;
+    color: white;
+  }
+  .alibiform{
+    background-color: var(--highlight-color);
+  }
+  .alibiform>.updatebutton {
+    width: 96%;
+    cursor: pointer;
+    border-radius: 0.5em;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 0.2em;
+    border-color: var(--header-shadow-color);
+    background-color: var(--header-bg-color);
+    transition: 0.2s;
+  }
+  .alibiform>.updatebutton:hover {
+    background-color: var(--main-bg-color);
+  }
+  .alibiformsections {
+    margin-top: 0.2em;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    border-radius: 1em;
+    overflow: hidden;
+    border: 1px solid gray;
+  }
+  .alibiformsection {
+    padding-bottom: 1em;
+    background-color: var(--main-bg-color);
+  }
+  .alibiformsection>.title {
+    background-color: var(--highlight-intent-color);
+    text-align: center;
+  }
