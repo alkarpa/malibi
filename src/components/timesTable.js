@@ -36,10 +36,10 @@ const TimesTable = (
     return (
         <div className='timesTable'>
             <div className='dateTitle'>{title}</div>
-            <div className='rightalign'>
+            <div className='alibiContainer rightalign'>
                 {intervals.map(t => (
                     <div className={'alibi' + (t.end ? '' : ' active')} key={`${keyprefix}${t.id}`}>
-                        <div><IntervalFormPopup interval={t} /></div>
+                        <IntervalFormPopup interval={t} />
                         <div className='clocks'>
                             <div><label>Start</label><TimeDisplay isTime={true} time={t.start} /></div>
                             <div><label>End</label><TimeDisplay isTime={true} time={t.end} /></div>
@@ -62,44 +62,6 @@ const TimesTable = (
             <TotalRow total={tableTotal} active={lastIntervalOpen} />
         </div>
     )
-
-    /*
-    return (
-        <table className='timesTable'>
-            <caption>{title}</caption>
-            <thead>
-                <tr>
-                    <th style={{minWidth:'1px'}}>Edit</th>
-                    <th>Start</th>
-                    <th>End</th>
-                    <th>Time</th>
-                    <th>Project</th>
-                </tr>
-            </thead>
-            <tbody className='rightalign'>
-                {intervals.map(t => (
-                    <tr key={`${keyprefix}${t.id}`}>
-                        <td><IntervalFormPopup interval={t} /></td>
-                        <td><TimeDisplay isTime={true} time={t.start} /></td>
-                        <td><TimeDisplay isTime={true} time={t.end} /></td>
-                        <td className='total'>
-                            {
-                                t.end
-                                    ? <TimeDisplay isTime={false} time={t.end - t.start} />
-                                    : <ElapsedTimeDisplay time={0} />
-                            }
-                        </td>
-                        <td className='projectCell'>
-                            <IntervalProject interval={t} />
-                            </td>
-                    </tr>
-                ))}
-            </tbody>
-            <TotalRow total={tableTotal} active={lastIntervalOpen} />
-        </table>
-    )
-    */
-
 }
 
 export default TimesTable

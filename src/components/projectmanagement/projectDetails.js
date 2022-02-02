@@ -20,7 +20,7 @@ const ProjectIntervalsList = ({ projectid }) => {
 
     if (total === 0) {
         const projectDescriptor = projectid ? 'this project' : 'no project'
-        return (<div style={{textAlign: 'center', margin: '2em'}}>
+        return (<div style={{ textAlign: 'center', margin: '2em' }}>
             No alibis with {projectDescriptor}
         </div>)
     }
@@ -29,7 +29,7 @@ const ProjectIntervalsList = ({ projectid }) => {
     const dates = Object.keys(dateMap)
 
     return (
-        <div className='projecttracked'>
+        <div className='projecttracked completedCardContainer'>
             <ProjectDnDList />
             <div className='projecttrackedtotal'>
                 Total: <TimeDisplay time={total} />
@@ -61,7 +61,7 @@ const ProjectDetails = ({ project }) => {
             </div>
             <div>
                 <DetailsSection >
-                    <ProjectForm buttontitle={ project.id ? 'Edit' : 'New' } project={project} />
+                    <ProjectForm buttontitle={project.id ? 'Edit' : 'New'} project={project} />
                     <ProjectIntervalsList buttontitle='Tracked' projectid={project.id} />
                 </DetailsSection>
             </div>

@@ -47,7 +47,6 @@
 .projecttrackedtotal {
     text-align: center;
     font-weight: bold;
-    background-color: var(--header-bg-color);
 }
 
 .projecttitle {

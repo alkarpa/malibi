@@ -86,8 +86,11 @@ const DayInfo = ({ activeDate, intervals, projectsMap }) => {
     return (
         <div>
             <ClockArea dateStart={dateStart} midday={midday} dateEnd={dateEnd} intervals={intervals} projectsMap={projectsMap} />
-            <div className='completedCard'>
-                <TimesTable day={intervals} />
+            <div className='completedCardContainer'>
+                <div className='completedCard'>
+                    <TimesTable day={intervals} />
+                </div>
+
             </div>
         </div>
     )
@@ -100,8 +103,8 @@ const CalendarDayInfo = ({ activeDate, setActiveDate, intervals = [], projectsMa
         <>
             {
                 intervals.length > 0
-                ? <DayInfo activeDate={activeDate} intervals={intervals} projectsMap={projectsMap} />
-                : <EmptyAlibis />
+                    ? <DayInfo activeDate={activeDate} intervals={intervals} projectsMap={projectsMap} />
+                    : <EmptyAlibis />
             }
 
 
