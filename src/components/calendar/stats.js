@@ -101,14 +101,15 @@ const Stats = ({ intervals = [], activeView }) => {
         if (daysTracked > 0) {
             statistics.push({ title: 'Average per day', value: totalMillis / daysTracked, type: 'time' })
 
-            const arr = keys.map(key => dateMap[key]).reduce((arr, cur) => {
-                const diffs = cur.map(inter => inter.end ? inter.end - inter.start : 0)
-                return [...arr, ...diffs]
+            const dateTotals = keys.map(key => dateMap[key]).reduce((prevDateTotals, cur) => {
+                const total = cur.map(inter => inter.end ? inter.end - inter.start : 0)
+                                 .reduce( (arr, cur) => (arr + cur), 0)
+                return [...prevDateTotals, total]
             }, [])
 
-            let max = arr.reduce((max, cur) => Math.max(max, cur), arr[0])
+            let max = dateTotals.reduce((max, cur) => Math.max(max, cur), dateTotals[0])
             statistics.push({ title: 'Longest day', value: max, type: 'time' })
-            let min = arr.reduce((min, cur) => Math.min(min, cur), arr[0])
+            let min = dateTotals.reduce((min, cur) => Math.min(min, cur), dateTotals[0])
             statistics.push({ title: 'Shortest day (tracked)', value: min, type: 'time' })
 
         }
