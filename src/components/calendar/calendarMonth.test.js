@@ -12,12 +12,10 @@ describe('Calendar', () => {
 
             const today = new Date(Date.UTC(2021, 7, 3, 12))
 
-            const component = render(
-                <CalendarMonth activeMonthDate={today} today={today} />
-            )
+            render(<CalendarMonth activeMonthDate={today} today={today} />)
 
-            const firstDayDiv = component.container.querySelector('#cal2021-8-1')
-            const lastDayDiv = component.container.querySelector('#cal2021-8-31')
+            const firstDayDiv = screen.getByTestId('cal2021-8-1')
+            const lastDayDiv = screen.getByTestId('cal2021-8-31')
 
             expect(firstDayDiv).toBeInTheDocument()
             expect(lastDayDiv).toBeInTheDocument()
@@ -27,12 +25,10 @@ describe('Calendar', () => {
 
             const today = new Date(Date.UTC(2021, 9, 3, 12))
 
-            const component = render(
-                <CalendarMonth activeMonthDate={today}  today={today} />
-            )
+            render(<CalendarMonth activeMonthDate={today}  today={today} />)
 
-            const firstDayDiv = component.container.querySelector('#cal2021-10-1')
-            const lastDayDiv = component.container.querySelector('#cal2021-10-31')
+            const firstDayDiv = screen.getByTestId('cal2021-10-1')
+            const lastDayDiv = screen.getByTestId('cal2021-10-31')
 
             expect(firstDayDiv).toBeInTheDocument()
             expect(lastDayDiv).toBeInTheDocument()

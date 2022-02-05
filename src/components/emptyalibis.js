@@ -1,5 +1,9 @@
 import React from 'react'
 
+export const TEXT = {
+    nocontent: 'Not a single alibi to give...'
+}
+
 const EmptyAlibis = () => {
 
     return (
@@ -7,7 +11,7 @@ const EmptyAlibis = () => {
         <div className='backstyling' />
             <div>
                 <h2>
-                    Not a single alibi to give...
+                    {TEXT.nocontent}
                 </h2>
             </div>
         </div>

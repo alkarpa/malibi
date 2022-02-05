@@ -1,8 +1,8 @@
 import React from 'react'
-import { render, fireEvent } from '../util/component_test_util'
+import { render, fireEvent } from '../../util/component_test_util'
 import { prettyDOM } from '@testing-library/jest-dom'
 import IntervalFormPopup from './intervalFormPopup'
-import { testState } from '../util/test_state_local'
+import { testState } from '../../util/test_state_local'
 
 describe('IntervalFormPopup', () => {
 
@@ -16,11 +16,11 @@ describe('IntervalFormPopup', () => {
             component = render(
                 <IntervalFormPopup interval={interval} />
             )
-            fireEvent.click(component.getByText('Edit'))
+            fireEvent.click(component.getByText('✎'))
         })
 
         test('Close form', () => {
-            fireEvent.click(component.getByText('X'))
+            fireEvent.click(component.getByText('Close ×'))
             expect(component.queryByRole('input')).toBeNull()
         })
 
