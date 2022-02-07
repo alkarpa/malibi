@@ -1,6 +1,6 @@
 import storageService from "./storage";
 
-const initialize = async (dispatch, getState) => {
+const initialize = async (dispatch) => {
 
     const initialProjects = await storageService.load('project')
     const initialAlibis = await storageService.load('alibi')

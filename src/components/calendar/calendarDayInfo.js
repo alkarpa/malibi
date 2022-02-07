@@ -97,7 +97,7 @@ const DayInfo = ({ activeDate, intervals, projectsMap }) => {
 }
 
 
-const CalendarDayInfo = ({ activeDate, setActiveDate, intervals = [], projectsMap }) => {
+const CalendarDayInfo = ({ activeDate, intervals = [], projectsMap }) => {
 
     return (
         <>

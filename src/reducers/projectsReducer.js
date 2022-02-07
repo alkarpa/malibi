@@ -2,7 +2,7 @@ import storageService from '../services/storage'
 
 const initialProjects = /*process.env.NODE_ENV === 'test' ? storageService.load('project') :*/ []
 
-export const createProject = (title, color) => async (dispatch, getState) => {
+export const createProject = (title, color) => async (dispatch) => {
     await storageService.add('project', {title: title, color: color})
     const projects = await storageService.load('project')
     //const projects = getState().projects.concat(project)
@@ -13,7 +13,7 @@ export const createProject = (title, color) => async (dispatch, getState) => {
     })
 }
 
-export const updateProject = (project) => async (dispatch, getState) => {
+export const updateProject = (project) => async (dispatch) => {
     await storageService.update('project', project)
     const projects = await storageService.load('project')
     /*const state = getState().projects

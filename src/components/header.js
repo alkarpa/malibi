@@ -9,7 +9,7 @@ const Header = () => {
             <div>
                 <div className='logo'>
                     <svg viewBox="0 0 55 20">
-                        <text x="5" y="15">M'alibi</text>
+                        <text x="5" y="15">M&apos;alibi</text>
                     </svg>
                 </div>
             </div>
