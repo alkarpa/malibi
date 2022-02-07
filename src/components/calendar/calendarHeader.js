@@ -1,42 +1,33 @@
 import React from 'react'
 import calendarService from '../../services/calendar'
 
-const DayHeader = ({ activeDate, setActiveDate }) => {
+const HEADERHEADERSTYLE = {padding: '0', margin: '0'}
+
+const DayHeader = ({ activeDate }) => {
     const iso = activeDate.toISOString().substring(0, 10)
     return (
         <div style={{overflow: 'hidden', whiteSpace: 'nowrap'}}>
-            {"" + activeDate.toLocaleDateString() + ' - ' 
+            <span>{activeDate.toLocaleDateString()}</span> {' - ' 
             + calendarService.getWeekdayStringFromDate( iso ) + ' - '
             + calendarService.getDaysSinceFromISODate( iso )}
         </div>
     )
 }
 
-const MonthHeader = ({ activeDate, setActiveDate }) => {
+const MonthHeader = ({ activeDate }) => {
 
     const ISO_yearmonth = activeDate.toISOString().substring(0, 7)
 
-    const handleChange = (event) => {
-        handleMonthPick(event)
-    }
-
-    const handleMonthPick = (event) => {
-        const newISO = event.target.value
-        const newYear = parseInt(newISO.substring(0, 4))
-        const newMonth = parseInt(newISO.substring(5))
-        const newActive = new Date(activeDate)
-        newActive.setFullYear(newYear)
-        newActive.setMonth(newMonth - 1)
-        setActiveDate(newActive)
-    }
-
     return (
         <div className='datepickercontainer'>
+            <h2 style={HEADERHEADERSTYLE}>{ISO_yearmonth}</h2>
+            { /*
             <input id='calMonthPicker'
                 onChange={handleChange}
                 type="month"
                 value={ISO_yearmonth}
             />
+            */ }
         </div>
     )
 }
@@ -68,8 +59,8 @@ const CalendarHeader = ({ activeDate, setActiveDate, tab }) => {
             <div className='datepickercontainer'>
                 {
                     tab === 'MONTH'
-                    ? <MonthHeader activeDate={activeDate} setActiveDate={setActiveDate} />
-                    : <DayHeader activeDate={activeDate} setActiveDate={setActiveDate} />
+                    ? <MonthHeader activeDate={activeDate} />
+                    : <DayHeader activeDate={activeDate} />
                 }
             </div>
             <button id='calNextMonthButton' onClick={() => handleAddition(1)}>

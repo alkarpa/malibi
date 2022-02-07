@@ -11,9 +11,6 @@ const TodayTracked = ({ time }) => {
 }
 
 const DateProjectBar = ({ date, intervals, projectsMap }) => {
-    if ( intervals.length === 0) {
-        return (<div>&nbsp;</div>)
-    }
     // DUPLICATE FROM stat.js
     const projectsGrouped = intervals.reduce((map, interval) => {
         const project = "" + interval.project
@@ -49,9 +46,9 @@ const CalendarMonthDay = ({
     intervals = [],
     active,
     today,
-    projectsMap,
-    setActiveMonthDate,
-    setActiveView
+    projectsMap = {},
+    setActiveMonthDate = () => (false),
+    setActiveView = () => (false)
 }) => {
 
     const clock = intervals?.reduce((arr, cur) => (
@@ -68,26 +65,26 @@ const CalendarMonthDay = ({
 
     return (
         <div onClick={() => { setActiveMonthDate(date); setActiveView('DAY') }}
-            id={`cal${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`}
+            data-testid={`cal${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`}
             className={`day dayGrid ${activeClass} ${clockClass} ${todayClass}`}>
 
             <div className='date'>
                 <span>{dateTitle} {today ? 'Today' : ''}</span>
             </div>
 
-            <div className='dayInfoGrid'>
-                <div style={{textAlign: 'center'}}>
-                    {
-                        today
-                            ? <TodayTracked time={clock} />
-                            : <TimeDisplay time={clock} seconds={false} />
-                    }
+            {
+                (intervals.length > 0) && 
+                <div className='dayInfoGrid'>
+                    <div style={{textAlign: 'center'}}>
+                        {
+                            today
+                                ? <TodayTracked time={clock} />
+                                : <TimeDisplay time={clock} seconds={false} />
+                        }
+                    </div>
+                    <DateProjectBar date={date} intervals={intervals} projectsMap={projectsMap} />
                 </div>
-                <DateProjectBar date={date} intervals={intervals} projectsMap={projectsMap} />
-            </div>
-
-
-
+            }
         </div>
     )
 }

@@ -7,6 +7,12 @@ import DetailsSection from '../detailsSection'
 import ProjectForm from './projectForm'
 import ProjectDnDList from '../projectDnDList'
 
+export const TEXT = {
+    button_edit : 'Edit',
+    button_new : 'New',
+    button_tracked: 'Tracked',
+}
+
 const ProjectIntervalsList = ({ projectid }) => {
     const allIntervals = useSelector(state => state.intervals)
     const projectIntervals = allIntervals.filter(
@@ -61,8 +67,8 @@ const ProjectDetails = ({ project }) => {
             </div>
             <div>
                 <DetailsSection >
-                    <ProjectForm buttontitle={project.id ? 'Edit' : 'New'} project={project} />
-                    <ProjectIntervalsList buttontitle='Tracked' projectid={project.id} />
+                    <ProjectForm buttontitle={project.id ? TEXT.button_edit : TEXT.button_new} project={project} />
+                    <ProjectIntervalsList buttontitle={TEXT.button_tracked} projectid={project.id} />
                 </DetailsSection>
             </div>
 

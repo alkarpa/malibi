@@ -4,6 +4,15 @@ import ProjectDetails from './projectDetails'
 import './projects.css'
 import Sidebar from '../sidebar'
 
+/**
+ * A project without an id.
+ * Used to give a title and color to 'no-projects'
+ */
+export const NEWPROJECT = {
+    title: '--no project / new project--',
+    color: '#777777'
+}
+
 const ProjectRow = ({ project, handleSelection, selected }) => {
 
     return (
@@ -47,17 +56,12 @@ const ProjectsList = ({ newProject, selectedProject, setSelection, toggleSidebar
 
 const Projects = () => {
 
-    const newProject = {
-        title: '--no project / new project--',
-        color: '#777777'
-    }
-
-    const [selectedProject, setSelectedProject] = useState(newProject)
+    const [selectedProject, setSelectedProject] = useState(NEWPROJECT)
 
     return (
         <div className='page'>
             <Sidebar>
-                <ProjectsList newProject={newProject} selectedProject={selectedProject} setSelection={setSelectedProject} />
+                <ProjectsList newProject={NEWPROJECT} selectedProject={selectedProject} setSelection={setSelectedProject} />
             </Sidebar>
             <ProjectDetails project={selectedProject} />
 

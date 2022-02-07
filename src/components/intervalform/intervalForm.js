@@ -87,10 +87,7 @@ const IntervalForm = ({ intervalId }) => {
     return (
         <>
             <div className='alibiformsections'>
-                {/*<FormSection title='ID'>
-                <span style={{ color: 'gray' }}>{interval.id}</span>
-            </FormSection>*/}
-
+                
                 <FormSection title="Start">
                     <DateTimeDisplay isTime={true} time={interval.start} />
                     <TimeInput

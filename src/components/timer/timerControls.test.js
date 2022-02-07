@@ -15,7 +15,7 @@ describe('TimerControls', () => {
     test('Pause visible when running', async () => {
         const component = render(<TimerControls running={true} />)
 
-        expect(component.container).toHaveTextContent('Pause')
+        expect(component.container).toHaveTextContent('Stop')
     })
 
     test('Breakpoint is disabled when not running', () => {

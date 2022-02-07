@@ -3,6 +3,10 @@ import { useDispatch } from 'react-redux'
 import { updateProject, createProject } from '../../reducers/projectsReducer'
 import SwitchInput from '../switchinput'
 
+export const TEXT = {
+    create: 'Create',
+    update: 'Update',
+}
 
 const ProjectFormInputField = ({ children, label, visible = true, description }) => {
     if (!visible) return (<></>)
@@ -26,7 +30,7 @@ const ProjectFormButtons = ({ project, undoable, handleSubmit, handleUndo }) => 
     const buttons = [
         {
             id: 'projformsubmit',
-            text: project.id ? 'Update' : 'Create',
+            text: project.id ? TEXT.update : TEXT.create,
             handler: handleSubmit,
             disabled: project.title === '' || !undoable,
         },
@@ -115,6 +119,7 @@ const ProjectForm = ({ project }) => {
                 <h3>Properties</h3>
                 <ProjectFormInputField label='Title'>
                     <input
+                        name='title'
                         onChange={(event) => handleInputChange('title', event.target.value)}
                         value={formProject.title}
                         placeholder='Enter a name for the project'
@@ -123,6 +128,7 @@ const ProjectForm = ({ project }) => {
                 <ProjectFormInputField label='Color'>
                     <label style={{ display: 'flex' }}>
                         <input style={{ flexGrow: '1' }}
+                            name='color'
                             type='color'
                             onChange={(event) => handleInputChange('color', event.target.value)}
                             value={formProject.color} />

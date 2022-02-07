@@ -8,6 +8,6 @@ describe('IntervalCard', () => {
         const component = render(
             <IntervalCard />
         )
-        expect( component.container ).toBeEmptyDOMElement()
+        expect( component.container ).toHaveTextContent("Start")
     })
 })

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '../../util/component_test_util'
+import { render, screen, fireEvent } from '../../util/component_test_util'
 import { prettyDOM } from '@testing-library/jest-dom'
 import Calendar from './calendar'
 
@@ -7,131 +7,64 @@ describe('Calendar', () => {
 
     describe('Month changes', () => {
 
-        test('August 2021 Previous Month has 1st of July 2021', () => {
-            const today = new Date(Date.UTC(2021, 7, 3, 12))
+        const today = new Date(Date.UTC(2021, 7, 3, 12))
 
-            const component = render(
-                <Calendar today={today} />
-            )
+        beforeEach(() => {
+            render( <Calendar today={today} /> )
+        })
 
-            const prevMonthButton = component.container.querySelector('#calPrevMonthButton')
+        test('August 2021 Previous Month is July 2021', () => {
+            const prevMonthButton = screen.getByRole('button', {name:/Previous/})
             fireEvent.click(prevMonthButton)
-
-            const julyFirst = component.container.querySelector('#cal2021-7-1')
-
-            expect(julyFirst).toBeInTheDocument()
+            const monthHeading = screen.getByRole('heading', {name:'2021-07'})
+            expect(monthHeading).toBeInTheDocument()
         })
 
-        test('August 2021 Next Month has 30th of September 2021', () => {
-            const today = new Date(Date.UTC(2021, 7, 3, 12))
-
-            const component = render(
-                <Calendar today={today} />
-            )
-
-            const nextMonthButton = component.container.querySelector('#calNextMonthButton')
+        test('August 2021 Next Month is September 2021', () => {
+            const nextMonthButton = screen.getByRole('button', {name:/Next/})
             fireEvent.click(nextMonthButton)
-
-            const septemberLast = component.container.querySelector('#cal2021-9-30')
-
-            expect(septemberLast).toBeInTheDocument()
+            const monthHeading = screen.getByRole('heading', {name:'2021-09'})
+            expect(monthHeading).toBeInTheDocument()
         })
-
-        test('Choosing January 2020', () => {
-            const today = new Date(Date.UTC(2021, 7, 3, 12))
-
-            const component = render(
-                <Calendar today={today} />
-            )
-
-            const monthPicker = component.container.querySelector('#calMonthPicker')
-            fireEvent.change(monthPicker, {target: {value: '2020-01'} })
-
-            const januaryFirst = component.container.querySelector('#cal2020-1-1')
-
-            expect(januaryFirst).toBeInTheDocument()
+        test('Clicking 15(th day) opens Day', () => {
+            const fifteenth = screen.getByText(/15/)
+            fireEvent.click(fifteenth)
+            let date = new Date(today)
+            date.setDate(15)
+            const localDate = date.toLocaleDateString()
+            const datetitle = screen.getByText(localDate)
+            expect(datetitle).toBeInTheDocument()
         })
-
     })
 
     describe('Day view transition', () => {
-        test('Clicking 15(th day) opens Day', () => {
-            const component = render(
-                <Calendar />
-            )
-
-            const fifteenth = component.getByText(/15/)
-            fireEvent.click(fifteenth)
-
-            const prevday = component.getByText(/Previous day/)
-
-            expect(prevday).toBeInTheDocument()
-        })
+        
         test('Clicking DAY opens Day', () => {
-            const component = render(
+            render(
                 <Calendar />
             )
 
-            const dayTab = component.getByText(/DAY/)
+            const dayTab = screen.getByText(/DAY/)
             fireEvent.click(dayTab)
 
-            const prevday = component.getByText(/Previous day/)
+            let date = new Date()
+            const localDate = date.toLocaleDateString()
+            const datetitle = screen.getByText(localDate)
 
-            expect(prevday).toBeInTheDocument()
+            expect(datetitle).toBeInTheDocument()
         })
         test('Clicking DAY, prev, next works', () => {
-            const component = render(
+            render(
                 <Calendar />
             )
-            const dayTab = component.getByText(/DAY/)
+            const dayTab = screen.getByText(/DAY/)
             fireEvent.click(dayTab)
-            const prevday = component.getByText(/Previous day/)
+            const prevday = screen.getByText(/Previous/)
             fireEvent.click(prevday)
-            const nextday = component.getByText(/Next day/)
+            const nextday = screen.getByText(/Next/)
             fireEvent.click(nextday)
 
             expect(prevday).toBeInTheDocument()
         })
     })
-
-
-    describe('Tracking data', () => {
-
-        it('async initial state is something to figure out', done => {
-            done.fail('TODO: tests')
-        })
-        /*
-        let component
-
-        beforeEach( () => {
-            const today = new Date(Date.UTC(2021, 7, 10, 12))
-
-            component = render(
-                <Calendar today={today} />
-            )
-        })
-
-        test('3 hour interval total', () => {
-            const tc = component.getByText(/Total completed/,)
-                .parentElement
-
-            expect( tc ).toHaveTextContent(/7:56:00/)
-        })
-
-        test('3 hour interval on 15th', () => {
-            const ftth = component.getByText(/15/)
-                .parentElement
-                .parentElement
-                
-            const textContent = ftth.textContent
-            expect( textContent ).toContain('3:16:00')
-        })
-
-        test('by projects has textproject 3:56', () => {
-            const project = component.getByText(/Project Test/)
-            expect( project.parentElement ).toHaveTextContent('3:56')
-        })
-        */
-    })
-
 })
