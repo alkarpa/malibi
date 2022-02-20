@@ -23,7 +23,7 @@ export const DateTimeDisplay = ({time}) => {
 const TimeDisplay = ({ time, isTime, seconds = true}) => {
     const cName = 'mono timedisplay'+ (seconds ? ' hasseconds' : ' justminutes')
     if (!time) {
-        return (<div className={ cName }>&nbsp;</div>)
+        return (<div className={ cName + ' active' }>Now&nbsp;</div>)
     }
     const clock = isTime? timeDisplay.getTimeClockObject( time ) : timeDisplay.getIntervalClockObject( time )
     return (

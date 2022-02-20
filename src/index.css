@@ -149,7 +149,11 @@ footer a {
   width: 8ch;
 }
 .timedisplay.justminutes {
-  width: 4ch;
+  width: 5ch;
+}
+.timedisplay.active {
+  text-align: center;
+  color: teal;
 }
 
 .intervalproject {
@@ -256,4 +260,3 @@ footer a {
 .switch input:checked + .slider {
   transform: translateX(100%)
 }
-

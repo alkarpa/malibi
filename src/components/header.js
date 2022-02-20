@@ -1,8 +1,11 @@
 import React from 'react'
 import TimerContainer from './timer/timerContainer'
 import './header.css'
+import HeaderClock from './timer/headerClock'
 
 const Header = () => {
+
+    const drawHeaderClock = true
 
     return (
         <header>
@@ -13,9 +16,15 @@ const Header = () => {
                     </svg>
                 </div>
             </div>
-            <div className='speechbubble'>
-                <TimerContainer />
+            <div style={{display: 'grid', gridTemplateColumns: 'min-content min-content'}}>
+                <div className='speechbubble'>
+                    <TimerContainer />
+                </div>
+                {
+                    drawHeaderClock && <HeaderClock />
+                }
             </div>
+
         </header>
     )
 
