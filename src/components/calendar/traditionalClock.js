@@ -30,7 +30,7 @@ const ClockSector = ({ center, radius, clockStart, clockEnd, intervalStart, inte
 
 }
 
-const TraditionalClock = ({ startTime, endTime, intervals = [], projectsMap = {}, startDigit = 0 }) => {
+const TraditionalClock = ({ startTime, endTime, intervals = [], projectsMap = {}, startDigit = 0, size = 240 }) => {
 
 
     const filtered = intervals.filter(
@@ -42,10 +42,10 @@ const TraditionalClock = ({ startTime, endTime, intervals = [], projectsMap = {}
                 end: a.end > endTime ? endTime: a.end })
         )
 
-    const SIZE = 240
+    const VIEWBOX_SIZE = 240
 
-    const center = SIZE / 2
-    const radius = (SIZE-40) / 2
+    const center = VIEWBOX_SIZE / 2
+    const radius = (VIEWBOX_SIZE-40) / 2
 
     const twelve = new Array(12).fill(1).map((d, i) => ({
         cos: Math.cos(Math.PI / 6 * i - Math.PI/2),
@@ -53,8 +53,8 @@ const TraditionalClock = ({ startTime, endTime, intervals = [], projectsMap = {}
     }))
 
     return (
-        <svg width={SIZE} height={SIZE}>
-            <circle cx={SIZE / 2} cy={SIZE / 2} r={radius} fill="white" />
+        <svg viewBox={`0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}`} width={size} height={size}>
+            <circle cx={VIEWBOX_SIZE / 2} cy={VIEWBOX_SIZE / 2} r={radius} fill="white" />
             {
                 twelve.map((d, i) => (
                     <g key={startTime + 'd' + i}>

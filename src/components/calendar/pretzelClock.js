@@ -48,12 +48,15 @@ const PretzelInterval = ({ startX, startY, fillWeight, preparedInterval, project
 )
 
 
-const PretzelClock = ({ intervals, size = 250, startX = 100, startY = 140, FILLWEIGHT = 15, projectsMap = {} }) => {
+const PretzelClock = ({ intervals, size = 250, projectsMap = {} }) => {
 
     const preparedIntervals = prepareIntervals(intervals)
+    const viewBoxSize = 250
+    const width = viewBoxSize * 1.3, height = viewBoxSize
+    const startX = 100, startY = 140, FILLWEIGHT = 15
 
     return (
-        <svg width={1.3 * size} height={size}>
+        <svg viewBox={`0 0 ${width} ${height}`} width={1.3 * size} height={size} >
             <PretzelClockBG startX={startX} startY={startY} />
 
             {
