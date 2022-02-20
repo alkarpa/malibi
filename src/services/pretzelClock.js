@@ -138,15 +138,20 @@ export const prepareIntervals = (intervals) => {
     const D = DAYEND - DAYSTART
     const EIGHTH = D / 8
 
+    const MIN_PERCENT_DIFF = 0.2
+
     const p = intervals
         .filter(iv => iv.end)
         .map(iv => {
             const percentStart = getMillisPercentage(Math.max(day0, iv.start))
             const percentEnd = getMillisPercentage(Math.min(day24, iv.end))
+            const endDrawAdjusted = percentEnd > percentStart + MIN_PERCENT_DIFF 
+                ? percentEnd 
+                : Math.min( percentEnd + MIN_PERCENT_DIFF, DAYEND )
             return {
                 ...iv,
                 startSegment: percentStart / EIGHTH,
-                endSegment: percentEnd / EIGHTH,
+                endSegment: endDrawAdjusted / EIGHTH,
             }
         })
     const preparedIntervals = p.map(iv => ({ ...iv, arc: prepareIntervalArc(iv) }))

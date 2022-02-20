@@ -10,7 +10,7 @@ const IntervalProject = ({ interval }) => {
 
     if (!interval) {
         return (
-            <div style={{textAlign: 'center', backgroundColor: 'rgba(0,0,0,0.2)'}}>Start your alibi first</div>
+            <div className='intervalproject' style={{textAlign: 'center', backgroundColor: 'rgba(0,0,0,0.2)'}}>Start your alibi first</div>
         )
     }
 
@@ -41,7 +41,7 @@ const IntervalProject = ({ interval }) => {
     const filteredProjects = projects.filter(p => p.id === project?.id || !p.inactive)
 
     return (
-        <div className='projectDraggable'
+        <div className='projectDraggable intervalproject'
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             title={title}

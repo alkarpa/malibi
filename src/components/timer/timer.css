@@ -3,53 +3,29 @@
     display: flex;
     flex-wrap: wrap;
     max-width: 100%;
-    min-width: 70vw;
+    height: 100%;
+    place-items: center;
+    position: relative;
 }
 
 .timer {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-
-.times {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    flex-grow: 1;
-}
-
-.labelvaluegrid {
-    max-width: 100%;
-    display: grid;
-    grid-template-columns: 1fr min-content;
-}
-.labelvaluegrid label {
-    text-align: right;
-    line-height: 150%;
-}
-.labelvaluegrid > div {
-    min-width: 8ch;
-    text-align: center;
-    border: 2px solid green;
-}
-
-.labelvaluegrid.valuebubbled > div{
-    border-radius: 0.4em;
-    width: min-content;
+    justify-content: center;
 }
 
 .timercontainer .timerdisplay {
-    background-color: #ffffff;
+    background-color: #eeeeee;
     margin: 2px;
     padding: 0.2em;
     min-width: 9ch;
     text-align: right;
 }
+
 .timercontainer .timedisplay {
-    width: inherit;
     padding: 0.2em;
     margin: 2px;
     text-align: right;
+    background-color: #eeeeee;
 }
