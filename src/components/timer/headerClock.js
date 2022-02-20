@@ -31,18 +31,22 @@ const HeaderClock = () => {
     const todayStart = today.getTime()
     const intervals = alibis.filter(a => a.start >= todayStart || a.end > todayStart)
         .map(a => (a.start < todayStart ? { ...a, start: todayStart } : { ...a }))
+
+    // order of evaluation: todayTotal before pretzel last.end = lastTick
+    // because TotalToday component adds state.elapsed
+    const todayTotal = intervals.reduce((acc, cur) => {
+        return acc + ( cur.end ? cur.end - cur.start : 0)
+    }, 0)
+
+    // to add the ongoing Alibi to the pretzel
     if (intervals.length > 0 && lastTick) {
         intervals[intervals.length - 1].end = lastTick
     }
-
-    const todayTotal = intervals.reduce((acc, cur) => {
-                return acc + (cur.end - cur.start)
-            }, 0)
-
+    
     return (
-        <div style={{display: 'grid', gridTemplateRows: 'min-content min-content', justifyContent: 'center', textAlign:'center'}}>
+        <div style={{ display: 'grid', gridTemplateRows: 'min-content min-content', justifyContent: 'center', textAlign: 'center' }}>
             <PretzelClock intervals={intervals} size={100} projectsMap={projectsMap} />
-            <TotalToday todayCompleted={ todayTotal } />
+            <TotalToday todayCompleted={todayTotal} />
         </div>
     )
 }
