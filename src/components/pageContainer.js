@@ -36,7 +36,7 @@ const PageContainer = () => {
         <div className='pageContainer'>
             <div className="tabButtons">
                 { TABS.map( t => (
-                    <button key={t}
+                    <button key={t} id={`tab_${t}`}
                             onClick={() => handleTabChange(t)}
                             className={ activePage === t ? "active" : "" }
                             >

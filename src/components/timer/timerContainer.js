@@ -39,7 +39,7 @@ const TimerContainer = () => {
                 <div style={{minWidth: '15ch'}}>
                     <IntervalProject interval={lastInterval} />
                 </div>
-                <div className='timer' >
+                <div id='timercard' className='timer' >
                     <div style={{ display: 'flex', position: 'relative' }}>
                         <TimeDisplay isTime={true} time={lastInterval?.start} seconds={false} />
                         {

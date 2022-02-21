@@ -44,7 +44,7 @@ const HeaderClock = () => {
     }
     
     return (
-        <div style={{ display: 'grid', gridTemplateRows: 'min-content min-content', justifyContent: 'center', textAlign: 'center' }}>
+        <div id='todaytracked' style={{ display: 'grid', gridTemplateRows: 'min-content min-content', justifyContent: 'center', textAlign: 'center' }}>
             <PretzelClock intervals={intervals} size={100} projectsMap={projectsMap} />
             <TotalToday todayCompleted={todayTotal} />
         </div>
